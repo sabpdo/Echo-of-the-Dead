@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=5 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://Player.tscn" id="1_2"]
 [ext_resource type="Script" path="res://WallGenerator.gd" id="2_1"]
+[ext_resource type="Script" path="res://FogController.gd" id="3_1"]
+[ext_resource type="Shader" path="res://fog_shader.gdshader" id="4_1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
+shader = ExtResource("4_1")
+shader_parameter/view_radius = 150.0
+shader_parameter/soft_edge = 50.0
+shader_parameter/player_position = Vector2(0, 0)
+shader_parameter/viewport_size = Vector2(1152, 648)
+shader_parameter/fog_opacity = 0.85
 
 [node name="Main" type="Node2D"]
 
@@ -17,3 +27,25 @@ script = ExtResource("2_1")
 
 [node name="Player" parent="." instance=ExtResource("1_2")]
 position = Vector2(335, 150)
+
+[node name="FogLayer" type="CanvasLayer" parent="."]
+
+[node name="FogController" type="Control" parent="FogLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_1")
+
+[node name="FogRect" type="ColorRect" parent="FogLayer/FogController"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+material = SubResource("ShaderMaterial_1")

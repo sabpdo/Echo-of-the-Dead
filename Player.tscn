@@ -17,3 +17,6 @@ offset_top = -15.0
 offset_right = 15.0
 offset_bottom = 15.0
 color = Color(0.2, 0.6, 1, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = true
