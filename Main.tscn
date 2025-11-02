@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=6 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://Player.tscn" id="1_2"]
 [ext_resource type="Script" path="res://WallGenerator.gd" id="2_1"]
 [ext_resource type="Script" path="res://FogController.gd" id="3_1"]
 [ext_resource type="Shader" path="res://fog_shader.gdshader" id="4_1"]
+[ext_resource type="Script" path="res://EcholocationButton.gd" id="5_1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
@@ -49,3 +50,68 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_1")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="EcholocationButtonContainer" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.0
+offset_top = -90.0
+offset_right = 35.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("5_1")
+
+[node name="EcholocationButton" type="Button" parent="UILayer/EcholocationButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = ""
+flat = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/EcholocationButtonContainer/EcholocationButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -20.0
+offset_right = 25.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EcholocationLabel" type="Label" parent="UILayer/EcholocationButtonContainer/EcholocationButton/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Echolocation"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/EcholocationButtonContainer/EcholocationButton/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "1"
+horizontal_alignment = 1
+
+[node name="CooldownOverlay" type="ColorRect" parent="UILayer/EcholocationButtonContainer/EcholocationButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3, 0.3, 0.3, 0.7)
+mouse_filter = 2
+visible = false
