@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=9 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://Player.tscn" id="1_2"]
 [ext_resource type="Script" path="res://WallGenerator.gd" id="2_1"]
 [ext_resource type="Script" path="res://FogController.gd" id="3_1"]
 [ext_resource type="Shader" path="res://fog_shader.gdshader" id="4_1"]
 [ext_resource type="Script" path="res://EcholocationButton.gd" id="5_1"]
+[ext_resource type="Script" path="res://PlayerHealthBar.gd" id="6_1"]
+[ext_resource type="Script" path="res://ZombieSpawner.gd" id="7_1"]
+[ext_resource type="Script" path="res://GameOverOverlay.gd" id="8_1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
@@ -25,6 +28,9 @@ color = Color(0.1, 0.15, 0.2, 1)
 
 [node name="WallGenerator" type="Node2D" parent="."]
 script = ExtResource("2_1")
+
+[node name="ZombieSpawner" type="Node2D" parent="."]
+script = ExtResource("7_1")
 
 [node name="Player" parent="." instance=ExtResource("1_2")]
 position = Vector2(335, 150)
@@ -52,6 +58,30 @@ color = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_1")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerHealthBarContainer" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 170.0
+offset_bottom = 60.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("6_1")
+
+[node name="HeartsContainer" type="HBoxContainer" parent="UILayer/PlayerHealthBarContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
 
 [node name="EcholocationButtonContainer" type="Control" parent="UILayer"]
 layout_mode = 3
@@ -115,3 +145,47 @@ grow_vertical = 2
 color = Color(0.3, 0.3, 0.3, 0.7)
 mouse_filter = 2
 visible = false
+
+[node name="GameOverOverlay" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("8_1")
+visible = false
+
+[node name="BackgroundOverlay" type="ColorRect" parent="UILayer/GameOverOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/GameOverOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -50.0
+offset_right = 200.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverLabel" type="Label" parent="UILayer/GameOverOverlay/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 64
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
