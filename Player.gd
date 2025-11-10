@@ -2,6 +2,13 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 
+# Attack system
+const ATTACK_COOLDOWN = 0.2
+const ATTACK_OFFSET = 20.0
+var attack_timer: float = 0.0
+var attack_scene = preload("res://attack_effect.tscn")
+
+
 # Health system - Heart based (5 hearts = 10 half-hearts)
 const MAX_HEARTS = 5
 const HALF_HEARTS_PER_HEART = 2
@@ -54,4 +61,20 @@ func _physics_process(delta):
 	# Face the cursor
 	var mouse_pos = get_global_mouse_position()
 	look_at(mouse_pos)
+	
+	# Attack (E key)
+	attack_timer -= delta
+	if Input.is_key_pressed(KEY_E) and attack_timer <= 0.0:
+		perform_attack()
+		attack_timer = ATTACK_COOLDOWN
+		
+func perform_attack():	
+	var attack = attack_scene.instantiate()
+	
+	# direction of attack from cursor
+	var dir = (get_global_mouse_position() - global_position).normalized()
+	attack.direction = dir
 
+	# Spawn attack in front of player
+	attack.global_position = global_position + dir * ATTACK_OFFSET
+	get_parent().add_child(attack)
