@@ -94,4 +94,3 @@ func _on_echolocation_activated():
 func _on_echolocation_deactivated():
 	# Don't enable here - wait for cooldown to finish
 	pass
-

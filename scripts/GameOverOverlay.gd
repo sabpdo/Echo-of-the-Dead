@@ -20,4 +20,3 @@ func _on_player_died():
 	
 	# Pause the game
 	get_tree().paused = true
-

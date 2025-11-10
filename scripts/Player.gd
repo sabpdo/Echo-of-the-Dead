@@ -6,7 +6,7 @@ const SPEED = 300.0
 const ATTACK_COOLDOWN = 0.2
 const ATTACK_OFFSET = 20.0
 var attack_timer: float = 0.0
-var attack_scene = preload("res://attack_effect.tscn")
+var attack_scene = preload("res://scenes/attack_effect.tscn")
 
 
 # Health system - Heart based (5 hearts = 10 half-hearts)

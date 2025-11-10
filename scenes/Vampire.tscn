@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsy72tl2b0j7e"]
+
+[ext_resource type="Texture2D" uid="uid://dbbpftuxxniqo" path="res://assets/temp_vamp.png" id="1_xqxjr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ht4rs"]
+height = 36.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4bxgt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xqxjr")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Vampire" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ht4rs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -1.5707964
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_4bxgt")
+animation = &"idle"

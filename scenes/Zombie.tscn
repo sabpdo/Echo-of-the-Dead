@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4mby7o5p6r7"]
+
+[ext_resource type="Script" uid="uid://beyg3ubfsr0o5" path="res://scripts/Zombie.gd" id="1_1"]
+[ext_resource type="Texture2D" uid="uid://byh1k25q7dmyb" path="res://assets/temp_zombie.png" id="2_g6hu2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g6hu2"]
+radius = 20.75
+height = 52.5
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vrb4v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_g6hu2")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Zombie" type="CharacterBody2D"]
+script = ExtResource("1_1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.25, -0.75)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_g6hu2")
+
+[node name="HealthBarContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -30.0
+offset_top = -35.0
+offset_right = 30.0
+offset_bottom = -20.0
+mouse_filter = 2
+
+[node name="HealthBarBackground" type="ColorRect" parent="HealthBarContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2, 0.2, 0.2, 0.8)
+
+[node name="HealthBar" type="ColorRect" parent="HealthBarContainer"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 60.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.8, 0.2, 0.2, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -1.5707964
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_vrb4v")
+animation = &"walk"

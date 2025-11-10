@@ -10,7 +10,7 @@ const MAP_HEIGHT = MAP_BOTTOM - MAP_TOP
 
 # Wall properties
 const WALL_SIZE = 50.0
-const WALL_SCENE = preload("res://Wall.tscn")
+const WALL_SCENE = preload("res://scenes/Wall.tscn")
 
 # Random wall generation settings
 @export var random_wall_count: int = 30
@@ -87,4 +87,3 @@ func spawn_wall(position: Vector2):
 	var wall = WALL_SCENE.instantiate()
 	wall.position = position
 	add_child(wall)
-

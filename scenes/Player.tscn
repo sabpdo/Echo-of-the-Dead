@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://b2j8wq5m3n4p5"]
+
+[ext_resource type="Script" uid="uid://d3hf0nc2buaqs" path="res://scripts/Player.gd" id="1_1"]
+[ext_resource type="Texture2D" uid="uid://cyk2hohmnddj2" path="res://assets/temp.png" id="2_kpjcp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kpjcp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kne1u"]
+atlas = ExtResource("2_kpjcp")
+region = Rect2(40, 0, 486, 666)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e80uo"]
+atlas = ExtResource("2_kpjcp")
+region = Rect2(526, 0, 486, 666)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cxr5p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kne1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e80uo")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 2.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_kpjcp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(7.9999995, 1.9999999)
+rotation = -1.5707964
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_cxr5p")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.8917271

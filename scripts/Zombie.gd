@@ -91,4 +91,3 @@ func _physics_process(delta):
 			if player.has_method("take_damage"):
 				player.take_damage(DAMAGE)
 			attack_timer = ATTACK_COOLDOWN
-

@@ -12,7 +12,7 @@ const MAP_BOTTOM = 640.0
 @export var min_distance_from_player: float = 300.0  # Minimum distance from player to spawn
 @export var max_zombies: int = 20  # Maximum zombies on the map at once
 
-var zombie_scene = preload("res://Zombie.tscn")
+var zombie_scene = preload("res://scenes/Zombie.tscn")
 var spawn_points: Array[Vector2] = []
 var player: Node2D = null
 var spawn_timer: float = 0.0
@@ -128,4 +128,3 @@ func _on_zombie_died(zombie: Node2D):
 	var index = active_zombies.find(zombie)
 	if index >= 0:
 		active_zombies.remove_at(index)
-

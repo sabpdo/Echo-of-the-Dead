@@ -99,4 +99,3 @@ func start_cooldown():
 
 func is_echolocation_available() -> bool:
 	return not echolocation_active and not echolocation_on_cooldown
-

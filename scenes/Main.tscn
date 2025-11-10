@@ -1,13 +1,13 @@
 [gd_scene load_steps=10 format=3 uid="uid://c3laxr6n4o5q6"]
 
-[ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://Player.tscn" id="1_2"]
-[ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://WallGenerator.gd" id="2_1"]
-[ext_resource type="Script" uid="uid://dvhgcq5hl8sbi" path="res://FogController.gd" id="3_1"]
+[ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
+[ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
+[ext_resource type="Script" uid="uid://dvhgcq5hl8sbi" path="res://scripts/FogController.gd" id="3_1"]
 [ext_resource type="Shader" uid="uid://bmvmgq1w8g8qy" path="res://fog_shader.gdshader" id="4_1"]
-[ext_resource type="Script" uid="uid://cw65bmxq2l4pk" path="res://EcholocationButton.gd" id="5_1"]
-[ext_resource type="Script" uid="uid://byf3qh6kmqlhu" path="res://PlayerHealthBar.gd" id="6_1"]
-[ext_resource type="Script" uid="uid://bcffap826g73g" path="res://ZombieSpawner.gd" id="7_1"]
-[ext_resource type="Script" uid="uid://ds5bxs7u70rap" path="res://GameOverOverlay.gd" id="8_1"]
+[ext_resource type="Script" uid="uid://cw65bmxq2l4pk" path="res://scripts/EcholocationButton.gd" id="5_1"]
+[ext_resource type="Script" uid="uid://byf3qh6kmqlhu" path="res://scripts/PlayerHealthBar.gd" id="6_1"]
+[ext_resource type="Script" uid="uid://bcffap826g73g" path="res://scripts/ZombieSpawner.gd" id="7_1"]
+[ext_resource type="Script" uid="uid://ds5bxs7u70rap" path="res://scripts/GameOverOverlay.gd" id="8_1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
@@ -22,9 +22,9 @@ shader_parameter/fog_opacity = 0.85
 
 [node name="Background" type="ColorRect" parent="."]
 offset_left = -1085.0
-offset_top = -640.0
+offset_top = -641.0
 offset_right = 1157.0
-offset_bottom = 640.0
+offset_bottom = 639.0
 color = Color(0.1, 0.15, 0.2, 1)
 
 [node name="WallGenerator" type="Node2D" parent="."]

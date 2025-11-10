@@ -102,4 +102,3 @@ func _on_health_changed(current_half_hearts: int, max_half_hearts: int):
 			# Empty heart - hide both halves (only show gray outline)
 			left_half_container.visible = false
 			right_half_container.visible = false
-
