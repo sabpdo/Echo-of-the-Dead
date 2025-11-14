@@ -11,4 +11,3 @@ func _pressed():
 	
 	# Return to main menu
 	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
-

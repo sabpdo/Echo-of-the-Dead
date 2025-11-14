@@ -4,6 +4,8 @@ extends Control
 @onready var settings_button = $VBoxContainer/SettingsButton
 
 const MAIN_SCENE = preload("res://scenes/Main.tscn")
+const HOW_TO_PLAY_SCENE = preload("res://scenes/HowToPlay.tscn")
+
 
 func _ready():
 	# Connect button signals
@@ -20,3 +22,7 @@ func _on_settings_pressed():
 	print("Settings - Coming soon!")
 	# For now, you can add a settings dialog here later
 
+
+func _on_how_to_play_button_pressed() -> void:
+	# Replace with function body.
+	get_tree().change_scene_to_packed(HOW_TO_PLAY_SCENE)

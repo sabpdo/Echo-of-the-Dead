@@ -2,6 +2,7 @@ extends Control
 
 @export var pause_menu_path: NodePath
 @onready var pause_menu: Control = get_node_or_null(pause_menu_path)
+const MAIN_MENU = "res://scenes/MainMenu.tscn"  
 
 func _ready():
 	visible = false
@@ -33,3 +34,7 @@ func _on_restart_pressed():
 
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+func _on_home_page_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file(MAIN_MENU)
