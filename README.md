@@ -11,3 +11,7 @@ At its core, this game emphasizes atmospheric audio design, limited visibility, 
 - **Engine:** Godot 4.5
 - **Renderer:** Compatibility / OpenGL (exports to WebGL2)
 - **Languages**: GDScript
+
+
+## Credits
+Fireball animation is from here: https://opengameart.org/content/spell-animation-spritesheets 
