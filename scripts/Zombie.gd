@@ -54,6 +54,9 @@ func take_damage(amount: int):
 	health_changed.emit(current_health, max_health)
 	
 	if current_health <= 0:
+		var counters = get_tree().get_nodes_in_group("kill_counter")
+		if counters.size() > 0:
+			counters[0].zombies_killed += 1
 		zombie_died.emit()
 		queue_free()
 

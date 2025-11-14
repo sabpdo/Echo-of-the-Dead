@@ -9,12 +9,22 @@ const DAMAGE = 25
 
 var direction: Vector2 = Vector2.ZERO
 
-func _ready():
-	await get_tree().create_timer(DURATION).timeout
-	queue_free()
+var time_left := DURATION
 
-func _process(delta):
+#func _ready():
+	#await get_tree().create_timer(DURATION).timeout
+	#queue_free()
+
+func _physics_process(delta):
+	# Freeze attack when paused
+	if get_tree().paused:
+		return
+	# Move the attack
 	position += direction * SPEED * delta
+	# Count down timer
+	time_left -= delta
+	if time_left <= 0:
+		queue_free()
 
 func _on_attack_effect_body_entered(body):
 	# don't hit player

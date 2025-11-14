@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=17 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
 [ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
@@ -8,6 +8,13 @@
 [ext_resource type="Script" uid="uid://byf3qh6kmqlhu" path="res://scripts/PlayerHealthBar.gd" id="6_1"]
 [ext_resource type="Script" uid="uid://bcffap826g73g" path="res://scripts/ZombieSpawner.gd" id="7_1"]
 [ext_resource type="Script" uid="uid://ds5bxs7u70rap" path="res://scripts/GameOverOverlay.gd" id="8_1"]
+[ext_resource type="Texture2D" uid="uid://brecqfrka57ed" path="res://assets/gear.png" id="9_lhr70"]
+[ext_resource type="Script" uid="uid://bnm5k858u4025" path="res://scenes/settings_icon.gd" id="9_qmy6f"]
+[ext_resource type="Texture2D" uid="uid://q137iu1br2fq" path="res://assets/pause.png" id="10_wp0k4"]
+[ext_resource type="Script" uid="uid://cmevoj7pkfa7m" path="res://scenes/pause_icon.gd" id="11_mwfav"]
+[ext_resource type="Script" uid="uid://dayufmosq47ho" path="res://scenes/pause_menu.gd" id="13_3p2gp"]
+[ext_resource type="Script" uid="uid://58ljllc17sh7" path="res://scenes/settings_menu.gd" id="14_3p2gp"]
+[ext_resource type="Script" uid="uid://b6tbl40k7fnl7" path="res://scenes/kill_counter.gd" id="15_cvmbd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
@@ -183,3 +190,164 @@ theme_override_font_sizes/font_size = 64
 text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SettingsIcon" type="Button" parent="UILayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = 80.0
+grow_horizontal = 0
+script = ExtResource("9_qmy6f")
+
+[node name="TextureRect" type="TextureRect" parent="UILayer/SettingsIcon"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 64.0
+offset_bottom = 65.0
+texture = ExtResource("9_lhr70")
+
+[node name="PauseIcon" type="Button" parent="UILayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 8.0
+offset_right = -88.0
+offset_bottom = 80.0
+grow_horizontal = 0
+script = ExtResource("11_mwfav")
+
+[node name="TextureRect" type="TextureRect" parent="UILayer/PauseIcon"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 120.0
+offset_bottom = 124.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_wp0k4")
+
+[node name="PauseMenu" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_3p2gp")
+
+[node name="Panel" type="Panel" parent="UILayer/PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/PauseMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="UILayer/PauseMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 65
+text = "PAUSE MENU"
+
+[node name="Resume" type="Button" parent="UILayer/PauseMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "RESUME"
+
+[node name="Restart" type="Button" parent="UILayer/PauseMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "RESTART"
+
+[node name="SettingsMenu" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_3p2gp")
+
+[node name="Panel" type="Panel" parent="UILayer/SettingsMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/SettingsMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 65
+text = "SETTINGS MENU"
+
+[node name="Resume" type="Button" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "RESUME"
+
+[node name="Restart" type="Button" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "RESTART"
+
+[node name="KillCounter" type="Control" parent="UILayer" groups=["kill_counter"]]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 88.0
+offset_bottom = 80.0
+script = ExtResource("15_cvmbd")
+
+[node name="Kills" type="Label" parent="UILayer/KillCounter"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 11.0
+offset_right = 104.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Kills: 0"
+
+[connection signal="pressed" from="UILayer/PauseMenu/Panel/VBoxContainer/Resume" to="UILayer/PauseMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="UILayer/PauseMenu/Panel/VBoxContainer/Restart" to="UILayer/PauseMenu" method="_on_restart_pressed"]
+[connection signal="pressed" from="UILayer/SettingsMenu/Panel/VBoxContainer/Resume" to="UILayer/SettingsMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="UILayer/SettingsMenu/Panel/VBoxContainer/Restart" to="UILayer/SettingsMenu" method="_on_restart_pressed"]
