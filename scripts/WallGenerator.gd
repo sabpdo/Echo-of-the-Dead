@@ -11,10 +11,12 @@ const MAP_HEIGHT = MAP_BOTTOM - MAP_TOP
 # Wall properties
 const WALL_SIZE = 50.0
 const WALL_SCENE = preload("res://scenes/Wall.tscn")
+const TORCH_SCENE = preload("res://scenes/Torch.tscn")
 
 # Random wall generation settings
 @export var random_wall_count: int = 30
 @export var min_wall_spacing: float = 100.0  # Minimum distance between walls
+@export var torch_spawn_chance: float = 0.08  # 8% chance to spawn torch on a wall
 
 func _ready():
 	spawn_boundary_walls()
@@ -87,3 +89,13 @@ func spawn_wall(position: Vector2):
 	var wall = WALL_SCENE.instantiate()
 	wall.position = position
 	add_child(wall)
+	
+	# Randomly spawn torches on some walls
+	if randf() < torch_spawn_chance:
+		spawn_torch_on_wall(position)
+
+func spawn_torch_on_wall(wall_position: Vector2):
+	# Spawn torch on top of the wall, offset slightly
+	var torch = TORCH_SCENE.instantiate()
+	torch.position = wall_position + Vector2(0, -WALL_SIZE / 2 - 10)
+	add_child(torch)

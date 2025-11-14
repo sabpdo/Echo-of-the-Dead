@@ -8,6 +8,11 @@ const ATTACK_OFFSET = 20.0
 var attack_timer: float = 0.0
 var attack_scene = preload("res://scenes/attack_effect.tscn")
 
+# Torch interaction
+var nearby_torch: Node = null
+var torch_interact_timer: float = 0.0
+const TORCH_INTERACT_COOLDOWN: float = 0.3
+
 
 # Health system - Heart based (5 hearts = 10 half-hearts)
 const MAX_HEARTS = 5
@@ -67,6 +72,12 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_E) and attack_timer <= 0.0:
 		perform_attack()
 		attack_timer = ATTACK_COOLDOWN
+	
+	# Interact with torch (T key)
+	torch_interact_timer -= delta
+	if Input.is_key_pressed(KEY_T) and nearby_torch and torch_interact_timer <= 0.0:
+		nearby_torch.toggle()
+		torch_interact_timer = TORCH_INTERACT_COOLDOWN
 		
 func perform_attack():	
 	var attack = attack_scene.instantiate()

@@ -15,3 +15,5 @@ At its core, this game emphasizes atmospheric audio design, limited visibility, 
 
 ## Credits
 Fireball animation is from here: https://opengameart.org/content/spell-animation-spritesheets 
+
+Torch: https://opengameart.org/content/torch-32px-sprite
