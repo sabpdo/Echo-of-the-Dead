@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=19 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
 [ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://dayufmosq47ho" path="res://scenes/pause_menu.gd" id="13_3p2gp"]
 [ext_resource type="Script" uid="uid://58ljllc17sh7" path="res://scenes/settings_menu.gd" id="14_3p2gp"]
 [ext_resource type="Script" uid="uid://b6tbl40k7fnl7" path="res://scenes/kill_counter.gd" id="15_cvmbd"]
+[ext_resource type="Script" path="res://scenes/home_icon.gd" id="16_home"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
@@ -24,6 +25,14 @@ shader_parameter/view_radius = 150.0
 shader_parameter/soft_edge = 50.0
 shader_parameter/fog_color = Color(0, 0, 0, 0.85)
 shader_parameter/fog_opacity = 0.85
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.2, 0.2, 0.2, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 1)
 
 [node name="Main" type="Node2D"]
 
@@ -156,6 +165,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+process_mode = 4
 script = ExtResource("8_1")
 
 [node name="BackgroundOverlay" type="ColorRect" parent="UILayer/GameOverOverlay"]
@@ -165,6 +175,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0.7)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/GameOverOverlay"]
@@ -175,11 +186,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -50.0
+offset_top = -120.0
 offset_right = 200.0
-offset_bottom = 50.0
+offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 30
 
 [node name="GameOverLabel" type="Label" parent="UILayer/GameOverOverlay/VBoxContainer"]
 layout_mode = 2
@@ -190,6 +202,20 @@ theme_override_font_sizes/font_size = 64
 text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="UILayer/GameOverOverlay/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+theme_override_font_sizes/font_size = 32
+text = "Play Again"
+process_mode = 4
+
+[node name="ReturnHomeButton" type="Button" parent="UILayer/GameOverOverlay/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+theme_override_font_sizes/font_size = 32
+text = "Return to Home"
+process_mode = 4
 
 [node name="SettingsIcon" type="Button" parent="UILayer"]
 anchors_preset = 1
@@ -209,6 +235,51 @@ offset_top = 9.0
 offset_right = 64.0
 offset_bottom = 65.0
 texture = ExtResource("9_lhr70")
+
+[node name="HomeIcon" type="Button" parent="UILayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -240.0
+offset_top = 7.0
+offset_right = -168.0
+offset_bottom = 80.0
+grow_horizontal = 0
+script = ExtResource("16_home")
+
+[node name="HouseIcon" type="Control" parent="UILayer/HomeIcon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Roof" type="Polygon2D" parent="UILayer/HomeIcon/HouseIcon"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 18.0
+offset_right = 44.0
+offset_bottom = 35.0
+color = Color(0.6, 0.3, 0.2, 1)
+polygon = PackedVector2Array(18, 0, 36, 17, 0, 17)
+
+[node name="HouseBody" type="ColorRect" parent="UILayer/HomeIcon/HouseIcon"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 44.0
+offset_bottom = 58.0
+color = Color(0.4, 0.4, 0.5, 1)
+
+[node name="Door" type="ColorRect" parent="UILayer/HomeIcon/HouseIcon"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 40.0
+offset_right = 34.0
+offset_bottom = 58.0
+color = Color(0.3, 0.2, 0.1, 1)
 
 [node name="PauseIcon" type="Button" parent="UILayer"]
 anchors_preset = 1

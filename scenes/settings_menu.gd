@@ -9,6 +9,10 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS  
 
 func open():
+	# Close pause menu if it's open
+	if pause_menu and pause_menu.visible:
+		pause_menu.close()
+	
 	visible = true
 	get_tree().paused = true 
 

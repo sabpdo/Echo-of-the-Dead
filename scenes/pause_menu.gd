@@ -18,12 +18,20 @@ func _process(delta):
 		toggle_pause()
 
 func toggle_pause():
+	# Don't toggle if settings menu is open
+	if settings_menu and settings_menu.visible:
+		return
+	
 	if get_tree().paused:
 		close()
 	else:
 		open()
 
 func open():
+	# Close settings menu if it's open
+	if settings_menu and settings_menu.visible:
+		settings_menu.close()
+	
 	visible = true
 	get_tree().paused = true
 

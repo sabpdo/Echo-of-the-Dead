@@ -11,4 +11,11 @@ func _process(delta: float) -> void:
 	pass
 
 func _pressed():
-	get_parent().get_node("PauseMenu").open()
+	var pause_menu = get_parent().get_node("PauseMenu")
+	var settings_menu = get_parent().get_node("SettingsMenu")
+	
+	# Don't open pause menu if settings is open
+	if settings_menu and settings_menu.visible:
+		return
+	
+	pause_menu.open()
