@@ -10,6 +10,7 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		# Close settings first if it's open
+		# didn't work LOL
 		if settings_menu and settings_menu.visible:
 			settings_menu.close()
 			return
