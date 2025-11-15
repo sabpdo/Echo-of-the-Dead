@@ -8,9 +8,7 @@ const MAP_BOTTOM = 640.0
 
 # Spawn settings
 @export var spawn_point_count: int = 10  # Number of spawn points to generate
-@export var spawn_interval: float = 3.0  # Seconds between spawns
 @export var min_distance_from_player: float = 300.0  # Minimum distance from player to spawn
-@export var max_zombies: int = 20  # Maximum zombies on the map at once
 
 var zombie_scene = preload("res://scenes/Zombie.tscn")
 var spawn_points: Array[Vector2] = []
@@ -25,8 +23,8 @@ func _ready():
 	# Generate random spawn points
 	_generate_spawn_points()
 	
-	# Start spawning immediately
-	spawn_timer = spawn_interval
+	# Start spawning immediately based on difficulty
+	spawn_timer = GameSettings.get_zombie_spawn_interval()
 
 func _generate_spawn_points():
 	spawn_points.clear()
@@ -79,6 +77,10 @@ func _process(delta):
 	
 	spawn_timer -= delta
 	
+	# Get difficulty-based settings
+	var max_zombies = GameSettings.get_max_zombies()
+	var spawn_interval = GameSettings.get_zombie_spawn_interval()
+	
 	# Spawn zombie if timer is up and we haven't reached max zombies
 	if spawn_timer <= 0.0 and active_zombies.size() < max_zombies:
 		_spawn_zombie()
@@ -114,6 +116,11 @@ func _spawn_zombie():
 	# Instantiate zombie
 	var zombie = zombie_scene.instantiate()
 	zombie.global_position = spawn_pos
+	
+	# Apply difficulty modifiers
+	zombie.speed_multiplier = GameSettings.get_zombie_speed_multiplier()
+	zombie.health_multiplier = GameSettings.get_zombie_health_multiplier()
+	
 	get_parent().add_child(zombie)
 	
 	# Track the zombie

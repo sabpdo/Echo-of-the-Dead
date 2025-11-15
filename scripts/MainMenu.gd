@@ -5,6 +5,7 @@ extends Control
 
 const MAIN_SCENE = preload("res://scenes/Main.tscn")
 const HOW_TO_PLAY_SCENE = preload("res://scenes/HowToPlay.tscn")
+const SETTINGS_PAGE_SCENE = "res://scenes/SettingsPage.tscn"
 
 
 func _ready():
@@ -17,10 +18,8 @@ func _on_play_pressed():
 	get_tree().change_scene_to_packed(MAIN_SCENE)
 
 func _on_settings_pressed():
-	# Show a simple settings message
-	# TODO: Implement full settings menu
-	print("Settings - Coming soon!")
-	# For now, you can add a settings dialog here later
+	# Navigate to settings page
+	get_tree().change_scene_to_file(SETTINGS_PAGE_SCENE)
 
 
 func _on_how_to_play_button_pressed() -> void:

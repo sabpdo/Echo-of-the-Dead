@@ -2,7 +2,8 @@ extends Control
 
 @export var pause_menu_path: NodePath
 @onready var pause_menu: Control = get_node_or_null(pause_menu_path)
-const MAIN_MENU = "res://scenes/MainMenu.tscn"  
+const MAIN_MENU = "res://scenes/MainMenu.tscn"
+const SETTINGS_PAGE = "res://scenes/SettingsPage.tscn"
 
 func _ready():
 	visible = false
@@ -10,12 +11,11 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS  
 
 func open():
-	# Close pause menu if it's open
-	if pause_menu and pause_menu.visible:
-		pause_menu.close()
-	
-	visible = true
-	get_tree().paused = true 
+	# Navigate to settings page instead of showing in-game menu
+	# Mark that we came from the game
+	GameSettings.set_meta("came_from_game", true)
+	get_tree().paused = false
+	get_tree().change_scene_to_file(SETTINGS_PAGE)
 
 func close():
 	visible = false

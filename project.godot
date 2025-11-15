@@ -15,6 +15,10 @@ run/main_scene="res://scenes/MainMenu.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 
+[autoload]
+
+GameSettings="*res://scripts/GameSettings.gd"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

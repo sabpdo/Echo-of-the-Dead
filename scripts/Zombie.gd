@@ -5,8 +5,13 @@ const DAMAGE = 0.5  # Half a heart per attack
 const ATTACK_COOLDOWN = 1.0
 
 # Health system
+var base_max_health: int = 50
 var max_health: int = 50
 var current_health: int = 50
+
+# Difficulty multipliers (set by spawner)
+var speed_multiplier: float = 1.0
+var health_multiplier: float = 1.0
 
 var player: Node2D = null
 var attack_timer: float = 0.0
@@ -18,6 +23,8 @@ signal health_changed(current_health, max_health)
 signal zombie_died
 
 func _ready():
+	# Apply health multiplier
+	max_health = int(base_max_health * health_multiplier)
 	current_health = max_health
 	health_changed.emit(current_health, max_health)
 	_update_health_bar()
@@ -66,9 +73,9 @@ func _physics_process(delta):
 	
 	attack_timer -= delta
 	
-	# Move towards player
+	# Move towards player (with speed multiplier)
 	var direction = (player.global_position - global_position).normalized()
-	velocity = direction * SPEED
+	velocity = direction * SPEED * speed_multiplier
 	move_and_slide()
 	
 	# Face movement direction
