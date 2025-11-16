@@ -12,6 +12,7 @@ const MAP_HEIGHT = MAP_BOTTOM - MAP_TOP
 const WALL_SIZE = 50.0
 const WALL_SCENE = preload("res://scenes/Wall.tscn")
 const TORCH_SCENE = preload("res://scenes/Torch.tscn")
+const GENERATOR_SCENE = preload("res://scenes/Generator.tscn")
 
 # Random wall generation settings
 @export var random_wall_count: int = 30
@@ -21,6 +22,7 @@ const TORCH_SCENE = preload("res://scenes/Torch.tscn")
 func _ready():
 	spawn_boundary_walls()
 	spawn_random_walls()
+	spawn_generator()
 
 func spawn_boundary_walls():
 	# Spawn walls along the four edges of the map
@@ -99,3 +101,23 @@ func spawn_torch_on_wall(wall_position: Vector2):
 	var torch = TORCH_SCENE.instantiate()
 	torch.position = wall_position + Vector2(0, -WALL_SIZE / 2 - 10)
 	add_child(torch)
+
+func spawn_generator():
+	# Spawn exactly one generator at a random position
+	var margin = WALL_SIZE * 3
+	var spawn_area_left = MAP_LEFT + margin
+	var spawn_area_right = MAP_RIGHT - margin
+	var spawn_area_top = MAP_TOP + margin
+	var spawn_area_bottom = MAP_BOTTOM - margin
+	
+	# Generate random position
+	var x = randf_range(spawn_area_left, spawn_area_right)
+	var y = randf_range(spawn_area_top, spawn_area_bottom)
+	
+	# Snap to grid for cleaner placement
+	x = floor(x / WALL_SIZE) * WALL_SIZE
+	y = floor(y / WALL_SIZE) * WALL_SIZE
+	
+	var generator = GENERATOR_SCENE.instantiate()
+	generator.position = Vector2(x, y)
+	add_child(generator)

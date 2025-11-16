@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=24 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
 [ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
@@ -7,9 +7,11 @@
 [ext_resource type="Script" uid="uid://cw65bmxq2l4pk" path="res://scripts/EcholocationButton.gd" id="5_1"]
 [ext_resource type="Script" path="res://scripts/FireballButton.gd" id="17_fireball"]
 [ext_resource type="Script" path="res://scripts/LightTorchButton.gd" id="18_torch"]
+[ext_resource type="Script" path="res://scripts/GeneratorButton.gd" id="19_generator"]
 [ext_resource type="Script" uid="uid://byf3qh6kmqlhu" path="res://scripts/PlayerHealthBar.gd" id="6_1"]
 [ext_resource type="Script" uid="uid://bcffap826g73g" path="res://scripts/ZombieSpawner.gd" id="7_1"]
 [ext_resource type="Script" uid="uid://ds5bxs7u70rap" path="res://scripts/GameOverOverlay.gd" id="8_1"]
+[ext_resource type="Script" path="res://scripts/WinOverlay.gd" id="20_win"]
 [ext_resource type="Texture2D" uid="uid://brecqfrka57ed" path="res://assets/gear.png" id="9_lhr70"]
 [ext_resource type="Script" uid="uid://bnm5k858u4025" path="res://scenes/settings_icon.gd" id="9_qmy6f"]
 [ext_resource type="Texture2D" uid="uid://q137iu1br2fq" path="res://assets/pause.png" id="10_wp0k4"]
@@ -125,6 +127,62 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("18_torch")
+
+[node name="GeneratorButtonContainer" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_top = -90.0
+offset_right = -45.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("19_generator")
+
+[node name="GeneratorButton" type="Button" parent="UILayer/GeneratorButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/GeneratorButtonContainer/GeneratorButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GeneratorLabel" type="Label" parent="UILayer/GeneratorButtonContainer/GeneratorButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "Turn On Generator"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/GeneratorButtonContainer/GeneratorButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "T"
+horizontal_alignment = 1
 
 [node name="LightTorchButton" type="Button" parent="UILayer/LightTorchButtonContainer"]
 layout_mode = 1
@@ -342,6 +400,66 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_1")
 text = "Play Again"
 
 [node name="ReturnHomeButton" type="Button" parent="UILayer/GameOverOverlay/VBoxContainer"]
+process_mode = 4
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+text = "Return to Home"
+
+[node name="WinOverlay" type="Control" parent="UILayer"]
+process_mode = 4
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("20_win")
+
+[node name="BackgroundOverlay" type="ColorRect" parent="UILayer/WinOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/WinOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -120.0
+offset_right = 200.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="WinLabel" type="Label" parent="UILayer/WinOverlay/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 64
+text = "YOU WIN!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="UILayer/WinOverlay/VBoxContainer"]
+process_mode = 4
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+text = "Play Again"
+
+[node name="ReturnHomeButton" type="Button" parent="UILayer/WinOverlay/VBoxContainer"]
 process_mode = 4
 layout_mode = 2
 theme_override_font_sizes/font_size = 32

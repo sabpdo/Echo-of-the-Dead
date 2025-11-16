@@ -14,6 +14,12 @@ var previous_nearby_torch: Node = null
 var torch_interact_timer: float = 0.0
 const TORCH_INTERACT_COOLDOWN: float = 0.3
 
+# Generator interaction
+var nearby_generator: Node = null
+var previous_nearby_generator: Node = null
+var generator_interact_timer: float = 0.0
+const GENERATOR_INTERACT_COOLDOWN: float = 0.3
+
 
 # Health system - Heart based (5 hearts = 10 half-hearts)
 const MAX_HEARTS = 5
@@ -25,6 +31,7 @@ signal health_changed(current_half_hearts, max_half_hearts)
 signal player_died
 signal attack_performed
 signal torch_proximity_changed(has_torch: bool)
+signal generator_proximity_changed(has_generator: bool)
 
 func _ready():
 	current_half_hearts = max_half_hearts
@@ -50,6 +57,11 @@ func _physics_process(delta):
 	if nearby_torch != previous_nearby_torch:
 		torch_proximity_changed.emit(nearby_torch != null)
 		previous_nearby_torch = nearby_torch
+	
+	# Check if generator proximity changed
+	if nearby_generator != previous_nearby_generator:
+		generator_proximity_changed.emit(nearby_generator != null)
+		previous_nearby_generator = nearby_generator
 	
 	# Get input direction
 	var input_dir = Vector2.ZERO
@@ -81,9 +93,13 @@ func _physics_process(delta):
 		perform_attack()
 		attack_timer = ATTACK_COOLDOWN
 	
-	# Interact with torch (T key)
-	torch_interact_timer -= delta
-	if Input.is_key_pressed(KEY_T) and nearby_torch and torch_interact_timer <= 0.0:
+	# Interact with generator (T key) - prioritize generator over torch
+	generator_interact_timer -= delta
+	if Input.is_key_pressed(KEY_T) and nearby_generator and generator_interact_timer <= 0.0:
+		nearby_generator.toggle()
+		generator_interact_timer = GENERATOR_INTERACT_COOLDOWN
+	# Interact with torch (T key) - only if no generator nearby
+	elif Input.is_key_pressed(KEY_T) and nearby_torch and torch_interact_timer <= 0.0:
 		nearby_torch.toggle()
 		torch_interact_timer = TORCH_INTERACT_COOLDOWN
 		

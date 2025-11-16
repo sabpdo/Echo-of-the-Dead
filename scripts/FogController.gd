@@ -185,3 +185,15 @@ func start_cooldown():
 
 func is_echolocation_available() -> bool:
 	return not echolocation_active and not echolocation_on_cooldown
+
+func remove_all_fog():
+	# Set view radius to a very large value to clear all fog
+	if fog_material:
+		# Set view radius to cover entire screen (use a very large value)
+		var viewport = get_viewport()
+		if viewport:
+			var size = viewport.get_visible_rect().size
+			var max_dimension = max(size.x, size.y)
+			# Set radius to cover entire viewport plus extra
+			fog_material.set_shader_parameter("view_radius", max_dimension * 2.0)
+			view_radius = max_dimension * 2.0

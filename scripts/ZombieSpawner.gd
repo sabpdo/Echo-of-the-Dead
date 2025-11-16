@@ -15,6 +15,7 @@ var spawn_points: Array[Vector2] = []
 var player: Node2D = null
 var spawn_timer: float = 0.0
 var active_zombies: Array[Node2D] = []
+var spawning_enabled: bool = true
 
 func _ready():
 	# Find the player
@@ -72,7 +73,7 @@ func _generate_spawn_points():
 			spawn_points.append(spawn_pos)
 
 func _process(delta):
-	if spawn_points.is_empty():
+	if spawn_points.is_empty() or not spawning_enabled:
 		return
 	
 	spawn_timer -= delta
@@ -88,6 +89,18 @@ func _process(delta):
 	
 	# Clean up dead zombies from the array
 	active_zombies = active_zombies.filter(func(zombie): return is_instance_valid(zombie))
+
+func stop_spawning_and_kill_all():
+	# Stop spawning
+	spawning_enabled = false
+	
+	# Kill all active zombies
+	for zombie in active_zombies:
+		if is_instance_valid(zombie):
+			zombie.queue_free()
+	
+	# Clear the array
+	active_zombies.clear()
 
 func _spawn_zombie():
 	if spawn_points.is_empty():
