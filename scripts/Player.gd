@@ -10,6 +10,7 @@ var attack_scene = preload("res://scenes/attack_effect.tscn")
 
 # Torch interaction
 var nearby_torch: Node = null
+var previous_nearby_torch: Node = null
 var torch_interact_timer: float = 0.0
 const TORCH_INTERACT_COOLDOWN: float = 0.3
 
@@ -22,6 +23,8 @@ var current_half_hearts: int = MAX_HEARTS * HALF_HEARTS_PER_HEART
 
 signal health_changed(current_half_hearts, max_half_hearts)
 signal player_died
+signal attack_performed
+signal torch_proximity_changed(has_torch: bool)
 
 func _ready():
 	current_half_hearts = max_half_hearts
@@ -43,6 +46,11 @@ func heal(amount: float = 0.5):
 	health_changed.emit(current_half_hearts, max_half_hearts)
 
 func _physics_process(delta):
+	# Check if torch proximity changed
+	if nearby_torch != previous_nearby_torch:
+		torch_proximity_changed.emit(nearby_torch != null)
+		previous_nearby_torch = nearby_torch
+	
 	# Get input direction
 	var input_dir = Vector2.ZERO
 	if Input.is_action_pressed("ui_right") or Input.is_key_pressed(KEY_D):
@@ -89,3 +97,5 @@ func perform_attack():
 	# Spawn attack in front of player
 	attack.global_position = global_position + dir * ATTACK_OFFSET
 	get_parent().add_child(attack)
+	
+	attack_performed.emit()
