@@ -66,26 +66,26 @@ func _update_label_text():
 				button.disabled = true
 		else:
 			# Show cost in label
-			var counters = get_tree().get_nodes_in_group("kill_counter")
-			var kills = 0
-			if counters.size() > 0:
-				kills = counters[0].zombies_killed
-			generator_label.text = "Turn On Generator\n(" + str(current_generator.COST_KILLS) + " kills)"
+			var points_counters = get_tree().get_nodes_in_group("points_counter")
+			var points = 0
+			if points_counters.size() > 0:
+				points = points_counters[0].points
+			generator_label.text = "Turn On Generator\n(" + str(current_generator.COST_POINTS) + " points)"
 			
-			# Disable button if not enough kills
+			# Disable button if not enough points
 			if button:
-				button.disabled = kills < current_generator.COST_KILLS
+				button.disabled = points < current_generator.COST_POINTS
 
 func _process(_delta):
-	# Update button state and label text in real-time to reflect current kill count
+	# Update button state and label text in real-time to reflect current points
 	if current_generator and not current_generator.is_on:
-		var counters = get_tree().get_nodes_in_group("kill_counter")
-		var kills = 0
-		if counters.size() > 0:
-			kills = counters[0].zombies_killed
+		var points_counters = get_tree().get_nodes_in_group("points_counter")
+		var points = 0
+		if points_counters.size() > 0:
+			points = points_counters[0].points
 		if button:
-			button.disabled = kills < current_generator.COST_KILLS
-		# Update label text to show current kills
+			button.disabled = points < current_generator.COST_POINTS
+		# Update label text to show current points
 		if generator_label:
-			generator_label.text = "Turn On Generator\n(" + str(current_generator.COST_KILLS) + " kills)"
+			generator_label.text = "Turn On Generator\n(" + str(current_generator.COST_POINTS) + " points)"
 

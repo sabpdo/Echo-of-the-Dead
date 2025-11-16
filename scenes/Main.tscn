@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=25 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
 [ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://dayufmosq47ho" path="res://scenes/pause_menu.gd" id="13_3p2gp"]
 [ext_resource type="Script" uid="uid://58ljllc17sh7" path="res://scenes/settings_menu.gd" id="14_3p2gp"]
 [ext_resource type="Script" uid="uid://b6tbl40k7fnl7" path="res://scenes/kill_counter.gd" id="15_cvmbd"]
+[ext_resource type="Script" path="res://scenes/points_counter.gd" id="21_points"]
 [ext_resource type="Script" uid="uid://cbxbl8wdam3cx" path="res://scenes/home_icon.gd" id="16_home"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
@@ -666,6 +667,25 @@ offset_bottom = 46.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Kills: 0"
+
+[node name="PointsCounter" type="Control" parent="UILayer" groups=["points_counter"]]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 80.0
+offset_right = 88.0
+offset_bottom = 120.0
+script = ExtResource("21_points")
+
+[node name="Points" type="Label" parent="UILayer/PointsCounter"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 11.0
+offset_right = 104.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Points: 0"
 
 [connection signal="pressed" from="UILayer/PauseMenu/Panel/VBoxContainer/Resume" to="UILayer/PauseMenu" method="_on_resume_pressed"]
 [connection signal="pressed" from="UILayer/PauseMenu/Panel/VBoxContainer/Restart" to="UILayer/PauseMenu" method="_on_restart_pressed"]

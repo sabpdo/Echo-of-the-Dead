@@ -57,6 +57,8 @@ func _update_health_bar():
 			health_bar.color = Color(0.8, 0.2, 0.2, 1)  # Red
 
 func take_damage(amount: int):
+	var points_counters = get_tree().get_nodes_in_group("points_counter")
+	
 	current_health = max(0, current_health - amount)
 	health_changed.emit(current_health, max_health)
 	
@@ -64,8 +66,17 @@ func take_damage(amount: int):
 		var counters = get_tree().get_nodes_in_group("kill_counter")
 		if counters.size() > 0:
 			counters[0].zombies_killed += 1
+		
+		# Award 100 points for the kill (only if it dies)
+		if points_counters.size() > 0:
+			points_counters[0].add_points(100)
+		
 		zombie_died.emit()
 		queue_free()
+	else:
+		# Award 15 points for the hit (only if it doesn't die)
+		if points_counters.size() > 0:
+			points_counters[0].add_points(15)
 
 func _physics_process(delta):
 	if not player:

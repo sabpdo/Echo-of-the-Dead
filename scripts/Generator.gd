@@ -6,7 +6,7 @@ extends Node2D
 
 var is_on: bool = false
 const INTERACTION_RADIUS: float = 80.0
-const COST_KILLS: int = 10
+const COST_POINTS: int = 1000
 
 signal generator_toggled(on: bool)
 
@@ -44,13 +44,13 @@ func toggle():
 	if is_on:
 		return
 	
-	# Check if player has enough kills
-	var counters = get_tree().get_nodes_in_group("kill_counter")
-	if counters.size() > 0:
-		var kill_counter = counters[0]
-		if kill_counter.zombies_killed >= COST_KILLS:
-			# Deduct kills
-			kill_counter.zombies_killed -= COST_KILLS
+	# Check if player has enough points
+	var points_counters = get_tree().get_nodes_in_group("points_counter")
+	if points_counters.size() > 0:
+		var points_counter = points_counters[0]
+		if points_counter.points >= COST_POINTS:
+			# Deduct points (using negative amount to subtract)
+			points_counter.add_points(-COST_POINTS)
 			
 			# Turn on generator
 			set_on(true)
@@ -58,8 +58,8 @@ func toggle():
 			# Trigger win sequence
 			_trigger_win_sequence()
 		else:
-			# Not enough kills - could show a message here
-			print("Not enough kills! Need ", COST_KILLS, " kills.")
+			# Not enough points - could show a message here
+			print("Not enough points! Need ", COST_POINTS, " points.")
 
 func _trigger_win_sequence():
 	# Remove all fog
