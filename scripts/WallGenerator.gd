@@ -16,17 +16,90 @@ const GATE_SCENE = preload("res://scenes/Gate.tscn")
 const TORCH_SCENE = preload("res://scenes/Torch.tscn")
 const GENERATOR_SCENE = preload("res://scenes/Generator.tscn")
 
-# Random wall generation settings
-@export var random_wall_count: int = 30
-@export var min_wall_spacing: float = 100.0  # Minimum distance between walls
-@export var torch_spawn_chance: float = 0.08  # 8% chance to spawn torch on a wall
-@export var door_spawn_chance: float = 0.15  # 15% chance to spawn door instead of wall
-@export var gate_spawn_chance: float = 0.10  # 10% chance to spawn gate instead of wall
+# Hardcoded map layout
+# Edit this array to design your map!
+# Legend:
+#   'W' = Wall
+#   'D' = Door
+#   'G' = Gate
+#   'T' = Torch
+#   'P' = Generator
+#   'Z' = Zombie spawn point
+#   'S' = Player spawn point
+#   '.' = Empty space
+#   'B' = Boundary wall (automatically placed, but you can mark them here too)
+var map_layout = [
+	"................................................",
+	"............Z..........Z..........Z.............",
+	"............Z..........Z..........Z.............",
+	"................................................",
+	".......WWWWWGWWWWWWWWWWGWWWWWWWWWWGWWWWWW.......",
+	".......W..........W..........W..........W.......",
+	".......W..........W..........W..........W.......",
+	".......W..........W..........W..........W.......",
+	".......W....S.....D..........D....P.....W.......",
+	".......W..........W.......T..W..........W.......",
+	".......W.....T....W..........W..........W.......",
+	".......W..........W..........W......T...W.......",
+	".......WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW.......",
+	"................................................",
+	"................................................",
+	"................................................",
+	"................................................",
+	"................................................",
+	"................................................",
+	"................................................"
+]
+
+# Example with spawn points (uncomment and edit to use):
+# var map_layout = [
+# 	"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+# 	"B..............................................B",
+# 	"B..W...W...W...W...W...W...W...W...W...W....B",
+# 	"B..............................................B",
+# 	"B..W...Z..................................Z..W..B",
+# 	"B..............................................B",
+# 	"B..W.......................................W..B",
+# 	"B..............................................B",
+# 	"B..W.......................................W..B",
+# 	"B..............................................B",
+# 	"B..W.................S....................W..B",
+# 	"B..............................................B",
+# 	"B..W.......................................W..B",
+# 	"B..............................................B",
+# 	"B..W.......................................W..B",
+# 	"B..............................................B",
+# 	"B..W...Z..................................Z..W..B",
+# 	"B..............................................B",
+# 	"B..W...W...W...W...W...W...W...W...W...W....B",
+# 	"B..............................................B",
+# 	"B..............................................B",
+# 	"B..............................................B",
+# 	"B..............................................B",
+# 	"B..............................................B",
+# 	"B..............................................B",
+# 	"B..............................................B",
+# 	"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+# ]
+
+# Grid settings
+var grid_width: int = 0
+var grid_height: int = 0
+var cell_size: float = WALL_SIZE
+
+# Spawn point storage
+var zombie_spawn_points: Array[Vector2] = []
+var player_spawn_point: Vector2 = Vector2.ZERO
+var has_player_spawn: bool = false
 
 func _ready():
+	# Calculate grid dimensions
+	if map_layout.size() > 0:
+		grid_height = map_layout.size()
+		grid_width = map_layout[0].length()
+	
 	spawn_boundary_walls()
-	spawn_random_walls()
-	spawn_generator()
+	spawn_map_objects()
 
 func spawn_boundary_walls():
 	# Spawn walls along the four edges of the map
@@ -56,56 +129,74 @@ func spawn_boundary_walls():
 	for pos in wall_positions:
 		spawn_wall(pos)
 
-func spawn_random_walls():
-	# Spawn random walls inside the map (with some margin from boundaries)
-	var margin = WALL_SIZE * 2
-	var spawn_area_left = MAP_LEFT + margin
-	var spawn_area_right = MAP_RIGHT - margin - WALL_SIZE
-	var spawn_area_top = MAP_TOP + margin
-	var spawn_area_bottom = MAP_BOTTOM - margin - WALL_SIZE
+func spawn_map_objects():
+	# Spawn objects based on the hardcoded map layout
+	if map_layout.size() == 0:
+		return
 	
-	var spawned_positions = []
-	var attempts = 0
-	var max_attempts = random_wall_count * 10
+	# Calculate the center of the map
+	var map_center_x = (MAP_LEFT + MAP_RIGHT) / 2.0
+	var map_center_y = (MAP_TOP + MAP_BOTTOM) / 2.0
 	
-	while spawned_positions.size() < random_wall_count and attempts < max_attempts:
-		attempts += 1
+	# Calculate grid cell size to fit the map
+	var available_width = MAP_WIDTH
+	var available_height = MAP_HEIGHT
+	var cell_width = available_width / grid_width
+	var cell_height = available_height / grid_height
+	cell_size = min(cell_width, cell_height)
+	
+	# Calculate starting position (top-left of grid)
+	var grid_start_x = map_center_x - (grid_width * cell_size) / 2.0
+	var grid_start_y = map_center_y - (grid_height * cell_size) / 2.0
+	
+	# Iterate through the map layout
+	for row in range(grid_height):
+		if row >= map_layout.size():
+			continue
 		
-		# Generate random position
-		var x = randf_range(spawn_area_left, spawn_area_right)
-		var y = randf_range(spawn_area_top, spawn_area_bottom)
-		
-		# Snap to grid for cleaner placement
-		x = floor(x / WALL_SIZE) * WALL_SIZE
-		y = floor(y / WALL_SIZE) * WALL_SIZE
-		var pos = Vector2(x, y)
-		
-		# Check if position is too close to other walls
-		var too_close = false
-		for existing_pos in spawned_positions:
-			if pos.distance_to(existing_pos) < min_wall_spacing:
-				too_close = true
-				break
-		
-		if not too_close:
-			spawned_positions.append(pos)
-			# Randomly decide what type of wall to spawn
-			var rand = randf()
-			if rand < door_spawn_chance:
-				spawn_door(pos)
-			elif rand < door_spawn_chance + gate_spawn_chance:
-				spawn_gate(pos)
-			else:
-				spawn_wall(pos)
+		var row_string = map_layout[row]
+		for col in range(min(row_string.length(), grid_width)):
+			var cell_char = row_string[col]
+			
+			# Calculate world position for this cell
+			var world_x = grid_start_x + col * cell_size + cell_size / 2.0
+			var world_y = grid_start_y + row * cell_size + cell_size / 2.0
+			var world_pos = Vector2(world_x, world_y)
+			
+			# Spawn object based on character
+			match cell_char:
+				'W':
+					spawn_wall(world_pos)
+				'D':
+					spawn_door(world_pos)
+				'G':
+					spawn_gate(world_pos)
+				'T':
+					spawn_torch(world_pos)
+				'P':
+					spawn_generator_at(world_pos)
+				'Z':
+					# Store zombie spawn point
+					zombie_spawn_points.append(world_pos)
+				'S':
+					# Store player spawn point
+					player_spawn_point = world_pos
+					has_player_spawn = true
+					set_player_spawn(world_pos)
+				'B':
+					# Boundary walls are handled separately, but you can mark them here too
+					pass
+				'.':
+					# Empty space, do nothing
+					pass
+	
+	# Pass zombie spawn points to ZombieSpawner if it exists
+	pass_zombie_spawn_points_to_spawner()
 
 func spawn_wall(position: Vector2):
 	var wall = WALL_SCENE.instantiate()
 	wall.position = position
 	add_child(wall)
-	
-	# Randomly spawn torches on some walls
-	if randf() < torch_spawn_chance:
-		spawn_torch_on_wall(position)
 
 func spawn_door(position: Vector2):
 	var door = DOOR_SCENE.instantiate()
@@ -117,28 +208,40 @@ func spawn_gate(position: Vector2):
 	gate.position = position
 	add_child(gate)
 
-func spawn_torch_on_wall(wall_position: Vector2):
-	# Spawn torch on top of the wall, offset slightly
+func spawn_torch(position: Vector2):
 	var torch = TORCH_SCENE.instantiate()
-	torch.position = wall_position + Vector2(0, -WALL_SIZE / 2 - 10)
+	torch.position = position
 	add_child(torch)
 
-func spawn_generator():
-	# Spawn exactly one generator at a random position
-	var margin = WALL_SIZE * 3
-	var spawn_area_left = MAP_LEFT + margin
-	var spawn_area_right = MAP_RIGHT - margin
-	var spawn_area_top = MAP_TOP + margin
-	var spawn_area_bottom = MAP_BOTTOM - margin
-	
-	# Generate random position
-	var x = randf_range(spawn_area_left, spawn_area_right)
-	var y = randf_range(spawn_area_top, spawn_area_bottom)
-	
-	# Snap to grid for cleaner placement
-	x = floor(x / WALL_SIZE) * WALL_SIZE
-	y = floor(y / WALL_SIZE) * WALL_SIZE
-	
+func spawn_generator_at(position: Vector2):
 	var generator = GENERATOR_SCENE.instantiate()
-	generator.position = Vector2(x, y)
+	generator.position = position
 	add_child(generator)
+
+func set_player_spawn(position: Vector2):
+	# Set the player's position if player exists
+	var player = get_node_or_null("/root/Main/Player")
+	if player:
+		player.global_position = position
+		print("Player spawn set to: ", position)
+	else:
+		# If player doesn't exist yet, try again next frame
+		await get_tree().process_frame
+		player = get_node_or_null("/root/Main/Player")
+		if player:
+			player.global_position = position
+			print("Player spawn set to: ", position)
+
+func pass_zombie_spawn_points_to_spawner():
+	# Pass zombie spawn points to ZombieSpawner if it exists
+	# Wait a frame to ensure ZombieSpawner is ready
+	await get_tree().process_frame
+	var zombie_spawner = get_node_or_null("/root/Main/ZombieSpawner")
+	if zombie_spawner and zombie_spawn_points.size() > 0:
+		# Check if ZombieSpawner has a method to set spawn points
+		if zombie_spawner.has_method("set_spawn_points"):
+			zombie_spawner.set_spawn_points(zombie_spawn_points)
+		else:
+			# Directly set the spawn_points array if it exists
+			zombie_spawner.spawn_points = zombie_spawn_points
+		print("Set ", zombie_spawn_points.size(), " zombie spawn points from map layout")

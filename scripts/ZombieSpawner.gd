@@ -21,8 +21,13 @@ func _ready():
 	# Find the player
 	player = get_node("/root/Main/Player")
 	
-	# Generate random spawn points
-	_generate_spawn_points()
+	# Check if WallGenerator has already set spawn points
+	# If not, generate random spawn points
+	if spawn_points.is_empty():
+		# Wait a frame to see if WallGenerator sets spawn points
+		await get_tree().process_frame
+		if spawn_points.is_empty():
+			_generate_spawn_points()
 	
 	# Start spawning immediately based on difficulty
 	spawn_timer = GameSettings.get_zombie_spawn_interval()
@@ -148,3 +153,8 @@ func _on_zombie_died(zombie: Node2D):
 	var index = active_zombies.find(zombie)
 	if index >= 0:
 		active_zombies.remove_at(index)
+
+func set_spawn_points(points: Array[Vector2]):
+	# Method to set spawn points from WallGenerator
+	spawn_points = points.duplicate()
+	print("ZombieSpawner: Using ", spawn_points.size(), " spawn points from map layout")
