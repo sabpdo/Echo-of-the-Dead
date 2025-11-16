@@ -111,13 +111,15 @@ func _physics_process(delta):
 		nearby_generator.toggle()
 		generator_interact_timer = GENERATOR_INTERACT_COOLDOWN
 	# Interact with door (T key) - prioritize door over torch
-	elif Input.is_key_pressed(KEY_T) and nearby_door and door_interact_timer <= 0.0:
+	elif Input.is_key_pressed(KEY_T) and nearby_door:
 		if not nearby_door.is_unlocked:  # Only unlock if not already unlocked
 			nearby_door.unlock()
-			door_interact_timer = DOOR_INTERACT_COOLDOWN
+		# Reset timer to allow immediate interaction with other doors
+		door_interact_timer = DOOR_INTERACT_COOLDOWN
 	# Interact with torch (T key) - only if no generator or door nearby
-	elif Input.is_key_pressed(KEY_T) and nearby_torch and torch_interact_timer <= 0.0:
+	elif Input.is_key_pressed(KEY_T) and nearby_torch:
 		nearby_torch.toggle()
+		# Reset timer to allow immediate interaction with other torches
 		torch_interact_timer = TORCH_INTERACT_COOLDOWN
 		
 func perform_attack():	

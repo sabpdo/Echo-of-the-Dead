@@ -41,22 +41,29 @@ func _update_visibility():
 		if button:
 			button.visible = has_door and not (player.nearby_door.is_unlocked if player.nearby_door else false)
 		
+		# Always update current_door to match player.nearby_door
 		# Connect to door signals when near a door
-		if has_door and player.nearby_door != current_door:
-			# Disconnect from previous door if any
-			if current_door and current_door.has_signal("door_unlocked"):
-				current_door.door_unlocked.disconnect(_on_door_unlocked)
+		if has_door:
+			# Disconnect from previous door if it's different
+			if current_door and current_door != player.nearby_door:
+				if current_door.has_signal("door_unlocked"):
+					current_door.door_unlocked.disconnect(_on_door_unlocked)
 			
-			# Connect to new door
-			current_door = player.nearby_door
-			if current_door and current_door.has_signal("door_unlocked"):
-				current_door.door_unlocked.connect(_on_door_unlocked)
+			# Connect to new door if it's different
+			if player.nearby_door != current_door:
+				current_door = player.nearby_door
+				if current_door and current_door.has_signal("door_unlocked"):
+					# Make sure we're not already connected
+					if current_door.door_unlocked.is_connected(_on_door_unlocked):
+						current_door.door_unlocked.disconnect(_on_door_unlocked)
+					current_door.door_unlocked.connect(_on_door_unlocked)
 				# Update label immediately with current state
 				_update_label_text()
 		elif not has_door and current_door:
 			# Disconnect when leaving door
-			if current_door and current_door.has_signal("door_unlocked"):
-				current_door.door_unlocked.disconnect(_on_door_unlocked)
+			if current_door.has_signal("door_unlocked"):
+				if current_door.door_unlocked.is_connected(_on_door_unlocked):
+					current_door.door_unlocked.disconnect(_on_door_unlocked)
 			current_door = null
 
 func _update_label_text():

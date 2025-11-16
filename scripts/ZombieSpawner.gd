@@ -135,6 +135,13 @@ func _spawn_zombie():
 	var zombie = zombie_scene.instantiate()
 	zombie.global_position = spawn_pos
 	
+	# Set zombie to collision layer 2 so they can pass through gates (gates are on layer 1)
+	zombie.collision_layer = 2
+	# Set collision mask to layer 2 only - this allows zombies to collide with walls (which are on layers 1+2, including layer 2)
+	# but NOT collide with gates (which are only on layer 1)
+	# Layer 1 = 1, Layer 2 = 2, Layer 3 = 4
+	zombie.collision_mask = 2  # Layer 2 only - collide with walls (includes layer 2), pass through gates (layer 1 only)
+	
 	# Apply difficulty modifiers
 	zombie.speed_multiplier = GameSettings.get_zombie_speed_multiplier()
 	zombie.health_multiplier = GameSettings.get_zombie_health_multiplier()

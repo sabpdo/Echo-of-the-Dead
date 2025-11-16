@@ -33,7 +33,7 @@ var map_layout = [
 	"............Z..........Z..........Z.............",
 	"............Z..........Z..........Z.............",
 	"................................................",
-	".......WWWWWGWWWWWWWWWWGWWWWWWWWWWGWWWWWW.......",
+	".......WWWWGGGWWWWWWWWGGGWWWWWWWWGGGWWWWW.......",
 	".......W..........W..........W..........W.......",
 	".......W..........W..........W..........W.......",
 	".......W..........W..........W..........W.......",
@@ -51,36 +51,7 @@ var map_layout = [
 	"................................................"
 ]
 
-# Example with spawn points (uncomment and edit to use):
-# var map_layout = [
-# 	"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-# 	"B..............................................B",
-# 	"B..W...W...W...W...W...W...W...W...W...W....B",
-# 	"B..............................................B",
-# 	"B..W...Z..................................Z..W..B",
-# 	"B..............................................B",
-# 	"B..W.......................................W..B",
-# 	"B..............................................B",
-# 	"B..W.......................................W..B",
-# 	"B..............................................B",
-# 	"B..W.................S....................W..B",
-# 	"B..............................................B",
-# 	"B..W.......................................W..B",
-# 	"B..............................................B",
-# 	"B..W.......................................W..B",
-# 	"B..............................................B",
-# 	"B..W...Z..................................Z..W..B",
-# 	"B..............................................B",
-# 	"B..W...W...W...W...W...W...W...W...W...W....B",
-# 	"B..............................................B",
-# 	"B..............................................B",
-# 	"B..............................................B",
-# 	"B..............................................B",
-# 	"B..............................................B",
-# 	"B..............................................B",
-# 	"B..............................................B",
-# 	"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
-# ]
+
 
 # Grid settings
 var grid_width: int = 0
@@ -195,27 +166,32 @@ func spawn_map_objects():
 
 func spawn_wall(position: Vector2):
 	var wall = WALL_SCENE.instantiate()
-	wall.position = position
+	wall.global_position = position
+	# Set wall to collision layers 1 and 2 (blocks both players and zombies)
+	# Layer 1 = 1, Layer 2 = 2, so 1 + 2 = 3
+	wall.collision_layer = 3  # Binary: 11 = layer 1 (player) + layer 2 (zombie)
 	add_child(wall)
 
 func spawn_door(position: Vector2):
 	var door = DOOR_SCENE.instantiate()
-	door.position = position
+	door.global_position = position
+	# Set door to collision layers 1 and 2 (blocks both players and zombies when locked)
+	door.collision_layer = 3  # Binary: 11 = layer 1 (player) + layer 2 (zombie)
 	add_child(door)
 
 func spawn_gate(position: Vector2):
 	var gate = GATE_SCENE.instantiate()
-	gate.position = position
+	gate.global_position = position
 	add_child(gate)
 
 func spawn_torch(position: Vector2):
 	var torch = TORCH_SCENE.instantiate()
-	torch.position = position
+	torch.global_position = position
 	add_child(torch)
 
 func spawn_generator_at(position: Vector2):
 	var generator = GENERATOR_SCENE.instantiate()
-	generator.position = position
+	generator.global_position = position
 	add_child(generator)
 
 func set_player_spawn(position: Vector2):
@@ -231,6 +207,8 @@ func set_player_spawn(position: Vector2):
 		if player:
 			player.global_position = position
 			print("Player spawn set to: ", position)
+		else:
+			pass
 
 func pass_zombie_spawn_points_to_spawner():
 	# Pass zombie spawn points to ZombieSpawner if it exists

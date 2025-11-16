@@ -40,22 +40,29 @@ func _update_visibility():
 		if button:
 			button.visible = has_torch
 		
+		# Always update current_torch to match player.nearby_torch
 		# Connect to torch signals when near a torch
-		if has_torch and player.nearby_torch != current_torch:
-			# Disconnect from previous torch if any
-			if current_torch and current_torch.has_signal("torch_toggled"):
-				current_torch.torch_toggled.disconnect(_on_torch_toggled)
+		if has_torch:
+			# Disconnect from previous torch if it's different
+			if current_torch and current_torch != player.nearby_torch:
+				if current_torch.has_signal("torch_toggled"):
+					current_torch.torch_toggled.disconnect(_on_torch_toggled)
 			
-			# Connect to new torch
-			current_torch = player.nearby_torch
-			if current_torch and current_torch.has_signal("torch_toggled"):
-				current_torch.torch_toggled.connect(_on_torch_toggled)
+			# Connect to new torch if it's different
+			if player.nearby_torch != current_torch:
+				current_torch = player.nearby_torch
+				if current_torch and current_torch.has_signal("torch_toggled"):
+					# Make sure we're not already connected
+					if current_torch.torch_toggled.is_connected(_on_torch_toggled):
+						current_torch.torch_toggled.disconnect(_on_torch_toggled)
+					current_torch.torch_toggled.connect(_on_torch_toggled)
 				# Update label immediately with current state
 				_update_label_text()
 		elif not has_torch and current_torch:
 			# Disconnect when leaving torch
 			if current_torch.has_signal("torch_toggled"):
-				current_torch.torch_toggled.disconnect(_on_torch_toggled)
+				if current_torch.torch_toggled.is_connected(_on_torch_toggled):
+					current_torch.torch_toggled.disconnect(_on_torch_toggled)
 			current_torch = null
 
 func _update_label_text():

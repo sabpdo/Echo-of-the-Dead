@@ -17,6 +17,11 @@ var time_left := DURATION
 var fog_controller: Node = null
 
 func _ready():
+	# Set collision mask to detect zombies (layer 2) and walls (layers 1+2 = 3)
+	# Layer 1 = 1, Layer 2 = 2, so 1 + 2 = 3 detects both layers
+	# This allows fireballs to detect zombies and walls, but we'll ignore gates in code
+	collision_mask = 3  # Detect layers 1 and 2 (zombies on layer 2, walls on layers 1+2)
+	
 	# Wait a frame for direction to be set
 	await get_tree().process_frame
 	
@@ -50,6 +55,10 @@ func _physics_process(delta):
 func _on_attack_effect_body_entered(body):
 	# don't hit player
 	if body.name == "Player":
+		return
+	
+	# ignore gates - fireballs pass through them
+	if body.is_in_group("gates"):
 		return
 
 	# if it hits a zombie, damage

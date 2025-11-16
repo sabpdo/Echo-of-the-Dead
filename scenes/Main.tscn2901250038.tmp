@@ -1,0 +1,751 @@
+[gd_scene load_steps=26 format=3 uid="uid://c3laxr6n4o5q6"]
+
+[ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
+[ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
+[ext_resource type="Script" uid="uid://dvhgcq5hl8sbi" path="res://scripts/FogController.gd" id="3_1"]
+[ext_resource type="Shader" uid="uid://bmvmgq1w8g8qy" path="res://fog_shader.gdshader" id="4_1"]
+[ext_resource type="Script" uid="uid://cw65bmxq2l4pk" path="res://scripts/EcholocationButton.gd" id="5_1"]
+[ext_resource type="Script" uid="uid://byf3qh6kmqlhu" path="res://scripts/PlayerHealthBar.gd" id="6_1"]
+[ext_resource type="Script" uid="uid://bcffap826g73g" path="res://scripts/ZombieSpawner.gd" id="7_1"]
+[ext_resource type="Script" uid="uid://ds5bxs7u70rap" path="res://scripts/GameOverOverlay.gd" id="8_1"]
+[ext_resource type="Texture2D" uid="uid://brecqfrka57ed" path="res://assets/gear.png" id="9_lhr70"]
+[ext_resource type="Script" uid="uid://bnm5k858u4025" path="res://scenes/settings_icon.gd" id="9_qmy6f"]
+[ext_resource type="Texture2D" uid="uid://q137iu1br2fq" path="res://assets/pause.png" id="10_wp0k4"]
+[ext_resource type="Script" uid="uid://cmevoj7pkfa7m" path="res://scenes/pause_icon.gd" id="11_mwfav"]
+[ext_resource type="Script" uid="uid://dayufmosq47ho" path="res://scenes/pause_menu.gd" id="13_3p2gp"]
+[ext_resource type="Script" uid="uid://58ljllc17sh7" path="res://scenes/settings_menu.gd" id="14_3p2gp"]
+[ext_resource type="Script" uid="uid://b6tbl40k7fnl7" path="res://scenes/kill_counter.gd" id="15_cvmbd"]
+[ext_resource type="Script" uid="uid://cbxbl8wdam3cx" path="res://scenes/home_icon.gd" id="16_home"]
+[ext_resource type="Script" uid="uid://dss26kjsv8fan" path="res://scripts/FireballButton.gd" id="17_fireball"]
+[ext_resource type="Script" uid="uid://sban3vieqfvm" path="res://scripts/LightTorchButton.gd" id="18_torch"]
+[ext_resource type="Script" uid="uid://de0k5flb5qr0l" path="res://scripts/GeneratorButton.gd" id="19_generator"]
+[ext_resource type="Script" uid="uid://bk5k32spqfh66" path="res://scripts/DoorButton.gd" id="20_door"]
+[ext_resource type="Script" uid="uid://bpwb1pu7q2lst" path="res://scripts/WinOverlay.gd" id="20_win"]
+[ext_resource type="Script" uid="uid://cbpcvws5np2be" path="res://scenes/points_counter.gd" id="21_points"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
+shader = ExtResource("4_1")
+shader_parameter/player_position = Vector2(0, 0)
+shader_parameter/viewport_size = Vector2(1152, 648)
+shader_parameter/view_radius = 150.0
+shader_parameter/soft_edge = 50.0
+shader_parameter/fog_color = Color(0, 0, 0, 0.85)
+shader_parameter/fog_opacity = 0.85
+shader_parameter/light_count = 0
+shader_parameter/light_positions = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/light_radii = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/light_directions = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/light_aspects = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(1, 0.8, 0, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.6, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.2, 0.2, 0.2, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="Main" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+offset_left = -1085.0
+offset_top = -641.0
+offset_right = 1157.0
+offset_bottom = 639.0
+color = Color(0.1, 0.15, 0.2, 1)
+
+[node name="WallGenerator" type="Node2D" parent="."]
+script = ExtResource("2_1")
+
+[node name="ZombieSpawner" type="Node2D" parent="."]
+script = ExtResource("7_1")
+
+[node name="Player" parent="." instance=ExtResource("1_2")]
+position = Vector2(335, 150)
+
+[node name="FogLayer" type="CanvasLayer" parent="."]
+
+[node name="FogController" type="Control" parent="FogLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_1")
+
+[node name="FogRect" type="ColorRect" parent="FogLayer/FogController"]
+material = SubResource("ShaderMaterial_1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerHealthBarContainer" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 170.0
+offset_bottom = 60.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("6_1")
+
+[node name="HeartsContainer" type="HBoxContainer" parent="UILayer/PlayerHealthBarContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+
+[node name="LightTorchButtonContainer" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_top = -90.0
+offset_right = -45.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("18_torch")
+
+[node name="LightTorchButton" type="Button" parent="UILayer/LightTorchButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/LightTorchButtonContainer/LightTorchButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TorchLabel" type="Label" parent="UILayer/LightTorchButtonContainer/LightTorchButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "Light Torch"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/LightTorchButtonContainer/LightTorchButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "T"
+horizontal_alignment = 1
+
+[node name="GeneratorButtonContainer" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_top = -90.0
+offset_right = -45.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("19_generator")
+
+[node name="GeneratorButton" type="Button" parent="UILayer/GeneratorButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/GeneratorButtonContainer/GeneratorButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GeneratorLabel" type="Label" parent="UILayer/GeneratorButtonContainer/GeneratorButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "Turn On Generator"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/GeneratorButtonContainer/GeneratorButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "T"
+horizontal_alignment = 1
+
+[node name="DoorButtonContainer" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_top = -90.0
+offset_right = -45.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("20_door")
+
+[node name="DoorButton" type="Button" parent="UILayer/DoorButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/DoorButtonContainer/DoorButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DoorLabel" type="Label" parent="UILayer/DoorButtonContainer/DoorButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "Unlock Door"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/DoorButtonContainer/DoorButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "T"
+horizontal_alignment = 1
+
+[node name="EcholocationButtonContainer" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.0
+offset_top = -90.0
+offset_right = 35.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("5_1")
+
+[node name="EcholocationButton" type="Button" parent="UILayer/EcholocationButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/EcholocationButtonContainer/EcholocationButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -20.0
+offset_right = 25.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EcholocationLabel" type="Label" parent="UILayer/EcholocationButtonContainer/EcholocationButton/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Echolocation"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/EcholocationButtonContainer/EcholocationButton/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "1"
+horizontal_alignment = 1
+
+[node name="CooldownOverlay" type="ColorRect" parent="UILayer/EcholocationButtonContainer/EcholocationButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.3, 0.3, 0.3, 0.7)
+
+[node name="FireballButtonContainer" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 45.0
+offset_top = -90.0
+offset_right = 115.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("17_fireball")
+
+[node name="FireballButton" type="Button" parent="UILayer/FireballButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/FireballButtonContainer/FireballButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -20.0
+offset_right = 25.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FireballLabel" type="Label" parent="UILayer/FireballButtonContainer/FireballButton/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Fireball"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/FireballButtonContainer/FireballButton/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "E"
+horizontal_alignment = 1
+
+[node name="CooldownOverlay" type="ColorRect" parent="UILayer/FireballButtonContainer/FireballButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.3, 0.3, 0.3, 0.7)
+
+[node name="GameOverOverlay" type="Control" parent="UILayer"]
+process_mode = 4
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_1")
+
+[node name="BackgroundOverlay" type="ColorRect" parent="UILayer/GameOverOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/GameOverOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -120.0
+offset_right = 200.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="GameOverLabel" type="Label" parent="UILayer/GameOverOverlay/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 64
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="UILayer/GameOverOverlay/VBoxContainer"]
+process_mode = 4
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+text = "Play Again"
+
+[node name="ReturnHomeButton" type="Button" parent="UILayer/GameOverOverlay/VBoxContainer"]
+process_mode = 4
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+text = "Return to Home"
+
+[node name="WinOverlay" type="Control" parent="UILayer"]
+process_mode = 4
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("20_win")
+
+[node name="BackgroundOverlay" type="ColorRect" parent="UILayer/WinOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/WinOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -120.0
+offset_right = 200.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="WinLabel" type="Label" parent="UILayer/WinOverlay/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 64
+text = "YOU WIN!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="UILayer/WinOverlay/VBoxContainer"]
+process_mode = 4
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+text = "Play Again"
+
+[node name="ReturnHomeButton" type="Button" parent="UILayer/WinOverlay/VBoxContainer"]
+process_mode = 4
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+text = "Return to Home"
+
+[node name="SettingsIcon" type="Button" parent="UILayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = 80.0
+grow_horizontal = 0
+script = ExtResource("9_qmy6f")
+
+[node name="TextureRect" type="TextureRect" parent="UILayer/SettingsIcon"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 64.0
+offset_bottom = 65.0
+texture = ExtResource("9_lhr70")
+
+[node name="HomeIcon" type="Button" parent="UILayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -240.0
+offset_top = 7.0
+offset_right = -168.0
+offset_bottom = 80.0
+grow_horizontal = 0
+script = ExtResource("16_home")
+
+[node name="HouseIcon" type="Control" parent="UILayer/HomeIcon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Roof" type="Polygon2D" parent="UILayer/HomeIcon/HouseIcon"]
+color = Color(0.6, 0.3, 0.2, 1)
+polygon = PackedVector2Array(18, 0, 36, 17, 0, 17)
+
+[node name="HouseBody" type="ColorRect" parent="UILayer/HomeIcon/HouseIcon"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 44.0
+offset_bottom = 58.0
+color = Color(0.4, 0.4, 0.5, 1)
+
+[node name="Door" type="ColorRect" parent="UILayer/HomeIcon/HouseIcon"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 40.0
+offset_right = 34.0
+offset_bottom = 58.0
+color = Color(0.3, 0.2, 0.1, 1)
+
+[node name="PauseIcon" type="Button" parent="UILayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 8.0
+offset_right = -88.0
+offset_bottom = 80.0
+grow_horizontal = 0
+script = ExtResource("11_mwfav")
+
+[node name="TextureRect" type="TextureRect" parent="UILayer/PauseIcon"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 120.0
+offset_bottom = 124.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_wp0k4")
+
+[node name="PauseMenu" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_3p2gp")
+
+[node name="Panel" type="Panel" parent="UILayer/PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/PauseMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="UILayer/PauseMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 65
+text = "PAUSE"
+
+[node name="Resume" type="Button" parent="UILayer/PauseMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "RESUME"
+
+[node name="Restart" type="Button" parent="UILayer/PauseMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "RESTART"
+
+[node name="SettingsMenu" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_3p2gp")
+
+[node name="Panel" type="Panel" parent="UILayer/SettingsMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/SettingsMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 65
+text = "SETTINGS"
+
+[node name="Resume" type="Button" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "RESUME"
+
+[node name="Restart" type="Button" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "RESTART"
+
+[node name="HomePage" type="Button" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "HOME PAGE"
+
+[node name="KillCounter" type="Control" parent="UILayer" groups=["kill_counter"]]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 88.0
+offset_bottom = 80.0
+script = ExtResource("15_cvmbd")
+
+[node name="Kills" type="Label" parent="UILayer/KillCounter"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 11.0
+offset_right = 104.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Kills: 0"
+
+[node name="PointsCounter" type="Control" parent="UILayer" groups=["points_counter"]]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 80.0
+offset_right = 88.0
+offset_bottom = 120.0
+script = ExtResource("21_points")
+
+[node name="Points" type="Label" parent="UILayer/PointsCounter"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 11.0
+offset_right = 104.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Points: 0"
+
+[connection signal="pressed" from="UILayer/PauseMenu/Panel/VBoxContainer/Resume" to="UILayer/PauseMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="UILayer/PauseMenu/Panel/VBoxContainer/Restart" to="UILayer/PauseMenu" method="_on_restart_pressed"]
+[connection signal="pressed" from="UILayer/SettingsMenu/Panel/VBoxContainer/Resume" to="UILayer/SettingsMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="UILayer/SettingsMenu/Panel/VBoxContainer/Restart" to="UILayer/SettingsMenu" method="_on_restart_pressed"]
+[connection signal="pressed" from="UILayer/SettingsMenu/Panel/VBoxContainer/HomePage" to="UILayer/SettingsMenu" method="_on_home_page_pressed"]
