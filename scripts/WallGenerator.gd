@@ -11,6 +11,8 @@ const MAP_HEIGHT = MAP_BOTTOM - MAP_TOP
 # Wall properties
 const WALL_SIZE = 50.0
 const WALL_SCENE = preload("res://scenes/Wall.tscn")
+const DOOR_SCENE = preload("res://scenes/Door.tscn")
+const GATE_SCENE = preload("res://scenes/Gate.tscn")
 const TORCH_SCENE = preload("res://scenes/Torch.tscn")
 const GENERATOR_SCENE = preload("res://scenes/Generator.tscn")
 
@@ -18,6 +20,8 @@ const GENERATOR_SCENE = preload("res://scenes/Generator.tscn")
 @export var random_wall_count: int = 30
 @export var min_wall_spacing: float = 100.0  # Minimum distance between walls
 @export var torch_spawn_chance: float = 0.08  # 8% chance to spawn torch on a wall
+@export var door_spawn_chance: float = 0.15  # 15% chance to spawn door instead of wall
+@export var gate_spawn_chance: float = 0.10  # 10% chance to spawn gate instead of wall
 
 func _ready():
 	spawn_boundary_walls()
@@ -85,7 +89,14 @@ func spawn_random_walls():
 		
 		if not too_close:
 			spawned_positions.append(pos)
-			spawn_wall(pos)
+			# Randomly decide what type of wall to spawn
+			var rand = randf()
+			if rand < door_spawn_chance:
+				spawn_door(pos)
+			elif rand < door_spawn_chance + gate_spawn_chance:
+				spawn_gate(pos)
+			else:
+				spawn_wall(pos)
 
 func spawn_wall(position: Vector2):
 	var wall = WALL_SCENE.instantiate()
@@ -95,6 +106,16 @@ func spawn_wall(position: Vector2):
 	# Randomly spawn torches on some walls
 	if randf() < torch_spawn_chance:
 		spawn_torch_on_wall(position)
+
+func spawn_door(position: Vector2):
+	var door = DOOR_SCENE.instantiate()
+	door.position = position
+	add_child(door)
+
+func spawn_gate(position: Vector2):
+	var gate = GATE_SCENE.instantiate()
+	gate.position = position
+	add_child(gate)
 
 func spawn_torch_on_wall(wall_position: Vector2):
 	# Spawn torch on top of the wall, offset slightly

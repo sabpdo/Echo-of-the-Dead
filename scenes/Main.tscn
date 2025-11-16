@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=26 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
 [ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/FireballButton.gd" id="17_fireball"]
 [ext_resource type="Script" path="res://scripts/LightTorchButton.gd" id="18_torch"]
 [ext_resource type="Script" path="res://scripts/GeneratorButton.gd" id="19_generator"]
+[ext_resource type="Script" path="res://scripts/DoorButton.gd" id="20_door"]
 [ext_resource type="Script" uid="uid://byf3qh6kmqlhu" path="res://scripts/PlayerHealthBar.gd" id="6_1"]
 [ext_resource type="Script" uid="uid://bcffap826g73g" path="res://scripts/ZombieSpawner.gd" id="7_1"]
 [ext_resource type="Script" uid="uid://ds5bxs7u70rap" path="res://scripts/GameOverOverlay.gd" id="8_1"]
@@ -179,6 +180,62 @@ text = "Turn On Generator"
 horizontal_alignment = 1
 
 [node name="NumberLabel" type="Label" parent="UILayer/GeneratorButtonContainer/GeneratorButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "T"
+horizontal_alignment = 1
+
+[node name="DoorButtonContainer" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_top = -90.0
+offset_right = -45.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("20_door")
+
+[node name="DoorButton" type="Button" parent="UILayer/DoorButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/DoorButtonContainer/DoorButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DoorLabel" type="Label" parent="UILayer/DoorButtonContainer/DoorButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "Unlock Door"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/DoorButtonContainer/DoorButton/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_font_sizes/font_size = 10

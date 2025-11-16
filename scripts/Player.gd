@@ -20,6 +20,12 @@ var previous_nearby_generator: Node = null
 var generator_interact_timer: float = 0.0
 const GENERATOR_INTERACT_COOLDOWN: float = 0.3
 
+# Door interaction
+var nearby_door: Node = null
+var previous_nearby_door: Node = null
+var door_interact_timer: float = 0.0
+const DOOR_INTERACT_COOLDOWN: float = 0.3
+
 
 # Health system - Heart based (5 hearts = 10 half-hearts)
 const MAX_HEARTS = 5
@@ -32,6 +38,7 @@ signal player_died
 signal attack_performed
 signal torch_proximity_changed(has_torch: bool)
 signal generator_proximity_changed(has_generator: bool)
+signal door_proximity_changed(has_door: bool)
 
 func _ready():
 	current_half_hearts = max_half_hearts
@@ -63,6 +70,11 @@ func _physics_process(delta):
 		generator_proximity_changed.emit(nearby_generator != null)
 		previous_nearby_generator = nearby_generator
 	
+	# Check if door proximity changed
+	if nearby_door != previous_nearby_door:
+		door_proximity_changed.emit(nearby_door != null)
+		previous_nearby_door = nearby_door
+	
 	# Get input direction
 	var input_dir = Vector2.ZERO
 	if Input.is_action_pressed("ui_right") or Input.is_key_pressed(KEY_D):
@@ -93,12 +105,17 @@ func _physics_process(delta):
 		perform_attack()
 		attack_timer = ATTACK_COOLDOWN
 	
-	# Interact with generator (T key) - prioritize generator over torch
+	# Interact with generator (T key) - prioritize generator over door and torch
 	generator_interact_timer -= delta
 	if Input.is_key_pressed(KEY_T) and nearby_generator and generator_interact_timer <= 0.0:
 		nearby_generator.toggle()
 		generator_interact_timer = GENERATOR_INTERACT_COOLDOWN
-	# Interact with torch (T key) - only if no generator nearby
+	# Interact with door (T key) - prioritize door over torch
+	elif Input.is_key_pressed(KEY_T) and nearby_door and door_interact_timer <= 0.0:
+		if not nearby_door.is_unlocked:  # Only unlock if not already unlocked
+			nearby_door.unlock()
+			door_interact_timer = DOOR_INTERACT_COOLDOWN
+	# Interact with torch (T key) - only if no generator or door nearby
 	elif Input.is_key_pressed(KEY_T) and nearby_torch and torch_interact_timer <= 0.0:
 		nearby_torch.toggle()
 		torch_interact_timer = TORCH_INTERACT_COOLDOWN
