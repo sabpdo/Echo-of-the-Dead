@@ -33,6 +33,11 @@ const HALF_HEARTS_PER_HEART = 2
 var max_half_hearts: int = MAX_HEARTS * HALF_HEARTS_PER_HEART
 var current_half_hearts: int = MAX_HEARTS * HALF_HEARTS_PER_HEART
 
+# Health regeneration
+const HEALTH_REGEN_INTERVAL = 10.0  # Regenerate every 10 seconds
+const HEALTH_REGEN_AMOUNT = 0.5  # Half a heart per regen
+var health_regen_timer: float = 0.0
+
 signal health_changed(current_half_hearts, max_half_hearts)
 signal player_died
 signal attack_performed
@@ -43,6 +48,7 @@ signal door_proximity_changed(has_door: bool)
 func _ready():
 	current_half_hearts = max_half_hearts
 	health_changed.emit(current_half_hearts, max_half_hearts)
+	health_regen_timer = HEALTH_REGEN_INTERVAL  # Start with full timer
 
 func take_damage(amount: float = 0.5):
 	# Each damage is half a heart (0.5 hearts)
@@ -60,6 +66,14 @@ func heal(amount: float = 0.5):
 	health_changed.emit(current_half_hearts, max_half_hearts)
 
 func _physics_process(delta):
+	# Health regeneration
+	health_regen_timer -= delta
+	if health_regen_timer <= 0.0:
+		# Regenerate health if not at max
+		if current_half_hearts < max_half_hearts:
+			heal(HEALTH_REGEN_AMOUNT)
+		health_regen_timer = HEALTH_REGEN_INTERVAL  # Reset timer
+	
 	# Check if torch proximity changed
 	if nearby_torch != previous_nearby_torch:
 		torch_proximity_changed.emit(nearby_torch != null)
