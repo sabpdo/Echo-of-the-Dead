@@ -40,7 +40,7 @@ func _try_activate_fireball():
 		player.perform_attack()
 
 func _on_player_attack_performed():
-	# Sync cooldown when player performs attack (either from button or E key)
+	# Sync cooldown when player performs attack (either from button or mouse click)
 	attack_timer = ATTACK_COOLDOWN
 	if button:
 		button.disabled = true

@@ -23,7 +23,7 @@ func _ready():
 		cooldown_overlay.visible = false
 
 func _input(event):
-	if event is InputEventKey and event.pressed and event.keycode == KEY_1:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_E:
 		_try_activate_echolocation()
 
 func _on_button_pressed():

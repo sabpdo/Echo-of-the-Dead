@@ -65,6 +65,7 @@ func _update_light_sources(viewport_size: Vector2):
 		return
 	
 	var player_world_pos = player.global_position
+	var camera_zoom = camera.zoom.x  # Get camera zoom (assumes uniform zoom)
 	
 	# Clean up invalid nodes and collect valid light sources
 	var valid_lights: Array[Dictionary] = []
@@ -76,11 +77,13 @@ func _update_light_sources(viewport_size: Vector2):
 		var world_pos = light_data.node.global_position
 		# Convert world position to screen position
 		# Since camera follows player, screen center = player position
-		var offset = world_pos - player_world_pos
+		# Account for camera zoom
+		var offset = (world_pos - player_world_pos) * camera_zoom
 		var screen_pos = viewport_size / 2.0 + offset
 		
 		light_positions.append(screen_pos)
-		light_radii.append(light_data.radius)
+		# Scale radius by camera zoom
+		light_radii.append(light_data.radius * camera_zoom)
 		
 		# Get direction for oval shape (convert to screen space)
 		var direction = light_data.get("direction", Vector2.ZERO)

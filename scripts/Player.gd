@@ -99,25 +99,29 @@ func _physics_process(delta):
 	var mouse_pos = get_global_mouse_position()
 	look_at(mouse_pos)
 	
-	# Attack (E key)
+	# Attack (Left Mouse Click)
 	attack_timer -= delta
-	if Input.is_key_pressed(KEY_E) and attack_timer <= 0.0:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and attack_timer <= 0.0:
 		perform_attack()
 		attack_timer = ATTACK_COOLDOWN
 	
-	# Interact with generator (T key) - prioritize generator over door and torch
+	# Update interaction timers
 	generator_interact_timer -= delta
-	if Input.is_key_pressed(KEY_T) and nearby_generator and generator_interact_timer <= 0.0:
+	torch_interact_timer -= delta
+	door_interact_timer -= delta
+	
+	# Interact with generator (F key) - prioritize generator over door and torch
+	if Input.is_key_pressed(KEY_F) and nearby_generator and generator_interact_timer <= 0.0:
 		nearby_generator.toggle()
 		generator_interact_timer = GENERATOR_INTERACT_COOLDOWN
-	# Interact with door (T key) - prioritize door over torch
-	elif Input.is_key_pressed(KEY_T) and nearby_door:
+	# Interact with door (F key) - prioritize door over torch
+	elif Input.is_key_pressed(KEY_F) and nearby_door:
 		if not nearby_door.is_unlocked:  # Only unlock if not already unlocked
 			nearby_door.unlock()
 		# Reset timer to allow immediate interaction with other doors
 		door_interact_timer = DOOR_INTERACT_COOLDOWN
-	# Interact with torch (T key) - only if no generator or door nearby
-	elif Input.is_key_pressed(KEY_T) and nearby_torch:
+	# Interact with torch (F key) - only if no generator or door nearby
+	elif Input.is_key_pressed(KEY_F) and nearby_torch and torch_interact_timer <= 0.0:
 		nearby_torch.toggle()
 		# Reset timer to allow immediate interaction with other torches
 		torch_interact_timer = TORCH_INTERACT_COOLDOWN

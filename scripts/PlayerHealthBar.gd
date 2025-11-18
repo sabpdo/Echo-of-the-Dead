@@ -29,13 +29,13 @@ func _create_hearts():
 	# Create 5 heart containers, each with left and right halves
 	for i in range(player.MAX_HEARTS):
 		var heart_container = Control.new()
-		heart_container.custom_minimum_size = Vector2(24, 24)
+		heart_container.custom_minimum_size = Vector2(50, 50)
 		heart_container.clip_contents = true
 		
 		# Empty heart outline (background)
 		var empty_heart = Label.new()
 		empty_heart.text = "♡"
-		empty_heart.add_theme_font_size_override("font_size", 24)
+		empty_heart.add_theme_font_size_override("font_size", 50)
 		empty_heart.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		empty_heart.modulate = Color(0.5, 0.5, 0.5, 0.5)  # Gray outline
 		empty_heart.position = Vector2(0, 0)
@@ -44,13 +44,13 @@ func _create_hearts():
 		# Left half (filled - red) - clipped to show only left side
 		var left_half_container = Control.new()
 		left_half_container.position = Vector2(0, 0)
-		left_half_container.size = Vector2(12, 24)  # Half width
+		left_half_container.size = Vector2(25, 50)  # Half width
 		left_half_container.clip_contents = true
 		left_half_container.name = "LeftHalfContainer"
 		
 		var left_half = Label.new()
 		left_half.text = "♥"
-		left_half.add_theme_font_size_override("font_size", 24)
+		left_half.add_theme_font_size_override("font_size", 50)
 		left_half.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		left_half.modulate = Color(1, 0, 0, 1)  # Red
 		left_half.position = Vector2(0, 0)
@@ -59,17 +59,17 @@ func _create_hearts():
 		
 		# Right half (filled - red) - clipped to show only right side
 		var right_half_container = Control.new()
-		right_half_container.position = Vector2(12, 0)  # Start from middle
-		right_half_container.size = Vector2(12, 24)  # Half width
+		right_half_container.position = Vector2(25, 0)  # Start from middle
+		right_half_container.size = Vector2(25, 50)  # Half width
 		right_half_container.clip_contents = true
 		right_half_container.name = "RightHalfContainer"
 		
 		var right_half = Label.new()
 		right_half.text = "♥"
-		right_half.add_theme_font_size_override("font_size", 24)
+		right_half.add_theme_font_size_override("font_size", 50)
 		right_half.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		right_half.modulate = Color(1, 0, 0, 1)  # Red
-		right_half.position = Vector2(-12, 0)  # Shift left to show right half
+		right_half.position = Vector2(-25, 0)  # Shift left to show right half
 		right_half_container.add_child(right_half)
 		heart_container.add_child(right_half_container)
 		

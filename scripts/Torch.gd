@@ -3,10 +3,14 @@ extends Node2D
 @onready var interaction_area = $InteractionArea
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var light_2d = $Light2D
+@onready var interaction_button = $InteractionButton
 
 var is_lit: bool = false
 var fog_controller: Node = null
 const LIGHT_RADIUS: float = 150.0
+var player_nearby: bool = false
+var toggle_cooldown: float = 0.0
+const TOGGLE_COOLDOWN_TIME: float = 0.3
 
 signal torch_toggled(lit: bool)
 
@@ -20,15 +24,32 @@ func _ready():
 	if interaction_area:
 		interaction_area.body_entered.connect(_on_body_entered)
 		interaction_area.body_exited.connect(_on_body_exited)
+	
+	# Setup button
+	if interaction_button:
+		interaction_button.visible = false
+		interaction_button.pressed.connect(_on_button_pressed)
+		_update_button_text()
+
+func _process(delta):
+	# Update cooldown
+	if toggle_cooldown > 0:
+		toggle_cooldown -= delta
+	
+	# Update button visibility
+	if interaction_button:
+		interaction_button.visible = player_nearby
 
 func _on_body_entered(body):
 	if body.is_in_group("player") or body.name == "Player":
 		body.nearby_torch = self
+		player_nearby = true
 
 func _on_body_exited(body):
 	if body.is_in_group("player") or body.name == "Player":
 		if body.nearby_torch == self:
 			body.nearby_torch = null
+		player_nearby = false
 
 func set_lit(lit: bool):
 	is_lit = lit
@@ -56,7 +77,25 @@ func set_lit(lit: bool):
 		else:
 			fog_controller.remove_light_source(self)
 	
+	_update_button_text()
 	torch_toggled.emit(lit)
 
 func toggle():
+	# Prevent rapid toggling
+	if toggle_cooldown > 0:
+		return
+	
 	set_lit(not is_lit)
+	toggle_cooldown = TOGGLE_COOLDOWN_TIME
+
+func _on_button_pressed():
+	toggle()
+
+func _update_button_text():
+	if interaction_button:
+		var label = interaction_button.get_node_or_null("Label")
+		if label:
+			if is_lit:
+				label.text = "Turn Off"
+			else:
+				label.text = "Light"

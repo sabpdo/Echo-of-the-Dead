@@ -54,8 +54,8 @@ theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
 theme_override_constants/line_spacing = 19
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 25
-text = "Move with WASD/Arrow Keys, aim with the cursor, attack with E. 
-Increase your vision by pressing 1 to navigate safely  (10s duration, 30s cooldown) . 
+text = "Move with WASD/Arrow Keys, aim with the cursor, attack by pressing trackpad. 
+Increase your vision by pressing E to navigate safely  (10s duration, 30s cooldown) . 
 Kill zombies to survive and unlock new areas as you progress. 
 ⁠Explore the environment, find the generator, and shut it off to complete the mission.
 

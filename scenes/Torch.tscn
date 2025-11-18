@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/torch.png" id="2_torch"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
-radius = 40.0
+radius = 60.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_frame0"]
 atlas = ExtResource("2_torch")
@@ -66,12 +66,13 @@ script = ExtResource("1_torch")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 0)
+scale = Vector2(2.0, 2.0)
 sprite_frames = SubResource("SpriteFrames_1")
 animation = &"unlit"
 
 [node name="Light2D" type="Light2D" parent="."]
-offset = Vector2( 0, -20 )
-texture_scale = 0.5
+offset = Vector2( 0, -30 )
+texture_scale = 0.6
 energy = 1.5
 color = Color( 1, 0.6, 0.2, 1 )
 enabled = false
@@ -81,4 +82,26 @@ shadow_enabled = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_1")
+
+[node name="InteractionButton" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0.9)
+offset_left = -35.0
+offset_top = -90.0
+offset_right = 35.0
+offset_bottom = -55.0
+
+[node name="Label" type="Label" parent="InteractionButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.7, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 18
+text = "Light"
+horizontal_alignment = 1
+vertical_alignment = 1
 
