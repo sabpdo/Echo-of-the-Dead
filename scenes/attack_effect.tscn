@@ -45,7 +45,7 @@ modulate = Color( 1, 1, 1, 1 )
 texture = ExtResource("2_fireball")
 scale = Vector2( 0.15, 0.15 )
 
-[node name="Light2D" type="Light2D" parent="."]
+[node name="Light2D" type="Light2D" parent="FireballSprite"]
 texture = ExtResource("2_fireball")
 offset = Vector2( 0, 0 )
 texture_scale = 0.3
