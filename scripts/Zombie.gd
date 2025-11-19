@@ -23,6 +23,9 @@ signal health_changed(current_health, max_health)
 signal zombie_died
 
 func _ready():
+	# Add to zombies group for radar detection
+	add_to_group("zombies")
+	
 	# Apply health multiplier
 	max_health = int(base_max_health * health_multiplier)
 	current_health = max_health

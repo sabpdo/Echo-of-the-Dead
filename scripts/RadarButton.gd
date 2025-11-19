@@ -1,52 +1,42 @@
 extends Control
 
-@onready var button: Button = $FireballButton
-@onready var cooldown_overlay: ColorRect = $FireballButton/CooldownOverlay
-@onready var player = get_node("/root/Main/Player")
+@onready var button: Button = $RadarButton
+@onready var cooldown_overlay: ColorRect = $RadarButton/CooldownOverlay
+@onready var radar_controller = get_node("/root/Main/RadarController")
 
 var cooldown_tween: Tween = null
 var stored_button_height: float = 0.0
-var attack_timer: float = 0.0
-const ATTACK_COOLDOWN = 0.2
 
 func _ready():
 	if button:
 		button.pressed.connect(_on_button_pressed)
 	
-	# Connect to player signal to sync cooldown
-	if player:
-		player.attack_performed.connect(_on_player_attack_performed)
+	# Connect to radar controller signals to update button state
+	if radar_controller:
+		radar_controller.cooldown_started.connect(_on_cooldown_started)
+		radar_controller.cooldown_finished.connect(_on_cooldown_finished)
+		radar_controller.radar_activated.connect(_on_radar_activated)
+		radar_controller.radar_deactivated.connect(_on_radar_deactivated)
 	
 	# Initialize cooldown overlay as hidden
 	if cooldown_overlay:
 		cooldown_overlay.visible = false
 
-func _process(delta):
-	# Update attack timer
-	if attack_timer > 0.0:
-		attack_timer -= delta
-		
-		# Update button state based on cooldown
-		if attack_timer <= 0.0:
-			if button:
-				button.disabled = false
-			_stop_cooldown()
+func _input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_R:
+		_try_activate_radar()
 
 func _on_button_pressed():
-	_try_activate_fireball()
+	_try_activate_radar()
 
-func _try_activate_fireball():
-	if player and attack_timer <= 0.0:
-		player.perform_attack()
+func _try_activate_radar():
+	if radar_controller and radar_controller.is_radar_available():
+		radar_controller.activate_radar()
 
-func _on_player_attack_performed():
-	# Sync cooldown when player performs attack (either from button or mouse click)
-	attack_timer = ATTACK_COOLDOWN
+func _on_cooldown_started():
 	if button:
 		button.disabled = true
-	_start_cooldown()
-
-func _start_cooldown():
+	
 	# Show and animate cooldown overlay
 	if cooldown_overlay and button:
 		await get_tree().process_frame  # Wait for layout to update
@@ -66,12 +56,14 @@ func _start_cooldown():
 		if cooldown_tween:
 			cooldown_tween.kill()
 		
+		# Total cooldown duration (10s cooldown)
+		var total_cooldown_duration = 10.0
 		cooldown_tween = create_tween()
 		cooldown_tween.set_ease(Tween.EASE_OUT)
 		cooldown_tween.set_trans(Tween.TRANS_LINEAR)
 		
 		# Animate from full coverage to no coverage, clearing from top to bottom
-		cooldown_tween.tween_method(_update_cooldown_overlay, 1.0, 0.0, ATTACK_COOLDOWN)
+		cooldown_tween.tween_method(_update_cooldown_overlay, 1.0, 0.0, total_cooldown_duration)
 
 func _update_cooldown_overlay(progress: float):
 	# progress goes from 1.0 (full gray) to 0.0 (no gray)
@@ -84,10 +76,21 @@ func _update_cooldown_overlay(progress: float):
 		# This makes it clear from top to bottom
 		cooldown_overlay.position.y = stored_button_height - (stored_button_height * progress)
 
-func _stop_cooldown():
+func _on_cooldown_finished():
+	if button:
+		button.disabled = false
+	
 	if cooldown_overlay:
 		cooldown_overlay.visible = false
 	
 	if cooldown_tween:
 		cooldown_tween.kill()
 		cooldown_tween = null
+
+func _on_radar_activated():
+	if button:
+		button.disabled = true
+
+func _on_radar_deactivated():
+	# Don't enable here - wait for cooldown to finish
+	pass
