@@ -28,6 +28,8 @@ anchor_left = 0.05
 anchor_top = 0.05
 anchor_right = 0.95
 anchor_bottom = 0.15
+offset_top = -20.0
+offset_bottom = 11.199997
 theme_override_constants/separation = 40
 
 [node name="TitleLabel" type="Label" parent="HowToPlay"]
@@ -48,12 +50,13 @@ anchor_left = 0.1
 anchor_top = 0.2
 anchor_right = 0.9
 anchor_bottom = 0.8
+
 [node name="Instructions" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 614.0
-offset_top = 109.0
-offset_right = 1153.0
-offset_bottom = 795.0
+offset_left = 549.0
+offset_top = 105.0
+offset_right = 1140.0
+offset_bottom = 633.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="Instructions"]
@@ -64,7 +67,7 @@ theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
 theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
 theme_override_constants/line_spacing = 25
 theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 25
 text = "Kill zombies to survive and unlock new areas as you progress. 
 ⁠Explore the environment, find the generator, and shut it off to complete the mission.
 
@@ -72,6 +75,19 @@ Manage your vision spell carefully and pay attention to your health
 Good luck surviving!"
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="Homepage" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 857.0
+offset_top = 591.0
+offset_right = 1136.0
+offset_bottom = 632.0
+theme_override_constants/separation = 30
+
+[node name="Button" type="Button" parent="Homepage"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Home Page"
 
 [node name="R_Instructions" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -187,10 +203,10 @@ texture = ExtResource("2_j20v8")
 
 [node name="Attack" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 136.0
-offset_top = 575.0
-offset_right = 216.0
-offset_bottom = 641.0
+offset_left = 126.0
+offset_top = 583.0
+offset_right = 285.0
+offset_bottom = 649.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="Attack"]
@@ -201,7 +217,7 @@ theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
 theme_override_constants/line_spacing = -1
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 20
-text = "Click to 
+text = "Click to     
  Attack"
 vertical_alignment = 1
 autowrap_mode = 3
@@ -335,3 +351,5 @@ theme_override_constants/line_spacing = 19
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 25
 text = "R"
+
+[connection signal="pressed" from="Homepage/Button" to="." method="_on_button_pressed"]
