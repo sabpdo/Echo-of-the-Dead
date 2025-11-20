@@ -1,6 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://ce5b8t4mvwwdn"]
+[gd_scene load_steps=3 format=3 uid="uid://ce5b8t4mvwwdn"]
 
 [ext_resource type="Script" path="res://scripts/SettingsPage.gd" id="1_settings"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.15, 0.15, 0.2, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.9, 0.1, 0.1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="SettingsPage" type="Control"]
 layout_mode = 3
@@ -31,10 +43,10 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="CenterContainer"]
-custom_minimum_size = Vector2(600, 700)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel"]
 layout_mode = 1
@@ -111,36 +123,68 @@ theme_override_font_sizes/font_size = 42
 text = "HARD (Many Fast Zombies!)"
 
 [node name="Spacer3" type="Control" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.8
+
+[node name="Separator" type="ColorRect" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+custom_minimum_size = Vector2(0, 2)
+color = Color(0.9, 0.1, 0.1, 0.5)
+
+[node name="Spacer_Sep" type="Control" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
 
 [node name="AudioLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "AUDIO SETTINGS"
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 42
+text = "🔊 AUDIO SETTINGS"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Spacer4" type="Control" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
 
-[node name="VolumeContainer" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="VolumeContainer" type="VBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+theme_override_constants/separation = 8
+
+[node name="VolumeHeader" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer/VolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 10
 
-[node name="VolumeLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/VolumeContainer"]
+[node name="VolumeLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/VolumeContainer/VolumeHeader"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Volume:"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "🔉 Master Volume"
+vertical_alignment = 1
+
+[node name="VolumeValueLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/VolumeContainer/VolumeHeader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "100%"
 vertical_alignment = 1
 
 [node name="VolumeSlider" type="HSlider" parent="CenterContainer/Panel/VBoxContainer/VolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-custom_minimum_size = Vector2(300, 30)
 min_value = 0.0
 max_value = 1.0
 step = 0.01
@@ -150,64 +194,50 @@ allow_greater = false
 allow_lesser = false
 scrollable = false
 
-[node name="VolumeValueLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/VolumeContainer"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "100%"
-vertical_alignment = 1
-
 [node name="Spacer5" type="Control" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
 
 [node name="MusicToggleContainer" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 15
-
-[node name="MusicLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/MusicToggleContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "♫"
-vertical_alignment = 1
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.2
+theme_override_constants/separation = 20
 
 [node name="MusicToggle" type="CheckBox" parent="CenterContainer/Panel/VBoxContainer/MusicToggleContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 24
-text = "Background Music"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "♫ Background Music"
 button_pressed = true
 
 [node name="Spacer6" type="Control" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
 
 [node name="SFXToggleContainer" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 15
-
-[node name="SFXLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/SFXToggleContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "🔊"
-vertical_alignment = 1
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.2
+theme_override_constants/separation = 20
 
 [node name="SFXToggle" type="CheckBox" parent="CenterContainer/Panel/VBoxContainer/SFXToggleContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 24
-text = "Sound Effects"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "⚡ Sound Effects"
 button_pressed = true
 
 [node name="Spacer7" type="Control" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
+size_flags_stretch_ratio = 0.3
 
 [node name="BackButton" type="Button" parent="CenterContainer/Panel/VBoxContainer"]
 layout_mode = 2

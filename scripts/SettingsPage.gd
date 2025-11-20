@@ -5,7 +5,7 @@ extends Control
 @onready var medium_button = $CenterContainer/Panel/VBoxContainer/MediumButton
 @onready var hard_button = $CenterContainer/Panel/VBoxContainer/HardButton
 @onready var volume_slider = $CenterContainer/Panel/VBoxContainer/VolumeContainer/VolumeSlider
-@onready var volume_value_label = $CenterContainer/Panel/VBoxContainer/VolumeContainer/VolumeValueLabel
+@onready var volume_value_label = $CenterContainer/Panel/VBoxContainer/VolumeContainer/VolumeHeader/VolumeValueLabel
 @onready var music_toggle = $CenterContainer/Panel/VBoxContainer/MusicToggleContainer/MusicToggle
 @onready var sfx_toggle = $CenterContainer/Panel/VBoxContainer/SFXToggleContainer/SFXToggle
 
