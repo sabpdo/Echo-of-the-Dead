@@ -5,6 +5,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _pressed():
+	GameSettings.play_click_sound()
 	var settings_menu = get_parent().get_node("SettingsMenu")
 	var pause_menu = get_parent().get_node("PauseMenu")
 	

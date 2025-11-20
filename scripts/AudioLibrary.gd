@@ -8,7 +8,8 @@ const AUDIO_PATHS := {
 	"monster_growl": "res://audio/monster.ogg",
 	"spell_cast": "res://audio/spell.wav",
 	"echolocation_ping": "res://audio/echolocation.wav",
-	"fireball_cast": "res://audio/fireball.wav"
+	"fireball_cast": "res://audio/fireball.wav",
+	"click": "res://audio/click.wav"
 }
 
 static var _cache: Dictionary = {}

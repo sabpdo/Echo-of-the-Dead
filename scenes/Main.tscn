@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://bpwb1pu7q2lst" path="res://scripts/WinOverlay.gd" id="20_win"]
 [ext_resource type="Script" uid="uid://cbpcvws5np2be" path="res://scripts/points_counter.gd" id="21_points"]
 [ext_resource type="Script" path="res://scripts/AudioCuePlayer.gd" id="22_audio"]
+[ext_resource type="Script" path="res://scripts/Main.gd" id="23_main"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
@@ -56,6 +57,7 @@ border_width_right = 2
 border_width_bottom = 2
 
 [node name="Main" type="Node2D"]
+script = ExtResource("23_main")
 
 [node name="Background" type="ColorRect" parent="."]
 visible = false
@@ -86,9 +88,10 @@ stretch_mode = 1
 script = ExtResource("2_1")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
 script = ExtResource("22_audio")
 audio_key = &"background_music"
-autoplay_on_ready = true
+autoplay_on_ready = false
 
 [node name="ZombieSpawner" type="Node2D" parent="."]
 script = ExtResource("7_1")
@@ -112,6 +115,7 @@ mouse_filter = 2
 script = ExtResource("3_1")
 
 [node name="EcholocationAudio" type="AudioStreamPlayer" parent="FogLayer/FogController"]
+bus = &"SFX"
 script = ExtResource("22_audio")
 audio_key = &"echolocation_ping"
 

@@ -40,9 +40,11 @@ func close():
 	get_tree().paused = false
 	
 func _on_resume_pressed():
+	GameSettings.play_click_sound()
 	close()
 
 func _on_restart_pressed():
+	GameSettings.play_click_sound()
 	var counters = get_tree().get_nodes_in_group("kill_counter")
 	if counters.size() > 0:
 		counters[0].zombies_killed = 0
