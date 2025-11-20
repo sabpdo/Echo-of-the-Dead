@@ -19,6 +19,14 @@ config/icon="res://assets/icon.svg"
 
 GameSettings="*res://scripts/GameSettings.gd"
 
+[dotnet]
+
+project/assembly_name="Echo of the Dead"
+
+[gui]
+
+theme/custom_font="uid://o2d44oj8kcgi"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

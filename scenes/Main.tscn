@@ -1,29 +1,29 @@
 [gd_scene load_steps=28 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
+[ext_resource type="Texture2D" uid="uid://dn722b128mods" path="res://assets/brick.png" id="1_2ofn6"]
 [ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
 [ext_resource type="Script" uid="uid://dvhgcq5hl8sbi" path="res://scripts/FogController.gd" id="3_1"]
 [ext_resource type="Shader" uid="uid://bmvmgq1w8g8qy" path="res://fog_shader.gdshader" id="4_1"]
-[ext_resource type="Script" uid="uid://cw65bmxq2l4pk" path="res://scripts/EcholocationButton.gd" id="5_1"]
-[ext_resource type="Script" uid="uid://bflxnhey45cof" path="res://scripts/RadarController.gd" id="5_2"]
-[ext_resource type="Script" uid="uid://ck5mx4hgf3dqr" path="res://scripts/RadarButton.gd" id="5_3"]
-[ext_resource type="Script" path="res://scripts/FireballButton.gd" id="17_fireball"]
-[ext_resource type="Script" path="res://scripts/LightTorchButton.gd" id="18_torch"]
-[ext_resource type="Script" path="res://scripts/GeneratorButton.gd" id="19_generator"]
-[ext_resource type="Script" path="res://scripts/DoorButton.gd" id="20_door"]
+[ext_resource type="Script" path="res://scripts/RadarController.gd" id="5_2"]
+[ext_resource type="Script" path="res://scripts/RadarButton.gd" id="5_3"]
 [ext_resource type="Script" uid="uid://byf3qh6kmqlhu" path="res://scripts/PlayerHealthBar.gd" id="6_1"]
 [ext_resource type="Script" uid="uid://bcffap826g73g" path="res://scripts/ZombieSpawner.gd" id="7_1"]
 [ext_resource type="Script" uid="uid://ds5bxs7u70rap" path="res://scripts/GameOverOverlay.gd" id="8_1"]
-[ext_resource type="Script" path="res://scripts/WinOverlay.gd" id="20_win"]
 [ext_resource type="Texture2D" uid="uid://brecqfrka57ed" path="res://assets/gear.png" id="9_lhr70"]
-[ext_resource type="Script" uid="uid://bnm5k858u4025" path="res://scenes/settings_icon.gd" id="9_qmy6f"]
+[ext_resource type="Script" uid="uid://bnm5k858u4025" path="res://scripts/settings_icon.gd" id="9_qmy6f"]
 [ext_resource type="Texture2D" uid="uid://q137iu1br2fq" path="res://assets/pause.png" id="10_wp0k4"]
-[ext_resource type="Script" uid="uid://cmevoj7pkfa7m" path="res://scenes/pause_icon.gd" id="11_mwfav"]
-[ext_resource type="Script" uid="uid://dayufmosq47ho" path="res://scenes/pause_menu.gd" id="13_3p2gp"]
-[ext_resource type="Script" uid="uid://58ljllc17sh7" path="res://scenes/settings_menu.gd" id="14_3p2gp"]
-[ext_resource type="Script" uid="uid://b6tbl40k7fnl7" path="res://scenes/kill_counter.gd" id="15_cvmbd"]
-[ext_resource type="Script" path="res://scenes/points_counter.gd" id="21_points"]
-[ext_resource type="Script" uid="uid://cbxbl8wdam3cx" path="res://scenes/home_icon.gd" id="16_home"]
+[ext_resource type="Script" uid="uid://cmevoj7pkfa7m" path="res://scripts/pause_icon.gd" id="11_mwfav"]
+[ext_resource type="Script" uid="uid://dayufmosq47ho" path="res://scripts/pause_menu.gd" id="13_3p2gp"]
+[ext_resource type="Script" uid="uid://58ljllc17sh7" path="res://scripts/settings_menu.gd" id="14_3p2gp"]
+[ext_resource type="Script" uid="uid://b6tbl40k7fnl7" path="res://scripts/kill_counter.gd" id="15_cvmbd"]
+[ext_resource type="Script" uid="uid://cbxbl8wdam3cx" path="res://scripts/home_icon.gd" id="16_home"]
+[ext_resource type="Script" uid="uid://dss26kjsv8fan" path="res://scripts/FireballButton.gd" id="17_fireball"]
+[ext_resource type="Script" uid="uid://sban3vieqfvm" path="res://scripts/LightTorchButton.gd" id="18_torch"]
+[ext_resource type="Script" uid="uid://de0k5flb5qr0l" path="res://scripts/GeneratorButton.gd" id="19_generator"]
+[ext_resource type="Script" uid="uid://bk5k32spqfh66" path="res://scripts/DoorButton.gd" id="20_door"]
+[ext_resource type="Script" uid="uid://bpwb1pu7q2lst" path="res://scripts/WinOverlay.gd" id="20_win"]
+[ext_resource type="Script" uid="uid://cbpcvws5np2be" path="res://scripts/points_counter.gd" id="21_points"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
@@ -39,13 +39,6 @@ shader_parameter/light_radii = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 shader_parameter/light_directions = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 shader_parameter/light_aspects = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
-bg_color = Color(0.2, 0.2, 0.2, 0.9)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
 bg_color = Color(1, 0.8, 0, 0.9)
 border_width_left = 2
@@ -54,14 +47,39 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 0.6, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.2, 0.2, 0.2, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
 [node name="Main" type="Node2D"]
 
 [node name="Background" type="ColorRect" parent="."]
+visible = false
 offset_left = -1085.0
 offset_top = -641.0
 offset_right = 1157.0
 offset_bottom = 639.0
 color = Color(0.1, 0.15, 0.2, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+clip_contents = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1085.0
+offset_top = -638.0
+offset_right = 16963.0
+offset_bottom = 9650.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("1_2ofn6")
+stretch_mode = 1
 
 [node name="WallGenerator" type="Node2D" parent="."]
 script = ExtResource("2_1")
@@ -101,17 +119,11 @@ color = Color(0, 0, 0, 1)
 
 [node name="PlayerHealthBarContainer" type="Control" parent="UILayer"]
 layout_mode = 3
-anchors_preset = 1
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+anchors_preset = 0
 offset_left = 30.0
 offset_top = 30.0
 offset_right = 280.0
 offset_bottom = 90.0
-grow_horizontal = 1
-grow_vertical = 1
 script = ExtResource("6_1")
 
 [node name="HeartsContainer" type="HBoxContainer" parent="UILayer/PlayerHealthBarContainer"]
@@ -139,6 +151,46 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("18_torch")
 
+[node name="LightTorchButton" type="Button" parent="UILayer/LightTorchButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/LightTorchButtonContainer/LightTorchButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TorchLabel" type="Label" parent="UILayer/LightTorchButtonContainer/LightTorchButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+text = "Light Torch"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/LightTorchButtonContainer/LightTorchButton/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+text = "F"
+horizontal_alignment = 1
+
 [node name="GeneratorButtonContainer" type="Control" parent="UILayer"]
 visible = false
 layout_mode = 3
@@ -164,8 +216,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_2")
-theme_override_styles/hover = SubResource("StyleBoxFlat_2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/GeneratorButtonContainer/GeneratorButton"]
 layout_mode = 1
@@ -220,8 +272,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_2")
-theme_override_styles/hover = SubResource("StyleBoxFlat_2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/DoorButtonContainer/DoorButton"]
 layout_mode = 1
@@ -245,46 +297,6 @@ text = "Unlock Door"
 horizontal_alignment = 1
 
 [node name="NumberLabel" type="Label" parent="UILayer/DoorButtonContainer/DoorButton/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
-theme_override_font_sizes/font_size = 24
-text = "F"
-horizontal_alignment = 1
-
-[node name="LightTorchButton" type="Button" parent="UILayer/LightTorchButtonContainer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxFlat_2")
-theme_override_styles/hover = SubResource("StyleBoxFlat_2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/LightTorchButtonContainer/LightTorchButton"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -20.0
-offset_right = 30.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TorchLabel" type="Label" parent="UILayer/LightTorchButtonContainer/LightTorchButton/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
-theme_override_font_sizes/font_size = 20
-text = "Light Torch"
-horizontal_alignment = 1
-
-[node name="NumberLabel" type="Label" parent="UILayer/LightTorchButtonContainer/LightTorchButton/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_font_sizes/font_size = 24
@@ -547,16 +559,14 @@ script = ExtResource("9_qmy6f")
 [node name="TextureRect" type="TextureRect" parent="UILayer/SettingsIcon"]
 layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 offset_left = 5.0
 offset_top = 5.0
 offset_right = -5.0
 offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("9_lhr70")
 expand_mode = 1
 stretch_mode = 5
@@ -615,16 +625,14 @@ script = ExtResource("11_mwfav")
 [node name="TextureRect" type="TextureRect" parent="UILayer/PauseIcon"]
 layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 offset_left = 5.0
 offset_top = 5.0
 offset_right = -5.0
 offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("10_wp0k4")
 expand_mode = 1
 stretch_mode = 5
@@ -743,8 +751,6 @@ script = ExtResource("15_cvmbd")
 
 [node name="Kills" type="Label" parent="UILayer/KillCounter"]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
 offset_right = 170.0
 offset_bottom = 50.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
@@ -762,8 +768,6 @@ script = ExtResource("21_points")
 
 [node name="Points" type="Label" parent="UILayer/PointsCounter"]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
 offset_right = 170.0
 offset_bottom = 50.0
 theme_override_colors/font_color = Color(1, 0.8, 0, 1)

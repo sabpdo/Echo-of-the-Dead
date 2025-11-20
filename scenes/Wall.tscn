@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bau3srayjxd02"]
+[gd_scene load_steps=3 format=3 uid="uid://bau3srayjxd02"]
+
+[ext_resource type="Texture2D" uid="uid://owh3moceye5j" path="res://assets/wall.png" id="1_efbxx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(50, 50)
@@ -9,8 +11,17 @@ size = Vector2(50, 50)
 shape = SubResource("RectangleShape2D_1")
 
 [node name="Visual" type="ColorRect" parent="."]
+visible = false
 offset_left = -25.0
 offset_top = -25.0
 offset_right = 25.0
 offset_bottom = 25.0
 color = Color(0.4, 0.3, 0.2, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 475.0
+offset_bottom = 475.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_efbxx")
