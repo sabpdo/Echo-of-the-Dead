@@ -458,25 +458,22 @@ color = Color(0, 0, 0, 0.7)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/GameOverOverlay"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -120.0
-offset_right = 200.0
-offset_bottom = 120.0
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.3
+anchor_right = 0.7
+anchor_bottom = 0.7
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = 40
 
 [node name="GameOverLabel" type="Label" parent="UILayer/GameOverOverlay/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 80
 text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -484,14 +481,16 @@ vertical_alignment = 1
 [node name="PlayAgainButton" type="Button" parent="UILayer/GameOverOverlay/VBoxContainer"]
 process_mode = 4
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_1")
 text = "Play Again"
 
 [node name="ReturnHomeButton" type="Button" parent="UILayer/GameOverOverlay/VBoxContainer"]
 process_mode = 4
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_1")
 text = "Return to Home"
 
@@ -650,15 +649,11 @@ stretch_mode = 5
 [node name="PauseMenu" type="Control" parent="UILayer"]
 visible = false
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.25
+anchor_right = 0.75
+anchor_bottom = 0.75
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("13_3p2gp")
@@ -673,41 +668,44 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/PauseMenu/Panel"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="UILayer/PauseMenu/Panel/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 65
+theme_override_font_sizes/font_size = 80
 text = "PAUSE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Resume" type="Button" parent="UILayer/PauseMenu/Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 42
 text = "RESUME"
 
 [node name="Restart" type="Button" parent="UILayer/PauseMenu/Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 42
 text = "RESTART"
 
 [node name="SettingsMenu" type="Control" parent="UILayer"]
 visible = false
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.25
+anchor_right = 0.75
+anchor_bottom = 0.75
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_3p2gp")
@@ -722,27 +720,34 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/SettingsMenu/Panel"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 65
+theme_override_font_sizes/font_size = 80
 text = "SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Resume" type="Button" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 42
 text = "RESUME"
 
 [node name="Restart" type="Button" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 42
 text = "RESTART"
 
 [node name="HomePage" type="Button" parent="UILayer/SettingsMenu/Panel/VBoxContainer"]
