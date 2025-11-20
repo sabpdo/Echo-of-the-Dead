@@ -91,10 +91,10 @@ text = "Home Page"
 
 [node name="R_Instructions" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 309.0
-offset_top = 121.0
-offset_right = 464.0
-offset_bottom = 225.0
+offset_left = 303.0
+offset_top = 123.0
+offset_right = 458.0
+offset_bottom = 227.0
 
 [node name="Instructions" type="Label" parent="R_Instructions"]
 custom_minimum_size = Vector2(12, 12)
@@ -111,9 +111,9 @@ autowrap_mode = 3
 
 [node name="Movement" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 117.0
+offset_left = 124.0
 offset_top = 145.0
-offset_right = 261.0
+offset_right = 268.0
 offset_bottom = 174.0
 
 [node name="Instructions" type="Label" parent="Movement"]
@@ -130,9 +130,9 @@ autowrap_mode = 3
 
 [node name="F_Instructions" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 349.0
+offset_left = 334.0
 offset_top = 355.0
-offset_right = 464.0
+offset_right = 449.0
 offset_bottom = 415.0
 theme_override_constants/separation = 30
 
@@ -219,6 +219,26 @@ theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 20
 text = "Click to     
  Attack"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Strong_Attack" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 253.0
+offset_top = 583.0
+offset_right = 449.0
+offset_bottom = 641.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="Strong_Attack"]
+custom_minimum_size = Vector2(2, 5)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = -1
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 20
+text = "  Slower but Stronger Attack"
 vertical_alignment = 1
 autowrap_mode = 3
 

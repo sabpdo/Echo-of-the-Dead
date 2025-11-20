@@ -7,6 +7,7 @@ const ATTACK_COOLDOWN = 0.2
 const ATTACK_OFFSET = 20.0
 var attack_timer: float = 0.0
 var attack_scene = preload("res://scenes/attack_effect.tscn")
+var strong_attack_scene = preload("res://scenes/strong_attack_effect.tscn")
 
 # Torch interaction
 var nearby_torch: Node = null
@@ -120,6 +121,10 @@ func _physics_process(delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and attack_timer <= 0.0:
 		perform_attack()
 		attack_timer = ATTACK_COOLDOWN
+		
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and attack_timer <= 0.0:
+		perform_strong_attack()
+		attack_timer = ATTACK_COOLDOWN
 	
 	# Update interaction timers
 	generator_interact_timer -= delta
@@ -155,5 +160,19 @@ func perform_attack():
 	
 	attack_performed.emit()
 	
+	if spell_audio and spell_audio.has_method("play_cue"):
+		spell_audio.play_cue()
+		
+func perform_strong_attack():
+	var attack = strong_attack_scene.instantiate()
+
+	var dir = (get_global_mouse_position() - global_position).normalized()
+	attack.direction = dir
+
+	attack.global_position = global_position + dir * ATTACK_OFFSET
+	get_parent().add_child(attack)
+
+	attack_performed.emit()
+
 	if spell_audio and spell_audio.has_method("play_cue"):
 		spell_audio.play_cue()
