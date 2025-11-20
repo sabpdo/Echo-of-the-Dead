@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://2oiodnx6lfch"]
+[gd_scene load_steps=3 format=3 uid="uid://2oiodnx6lfch"]
 
 [ext_resource type="Script" uid="uid://cy2j4ol340r7r" path="res://scripts/how_to_play.gd" id="1_iayqv"]
+[ext_resource type="Texture2D" uid="uid://dxukhrhbn836i" path="res://assets/Key.png" id="2_j20v8"]
 
 [node name="HowToPlay" type="Control"]
 layout_mode = 3
@@ -20,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.05, 0.05, 0.1, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HowToPlay" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 23.0
@@ -29,7 +30,7 @@ offset_right = 510.0
 offset_bottom = 120.0
 theme_override_constants/separation = 40
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="HowToPlay"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
 theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
@@ -39,15 +40,15 @@ text = "HOW TO PLAY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="Instructions" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 51.0
-offset_top = 112.0
-offset_right = 1114.0
-offset_bottom = 612.0
+offset_left = 614.0
+offset_top = 109.0
+offset_right = 1153.0
+offset_bottom = 795.0
 theme_override_constants/separation = 30
 
-[node name="Instructions" type="Label" parent="VBoxContainer2"]
+[node name="Instructions" type="Label" parent="Instructions"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
@@ -55,9 +56,7 @@ theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
 theme_override_constants/line_spacing = 19
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 25
-text = "Move with WASD/Arrow Keys, aim with the cursor, attack by pressing trackpad. 
-Increase your vision by pressing E to navigate safely  (10s duration, 30s cooldown) . 
-Kill zombies to survive and unlock new areas as you progress. 
+text = "Kill zombies to survive and unlock new areas as you progress. 
 ⁠Explore the environment, find the generator, and shut it off to complete the mission.
 
 Manage your vision spell carefully and pay attention to your health 
@@ -65,19 +64,265 @@ Good luck surviving!"
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="HomePageButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -242.0
-offset_top = -97.0
-offset_right = -49.0
-offset_bottom = -44.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Home Page"
+[node name="R_Instructions" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 121.0
+offset_right = 464.0
+offset_bottom = 225.0
 
-[connection signal="pressed" from="HomePageButton" to="." method="_on_home_page_button_pressed"]
+[node name="Instructions" type="Label" parent="R_Instructions"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 20
+text = "Activate 
+  Radar"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Movement" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 145.0
+offset_right = 261.0
+offset_bottom = 174.0
+
+[node name="Instructions" type="Label" parent="Movement"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 20
+text = "Movement"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="F_Instructions" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 349.0
+offset_top = 355.0
+offset_right = 464.0
+offset_bottom = 415.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="F_Instructions"]
+custom_minimum_size = Vector2(2, 5)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = -1
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "Use Torch
+& Interact"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="W_Key" type="Sprite2D" parent="."]
+position = Vector2(166, 221)
+scale = Vector2(0.45541403, 0.4349112)
+texture = ExtResource("2_j20v8")
+
+[node name="Key5" type="Sprite2D" parent="."]
+position = Vector2(258, 220)
+scale = Vector2(0.45541403, 0.4349112)
+texture = ExtResource("2_j20v8")
+
+[node name="Key6" type="Sprite2D" parent="."]
+position = Vector2(252.1875, 505)
+scale = Vector2(2.0278666, 0.8402366)
+texture = ExtResource("2_j20v8")
+
+[node name="Key9" type="Sprite2D" parent="."]
+modulate = Color(0.8666667, 0.8666667, 0.8666667, 1)
+position = Vector2(172.0625, 554.53125)
+scale = Vector2(1.005573, 0.25406852)
+texture = ExtResource("2_j20v8")
+
+[node name="Key10" type="Sprite2D" parent="."]
+modulate = Color(0.8666667, 0.8666667, 0.8666667, 1)
+position = Vector2(332.00003, 554.53125)
+scale = Vector2(1.005573, 0.25406808)
+texture = ExtResource("2_j20v8")
+
+[node name="R_Key" type="Sprite2D" parent="."]
+position = Vector2(347, 222)
+scale = Vector2(0.45541403, 0.4349112)
+texture = ExtResource("2_j20v8")
+
+[node name="S_Key" type="Sprite2D" parent="."]
+position = Vector2(197, 309)
+scale = Vector2(0.45541403, 0.4349112)
+texture = ExtResource("2_j20v8")
+
+[node name="D_Key" type="Sprite2D" parent="."]
+position = Vector2(287, 309)
+scale = Vector2(0.45541403, 0.4349112)
+texture = ExtResource("2_j20v8")
+
+[node name="F_Key" type="Sprite2D" parent="."]
+position = Vector2(376, 309)
+scale = Vector2(0.45541403, 0.4349112)
+texture = ExtResource("2_j20v8")
+
+[node name="A_Key" type="Sprite2D" parent="."]
+position = Vector2(105, 309)
+scale = Vector2(0.45541403, 0.4349112)
+texture = ExtResource("2_j20v8")
+
+[node name="Attack" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 136.0
+offset_top = 575.0
+offset_right = 216.0
+offset_bottom = 641.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="Attack"]
+custom_minimum_size = Vector2(2, 5)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = -1
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 20
+text = "Click to 
+ Attack"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Aim" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 213.0
+offset_top = 463.0
+offset_right = 340.0
+offset_bottom = 528.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="Aim"]
+custom_minimum_size = Vector2(2, 5)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = -1
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 20
+text = "Aim with 
+  Cursor"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="W" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 202.0
+offset_right = 177.0
+offset_bottom = 237.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="W"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = 19
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 25
+text = "W"
+
+[node name="A" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 290.0
+offset_right = 120.0
+offset_bottom = 325.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="A"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = 19
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 25
+text = "A"
+
+[node name="S" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 290.0
+offset_right = 213.0
+offset_bottom = 379.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="S"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = 19
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 25
+text = "S
+"
+
+[node name="D" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 290.0
+offset_right = 302.0
+offset_bottom = 325.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="D"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = 19
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 25
+text = "D"
+
+[node name="F" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 367.0
+offset_top = 290.0
+offset_right = 391.0
+offset_bottom = 325.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="F"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = 19
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 25
+text = "F"
+
+[node name="R" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 337.0
+offset_top = 202.0
+offset_right = 361.0
+offset_bottom = 237.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="R"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = 19
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 25
+text = "R"
