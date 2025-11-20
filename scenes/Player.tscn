@@ -47,5 +47,6 @@ autoplay = "walk"
 frame_progress = 0.8917271
 
 [node name="SpellAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
 script = ExtResource("3_audio2d")
-audio_key = &"spell_cast"
+audio_key = &"fireball_cast"

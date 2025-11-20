@@ -4,6 +4,10 @@ extends Control
 @onready var easy_button = $CenterContainer/Panel/VBoxContainer/EasyButton
 @onready var medium_button = $CenterContainer/Panel/VBoxContainer/MediumButton
 @onready var hard_button = $CenterContainer/Panel/VBoxContainer/HardButton
+@onready var volume_slider = $CenterContainer/Panel/VBoxContainer/VolumeContainer/VolumeSlider
+@onready var volume_value_label = $CenterContainer/Panel/VBoxContainer/VolumeContainer/VolumeValueLabel
+@onready var music_toggle = $CenterContainer/Panel/VBoxContainer/MusicToggleContainer/MusicToggle
+@onready var sfx_toggle = $CenterContainer/Panel/VBoxContainer/SFXToggleContainer/SFXToggle
 
 const MAIN_MENU_SCENE = "res://scenes/MainMenu.tscn"
 const MAIN_GAME_SCENE = "res://scenes/Main.tscn"
@@ -19,6 +23,20 @@ func _ready():
 	
 	_update_current_difficulty()
 	_highlight_selected_button()
+	_update_audio_controls()
+	
+	# Connect slider drag events to ensure proper drag behavior
+	if volume_slider:
+		volume_slider.drag_started.connect(_on_slider_drag_started)
+		volume_slider.drag_ended.connect(_on_slider_drag_ended)
+
+func _on_slider_drag_started():
+	# Slider is being dragged
+	pass
+
+func _on_slider_drag_ended(value_changed: bool):
+	# Slider drag ended
+	pass
 
 func _update_current_difficulty():
 	var difficulty_name = GameSettings.get_difficulty_name()
@@ -40,21 +58,44 @@ func _highlight_selected_button():
 			hard_button.modulate = Color(1, 0.5, 0.5)
 
 func _on_easy_pressed():
+	GameSettings.play_click_sound()
 	GameSettings.set_difficulty(GameSettings.Difficulty.EASY)
 	_update_current_difficulty()
 	_highlight_selected_button()
 
 func _on_medium_pressed():
+	GameSettings.play_click_sound()
 	GameSettings.set_difficulty(GameSettings.Difficulty.MEDIUM)
 	_update_current_difficulty()
 	_highlight_selected_button()
 
 func _on_hard_pressed():
+	GameSettings.play_click_sound()
 	GameSettings.set_difficulty(GameSettings.Difficulty.HARD)
 	_update_current_difficulty()
 	_highlight_selected_button()
 
+func _update_audio_controls():
+	# Load current audio settings
+	volume_slider.value = GameSettings.master_volume
+	volume_value_label.text = str(int(GameSettings.master_volume * 100)) + "%"
+	music_toggle.button_pressed = GameSettings.music_enabled
+	sfx_toggle.button_pressed = GameSettings.sfx_enabled
+
+func _on_volume_slider_value_changed(value: float):
+	GameSettings.set_master_volume(value)
+	volume_value_label.text = str(int(value * 100)) + "%"
+
+func _on_music_toggle_toggled(button_pressed: bool):
+	GameSettings.play_click_sound()
+	GameSettings.set_music_enabled(button_pressed)
+
+func _on_sfx_toggle_toggled(button_pressed: bool):
+	GameSettings.play_click_sound()
+	GameSettings.set_sfx_enabled(button_pressed)
+
 func _on_back_pressed():
+	GameSettings.play_click_sound()
 	if return_to_game:
 		get_tree().change_scene_to_file(MAIN_GAME_SCENE)
 	else:

@@ -11,6 +11,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _pressed():
+	GameSettings.play_click_sound()
 	var pause_menu = get_parent().get_node("PauseMenu")
 	var settings_menu = get_parent().get_node("SettingsMenu")
 	

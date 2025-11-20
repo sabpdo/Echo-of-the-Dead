@@ -61,6 +61,7 @@ sprite_frames = SubResource("SpriteFrames_vrb4v")
 animation = &"walk"
 
 [node name="MonsterAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
 script = ExtResource("3_audio2d")
 audio_key = &"monster_growl"
 autoplay_on_ready = true

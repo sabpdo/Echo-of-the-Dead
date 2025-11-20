@@ -21,6 +21,7 @@ func close():
 	visible = false
 
 func _on_resume_pressed():
+	GameSettings.play_click_sound()
 	# Close both menus and unpause
 	close()
 	if pause_menu:
@@ -28,6 +29,7 @@ func _on_resume_pressed():
 	get_tree().paused = false
 
 func _on_restart_pressed():
+	GameSettings.play_click_sound()
 	var counters = get_tree().get_nodes_in_group("kill_counter")
 	if counters.size() > 0:
 		counters[0].zombies_killed = 0
@@ -36,5 +38,6 @@ func _on_restart_pressed():
 	get_tree().reload_current_scene()
 
 func _on_home_page_pressed() -> void:
+	GameSettings.play_click_sound()
 	get_tree().paused = false
 	get_tree().change_scene_to_file(MAIN_MENU)
