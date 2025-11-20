@@ -34,7 +34,10 @@ func _ready():
 	max_health = int(base_max_health * health_multiplier)
 	current_health = max_health
 	health_changed.emit(current_health, max_health)
-	_update_health_bar()
+	
+	# Hide health bar (user preference - no green bar)
+	if health_bar_container:
+		health_bar_container.visible = false
 	
 	# Find the player
 	player = get_node("/root/Main/Player")
@@ -43,25 +46,27 @@ func _ready():
 	health_changed.connect(_on_health_changed)
 
 func _on_health_changed(current: int, max_hp: int):
-	_update_health_bar()
+	# Health bar is hidden, no need to update
+	pass
 
-func _update_health_bar():
-	if health_bar and health_bar_container:
-		var health_percentage = float(current_health) / float(max_health)
-		health_percentage = clamp(health_percentage, 0.0, 1.0)
-		
-		# Update health bar width based on health percentage
-		var container_width = health_bar_container.size.x
-		health_bar.size.x = container_width * health_percentage
-		health_bar.position.x = 0  # Keep it aligned to the left
-		
-		# Change color based on health (red when low, green when high)
-		if health_percentage > 0.6:
-			health_bar.color = Color(0.2, 0.8, 0.2, 1)  # Green
-		elif health_percentage > 0.3:
-			health_bar.color = Color(0.8, 0.8, 0.2, 1)  # Yellow
-		else:
-			health_bar.color = Color(0.8, 0.2, 0.2, 1)  # Red
+# Health bar update disabled - user prefers no visual health bar
+#func _update_health_bar():
+#	if health_bar and health_bar_container:
+#		var health_percentage = float(current_health) / float(max_health)
+#		health_percentage = clamp(health_percentage, 0.0, 1.0)
+#		
+#		# Update health bar width based on health percentage
+#		var container_width = health_bar_container.size.x
+#		health_bar.size.x = container_width * health_percentage
+#		health_bar.position.x = 0  # Keep it aligned to the left
+#		
+#		# Change color based on health (red when low, green when high)
+#		if health_percentage > 0.6:
+#			health_bar.color = Color(0.2, 0.8, 0.2, 1)  # Green
+#		elif health_percentage > 0.3:
+#			health_bar.color = Color(0.8, 0.8, 0.2, 1)  # Yellow
+#		else:
+#			health_bar.color = Color(0.8, 0.2, 0.2, 1)  # Red
 
 func take_damage(amount: int):
 	var points_counters = get_tree().get_nodes_in_group("points_counter")
