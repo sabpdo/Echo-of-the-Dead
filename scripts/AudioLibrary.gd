@@ -17,7 +17,7 @@ static func get_stream(key: StringName, warn_if_missing: bool = true) -> AudioSt
 	if _cache.has(key):
 		return _cache[key]
 	
-	var path := AUDIO_PATHS.get(String(key), "")
+	var path: String = AUDIO_PATHS.get(String(key), "")
 	if path.is_empty():
 		if warn_if_missing:
 			push_warning("No audio path configured for key '%s'." % key)
@@ -36,4 +36,3 @@ static func get_stream(key: StringName, warn_if_missing: bool = true) -> AudioSt
 
 static func get_audio_path(key: StringName) -> String:
 	return AUDIO_PATHS.get(String(key), "")
-
