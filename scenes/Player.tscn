@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d3hf0nc2buaqs" path="res://scripts/Player.gd" id="1_1"]
 [ext_resource type="Texture2D" uid="uid://cyk2hohmnddj2" path="res://assets/temp.png" id="2_kpjcp"]
+[ext_resource type="Script" path="res://scripts/AudioCuePlayer2D.gd" id="3_audio2d"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kpjcp"]
 
@@ -44,3 +45,7 @@ sprite_frames = SubResource("SpriteFrames_cxr5p")
 animation = &"walk"
 autoplay = "walk"
 frame_progress = 0.8917271
+
+[node name="SpellAudio" type="AudioStreamPlayer2D" parent="."]
+script = ExtResource("3_audio2d")
+audio_key = &"spell_cast"

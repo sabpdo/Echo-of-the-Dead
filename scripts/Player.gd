@@ -45,6 +45,8 @@ signal torch_proximity_changed(has_torch: bool)
 signal generator_proximity_changed(has_generator: bool)
 signal door_proximity_changed(has_door: bool)
 
+@onready var spell_audio = $SpellAudio
+
 func _ready():
 	current_half_hearts = max_half_hearts
 	health_changed.emit(current_half_hearts, max_half_hearts)
@@ -152,3 +154,6 @@ func perform_attack():
 	get_parent().add_child(attack)
 	
 	attack_performed.emit()
+	
+	if spell_audio and spell_audio.has_method("play_cue"):
+		spell_audio.play_cue()

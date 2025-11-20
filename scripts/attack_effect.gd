@@ -13,6 +13,7 @@ var time_left := DURATION
 
 @onready var fireball_sprite = $FireballSprite
 @onready var trail_particles = $TrailParticles
+@onready var fireball_audio = $FireballAudio
 
 var fog_controller: Node = null
 
@@ -30,6 +31,9 @@ func _ready():
 	if fog_controller and direction.length() > 0:
 		# Use circular fog clearing (aspect ratio 1.0)
 		fog_controller.add_light_source(self, 120.0, direction, 1.0)
+	
+	if fireball_audio and fireball_audio.has_method("play_cue"):
+		fireball_audio.play_cue()
 	
 	# Rotate fireball to face movement direction (straight from player)
 	if direction.length() > 0:

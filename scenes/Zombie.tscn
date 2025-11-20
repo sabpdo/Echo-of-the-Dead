@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://beyg3ubfsr0o5" path="res://scripts/Zombie.gd" id="1_1"]
 [ext_resource type="Texture2D" uid="uid://byh1k25q7dmyb" path="res://assets/temp_zombie.png" id="2_g6hu2"]
+[ext_resource type="Script" path="res://scripts/AudioCuePlayer2D.gd" id="3_audio2d"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g6hu2"]
 radius = 20.75
@@ -58,3 +59,9 @@ rotation = -1.5707964
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_vrb4v")
 animation = &"walk"
+
+[node name="MonsterAudio" type="AudioStreamPlayer2D" parent="."]
+script = ExtResource("3_audio2d")
+audio_key = &"monster_growl"
+autoplay_on_ready = true
+restart_on_trigger = false

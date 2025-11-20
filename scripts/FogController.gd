@@ -2,6 +2,7 @@ extends Control
 
 @onready var fog_material = $FogRect.material as ShaderMaterial
 @onready var player = get_node("/root/Main/Player")
+@onready var echolocation_audio = $EcholocationAudio
 
 var view_radius: float = 150.0
 var soft_edge: float = 50.0
@@ -142,6 +143,9 @@ func activate_echolocation():
 	echolocation_on_cooldown = true
 	echolocation_activated.emit()
 	cooldown_started.emit()
+	
+	if echolocation_audio and echolocation_audio.has_method("play_cue"):
+		echolocation_audio.play_cue()
 	
 	# Start cooldown immediately (cooldown includes the active duration)
 	var total_cooldown_time = echolocation_duration + echolocation_cooldown

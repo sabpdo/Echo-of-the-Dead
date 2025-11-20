@@ -3,6 +3,9 @@ extends CharacterBody2D
 const SPEED = 150.0
 const DAMAGE = 0.5  # Half a heart per attack
 const ATTACK_COOLDOWN = 1.0
+const MONSTER_AUDIO_MAX_DISTANCE = 900.0
+const MONSTER_AUDIO_MIN_DB = -32.0
+const MONSTER_AUDIO_MAX_DB = 3.0
 
 # Health system
 var base_max_health: int = 50
@@ -18,6 +21,7 @@ var attack_timer: float = 0.0
 
 @onready var health_bar_container: Control = $HealthBarContainer
 @onready var health_bar: ColorRect = $HealthBarContainer/HealthBar
+@onready var monster_audio = $MonsterAudio
 
 signal health_changed(current_health, max_health)
 signal zombie_died
@@ -115,3 +119,17 @@ func _physics_process(delta):
 			if player.has_method("take_damage"):
 				player.take_damage(DAMAGE)
 			attack_timer = ATTACK_COOLDOWN
+	
+	_update_monster_audio()
+
+func _update_monster_audio():
+	if not monster_audio or not player:
+		return
+	
+	# Keep looping ambience alive for each zombie
+	if monster_audio.stream and not monster_audio.playing:
+		monster_audio.play()
+	
+	var distance = global_position.distance_to(player.global_position)
+	var proximity = clamp(1.0 - distance / MONSTER_AUDIO_MAX_DISTANCE, 0.0, 1.0)
+	monster_audio.volume_db = lerp(MONSTER_AUDIO_MIN_DB, MONSTER_AUDIO_MAX_DB, proximity)
