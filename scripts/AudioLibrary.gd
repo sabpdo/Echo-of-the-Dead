@@ -34,6 +34,6 @@ static func get_stream(key: StringName, warn_if_missing: bool = true) -> AudioSt
 	_cache[key] = null
 	return null
 
-static func get_path(key: StringName) -> String:
+static func get_audio_path(key: StringName) -> String:
 	return AUDIO_PATHS.get(String(key), "")
 
