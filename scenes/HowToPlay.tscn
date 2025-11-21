@@ -51,31 +51,6 @@ anchor_top = 0.2
 anchor_right = 0.9
 anchor_bottom = 0.8
 
-[node name="Instructions" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 549.0
-offset_top = 105.0
-offset_right = 1140.0
-offset_bottom = 633.0
-theme_override_constants/separation = 30
-
-[node name="Instructions" type="Label" parent="Instructions"]
-custom_minimum_size = Vector2(500, 500)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
-theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
-theme_override_constants/line_spacing = 25
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 25
-text = "Kill zombies to survive and unlock new areas as you progress. 
-⁠Explore the environment, find the generator, and shut it off to complete the mission.
-
-Manage your vision spell carefully and pay attention to your health 
-Good luck surviving!"
-vertical_alignment = 1
-autowrap_mode = 3
-
 [node name="Homepage" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 857.0
@@ -91,10 +66,10 @@ text = "Home Page"
 
 [node name="R_Instructions" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 303.0
-offset_top = 123.0
-offset_right = 458.0
-offset_bottom = 227.0
+offset_left = 638.0
+offset_top = 121.0
+offset_right = 793.0
+offset_bottom = 225.0
 
 [node name="Instructions" type="Label" parent="R_Instructions"]
 custom_minimum_size = Vector2(12, 12)
@@ -111,10 +86,10 @@ autowrap_mode = 3
 
 [node name="Movement" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 124.0
-offset_top = 145.0
-offset_right = 268.0
-offset_bottom = 174.0
+offset_left = 459.00006
+offset_top = 143.0
+offset_right = 603.0
+offset_bottom = 172.0
 
 [node name="Instructions" type="Label" parent="Movement"]
 custom_minimum_size = Vector2(12, 12)
@@ -124,17 +99,16 @@ theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 20
-text = "Movement
-Hold Shift to Sprint"
+text = "Movement"
 vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="F_Instructions" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 334.0
-offset_top = 355.0
-offset_right = 449.0
-offset_bottom = 415.0
+offset_left = 669.0
+offset_top = 353.0
+offset_right = 784.0
+offset_bottom = 413.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="F_Instructions"]
@@ -151,63 +125,88 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="W_Key" type="Sprite2D" parent="."]
-position = Vector2(166, 221)
+position = Vector2(501, 219)
 scale = Vector2(0.45541403, 0.4349112)
 texture = ExtResource("2_j20v8")
 
-[node name="Key5" type="Sprite2D" parent="."]
-position = Vector2(258, 220)
+[node name="Empty_Key" type="Sprite2D" parent="."]
+position = Vector2(593, 218)
 scale = Vector2(0.45541403, 0.4349112)
 texture = ExtResource("2_j20v8")
 
-[node name="Key6" type="Sprite2D" parent="."]
-position = Vector2(252.1875, 505)
+[node name="Shift_Key" type="Sprite2D" parent="."]
+position = Vector2(339, 397)
+scale = Vector2(1.1003184, 0.43786985)
+texture = ExtResource("2_j20v8")
+
+[node name="Cursor_Key" type="Sprite2D" parent="."]
+position = Vector2(589.1875, 511)
 scale = Vector2(2.0278666, 0.8402366)
 texture = ExtResource("2_j20v8")
 
-[node name="Key9" type="Sprite2D" parent="."]
+[node name="LeftClick_Key" type="Sprite2D" parent="."]
 modulate = Color(0.8666667, 0.8666667, 0.8666667, 1)
-position = Vector2(172.0625, 554.53125)
+position = Vector2(509.0625, 560.53125)
 scale = Vector2(1.005573, 0.25406852)
 texture = ExtResource("2_j20v8")
 
-[node name="Key10" type="Sprite2D" parent="."]
+[node name="RightClick_Key" type="Sprite2D" parent="."]
 modulate = Color(0.8666667, 0.8666667, 0.8666667, 1)
-position = Vector2(332.00003, 554.53125)
+position = Vector2(669, 560.53125)
 scale = Vector2(1.005573, 0.25406808)
 texture = ExtResource("2_j20v8")
 
 [node name="R_Key" type="Sprite2D" parent="."]
-position = Vector2(347, 222)
+position = Vector2(682, 220)
 scale = Vector2(0.45541403, 0.4349112)
 texture = ExtResource("2_j20v8")
 
 [node name="S_Key" type="Sprite2D" parent="."]
-position = Vector2(197, 309)
+position = Vector2(532, 307)
 scale = Vector2(0.45541403, 0.4349112)
 texture = ExtResource("2_j20v8")
 
 [node name="D_Key" type="Sprite2D" parent="."]
-position = Vector2(287, 309)
+position = Vector2(622, 307)
 scale = Vector2(0.45541403, 0.4349112)
 texture = ExtResource("2_j20v8")
 
 [node name="F_Key" type="Sprite2D" parent="."]
-position = Vector2(376, 309)
+position = Vector2(711, 307)
 scale = Vector2(0.45541403, 0.4349112)
 texture = ExtResource("2_j20v8")
 
 [node name="A_Key" type="Sprite2D" parent="."]
-position = Vector2(105, 309)
+position = Vector2(440.00006, 307)
 scale = Vector2(0.45541403, 0.4349112)
 texture = ExtResource("2_j20v8")
 
+[node name="Instructions" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 877.0
+offset_top = 558.0
+offset_right = 1121.0
+offset_bottom = 586.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="Instructions"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.7607843, 0.101960786, 0.101960786, 1)
+theme_override_constants/line_spacing = 2
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 22
+text = "Good luck surviving!"
+vertical_alignment = 1
+autowrap_mode = 3
+
 [node name="Attack" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 126.0
-offset_top = 583.0
-offset_right = 285.0
-offset_bottom = 649.0
+offset_left = 463.00006
+offset_top = 589.0
+offset_right = 622.0
+offset_bottom = 655.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="Attack"]
@@ -225,10 +224,10 @@ autowrap_mode = 3
 
 [node name="Strong_Attack" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 253.0
-offset_top = 583.0
-offset_right = 449.0
-offset_bottom = 641.0
+offset_left = 592.0
+offset_top = 588.0
+offset_right = 788.0
+offset_bottom = 646.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="Strong_Attack"]
@@ -245,10 +244,10 @@ autowrap_mode = 3
 
 [node name="Aim" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 213.0
-offset_top = 463.0
-offset_right = 340.0
-offset_bottom = 528.0
+offset_left = 544.0
+offset_top = 469.0
+offset_right = 671.0
+offset_bottom = 534.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="Aim"]
@@ -260,16 +259,16 @@ theme_override_constants/line_spacing = -1
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 20
 text = "Aim with 
-  Cursor"
+ Cursor"
 vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="W" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 153.0
-offset_top = 202.0
-offset_right = 177.0
-offset_bottom = 237.0
+offset_left = 493.0
+offset_top = 203.0
+offset_right = 516.99994
+offset_bottom = 238.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="W"]
@@ -284,10 +283,10 @@ text = "W"
 
 [node name="A" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 96.0
-offset_top = 290.0
-offset_right = 120.0
-offset_bottom = 325.0
+offset_left = 431.00006
+offset_top = 288.0
+offset_right = 455.00006
+offset_bottom = 323.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="A"]
@@ -300,12 +299,48 @@ theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 25
 text = "A"
 
+[node name="Shift" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 308.0
+offset_top = 381.0
+offset_right = 424.0
+offset_bottom = 417.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="Shift"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/line_spacing = 19
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "Shift"
+
+[node name="Shift_instructions" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 287.0
+offset_top = 301.0
+offset_right = 403.0
+offset_bottom = 354.0
+theme_override_constants/separation = 30
+
+[node name="Instructions" type="Label" parent="Shift_instructions"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "Press to 
+ Sprint"
+
 [node name="S" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 189.0
-offset_top = 290.0
-offset_right = 213.0
-offset_bottom = 379.0
+offset_left = 524.0
+offset_top = 288.0
+offset_right = 548.0
+offset_bottom = 377.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="S"]
@@ -321,10 +356,10 @@ text = "S
 
 [node name="D" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 278.0
-offset_top = 290.0
-offset_right = 302.0
-offset_bottom = 325.0
+offset_left = 614.0
+offset_top = 289.0
+offset_right = 638.0
+offset_bottom = 324.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="D"]
@@ -339,10 +374,10 @@ text = "D"
 
 [node name="F" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 367.0
-offset_top = 290.0
-offset_right = 391.0
-offset_bottom = 325.0
+offset_left = 706.0
+offset_top = 288.0
+offset_right = 730.0
+offset_bottom = 323.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="F"]
@@ -357,10 +392,10 @@ text = "F"
 
 [node name="R" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 337.0
-offset_top = 202.0
-offset_right = 361.0
-offset_bottom = 237.0
+offset_left = 673.0
+offset_top = 201.0
+offset_right = 697.0
+offset_bottom = 236.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="R"]
