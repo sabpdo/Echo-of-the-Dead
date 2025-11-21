@@ -11,11 +11,15 @@ const MAP_BOTTOM = 640.0
 @export var min_distance_from_player: float = 300.0  # Minimum distance from player to spawn
 
 var zombie_scene = preload("res://scenes/Zombie.tscn")
+var big_zombie_scene = preload("res://scenes/BigZombie.tscn")
 var spawn_points: Array[Vector2] = []
 var player: Node2D = null
 var spawn_timer: float = 0.0
 var active_zombies: Array[Node2D] = []
 var spawning_enabled: bool = true
+
+# Big zombie spawn chance on hard difficulty
+const BIG_ZOMBIE_SPAWN_CHANCE = 0.3  # 30% chance
 
 func _ready():
 	# Find the player
@@ -131,8 +135,18 @@ func _spawn_zombie():
 			
 			spawn_pos = best_spawn
 	
-	# Instantiate zombie
-	var zombie = zombie_scene.instantiate()
+	# Decide which zombie type to spawn
+	var zombie
+	var is_hard_mode = GameSettings.current_difficulty == GameSettings.Difficulty.HARD
+	var spawn_big_zombie = is_hard_mode and randf() < BIG_ZOMBIE_SPAWN_CHANCE
+	
+	if spawn_big_zombie:
+		# Spawn a big zombie (30% chance on hard difficulty)
+		zombie = big_zombie_scene.instantiate()
+	else:
+		# Spawn a regular zombie
+		zombie = zombie_scene.instantiate()
+	
 	zombie.global_position = spawn_pos
 	
 	# Set zombie to collision layer 2 so they can pass through gates (gates are on layer 1)

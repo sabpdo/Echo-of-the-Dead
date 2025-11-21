@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=3 uid="uid://big_zombie_scene"]
+
+[ext_resource type="Script" path="res://scripts/BigZombie.gd" id="1_big"]
+[ext_resource type="Texture2D" uid="uid://byh1k25q7dmyb" path="res://assets/temp_zombie.png" id="2_g6hu2"]
+[ext_resource type="Script" path="res://scripts/AudioCuePlayer2D.gd" id="3_audio2d"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_big"]
+radius = 35.0
+height = 90.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_big"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_g6hu2")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="BigZombie" type="CharacterBody2D"]
+script = ExtResource("1_big")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.25, -0.75)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_big")
+
+[node name="HealthBarContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = -40.0
+mouse_filter = 2
+
+[node name="HealthBarBackground" type="ColorRect" parent="HealthBarContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2, 0.2, 0.2, 0.8)
+
+[node name="HealthBar" type="ColorRect" parent="HealthBarContainer"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 100.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.8, 0.2, 0.2, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.8, 0.3, 0.3, 1)
+rotation = -1.5707964
+scale = Vector2(0.18, 0.18)
+sprite_frames = SubResource("SpriteFrames_big")
+animation = &"walk"
+
+[node name="MonsterAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+pitch_scale = 0.75
+script = ExtResource("3_audio2d")
+audio_key = &"monster_growl"
+autoplay_on_ready = true
+restart_on_trigger = false
+
