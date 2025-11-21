@@ -1,12 +1,12 @@
-[gd_scene load_steps=28 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=31 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
 [ext_resource type="Texture2D" uid="uid://dn722b128mods" path="res://assets/brick.png" id="1_2ofn6"]
 [ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
 [ext_resource type="Script" uid="uid://dvhgcq5hl8sbi" path="res://scripts/FogController.gd" id="3_1"]
 [ext_resource type="Shader" uid="uid://bmvmgq1w8g8qy" path="res://fog_shader.gdshader" id="4_1"]
-[ext_resource type="Script" path="res://scripts/RadarController.gd" id="5_2"]
-[ext_resource type="Script" path="res://scripts/RadarButton.gd" id="5_3"]
+[ext_resource type="Script" uid="uid://bflxnhey45cof" path="res://scripts/RadarController.gd" id="5_2"]
+[ext_resource type="Script" uid="uid://ck5mx4hgf3dqr" path="res://scripts/RadarButton.gd" id="5_3"]
 [ext_resource type="Script" uid="uid://byf3qh6kmqlhu" path="res://scripts/PlayerHealthBar.gd" id="6_1"]
 [ext_resource type="Script" uid="uid://bcffap826g73g" path="res://scripts/ZombieSpawner.gd" id="7_1"]
 [ext_resource type="Script" uid="uid://ds5bxs7u70rap" path="res://scripts/GameOverOverlay.gd" id="8_1"]
@@ -23,9 +23,10 @@
 [ext_resource type="Script" uid="uid://de0k5flb5qr0l" path="res://scripts/GeneratorButton.gd" id="19_generator"]
 [ext_resource type="Script" uid="uid://bk5k32spqfh66" path="res://scripts/DoorButton.gd" id="20_door"]
 [ext_resource type="Script" uid="uid://bpwb1pu7q2lst" path="res://scripts/WinOverlay.gd" id="20_win"]
+[ext_resource type="Texture2D" uid="uid://caiwadvkmalgh" path="res://assets/white_home.png" id="21_fs0b5"]
 [ext_resource type="Script" uid="uid://cbpcvws5np2be" path="res://scripts/points_counter.gd" id="21_points"]
-[ext_resource type="Script" path="res://scripts/AudioCuePlayer.gd" id="22_audio"]
-[ext_resource type="Script" path="res://scripts/Main.gd" id="23_main"]
+[ext_resource type="Script" uid="uid://bvucavn4hilva" path="res://scripts/AudioCuePlayer.gd" id="22_audio"]
+[ext_resource type="Script" uid="uid://biykpidlql58t" path="res://scripts/Main.gd" id="23_main"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
@@ -60,7 +61,6 @@ border_width_bottom = 2
 script = ExtResource("23_main")
 
 [node name="Background" type="ColorRect" parent="."]
-visible = false
 offset_left = -1085.0
 offset_top = -641.0
 offset_right = 1157.0
@@ -88,10 +88,8 @@ stretch_mode = 1
 script = ExtResource("2_1")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-bus = &"Music"
 script = ExtResource("22_audio")
 audio_key = &"background_music"
-autoplay_on_ready = false
 
 [node name="ZombieSpawner" type="Node2D" parent="."]
 script = ExtResource("7_1")
@@ -115,7 +113,6 @@ mouse_filter = 2
 script = ExtResource("3_1")
 
 [node name="EcholocationAudio" type="AudioStreamPlayer" parent="FogLayer/FogController"]
-bus = &"SFX"
 script = ExtResource("22_audio")
 audio_key = &"echolocation_ping"
 
@@ -125,6 +122,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
@@ -590,7 +589,7 @@ anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -300.0
 offset_top = 10.0
-offset_right = -210.0
+offset_right = -205.0
 offset_bottom = 100.0
 grow_horizontal = 0
 script = ExtResource("16_home")
@@ -605,24 +604,36 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Roof" type="Polygon2D" parent="UILayer/HomeIcon/HouseIcon"]
-color = Color(0.6, 0.3, 0.2, 1)
-polygon = PackedVector2Array(22, 5, 45, 22, 0, 22)
+position = Vector2(28, 12)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(20, -2, 49, 26, 19, 26, -9, 26)
 
 [node name="HouseBody" type="ColorRect" parent="UILayer/HomeIcon/HouseIcon"]
 layout_mode = 0
-offset_left = 10.0
+offset_left = 19.0
 offset_top = 38.0
-offset_right = 55.0
-offset_bottom = 72.0
-color = Color(0.4, 0.4, 0.5, 1)
+offset_right = 77.0
+offset_bottom = 78.0
+color = Color(1, 0, 0, 1)
 
 [node name="Door" type="ColorRect" parent="UILayer/HomeIcon/HouseIcon"]
 layout_mode = 0
-offset_left = 22.0
-offset_top = 48.0
-offset_right = 42.0
-offset_bottom = 72.0
-color = Color(0.3, 0.2, 0.1, 1)
+offset_left = 39.0
+offset_top = 54.0
+offset_right = 59.0
+offset_bottom = 78.0
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="UILayer/HomeIcon"]
+visible = false
+modulate = Color(0.74658525, 2.0094587e-06, 8.663535e-07, 1)
+layout_mode = 0
+offset_left = -12.0
+offset_top = -12.0000105
+offset_right = 88.0
+offset_bottom = 87.99999
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("21_fs0b5")
 
 [node name="PauseIcon" type="Button" parent="UILayer"]
 anchors_preset = 1
@@ -653,7 +664,6 @@ stretch_mode = 5
 [node name="PauseMenu" type="Control" parent="UILayer"]
 visible = false
 layout_mode = 3
-anchors_preset = -1
 anchor_left = 0.25
 anchor_top = 0.25
 anchor_right = 0.75
@@ -705,7 +715,6 @@ text = "RESTART"
 [node name="SettingsMenu" type="Control" parent="UILayer"]
 visible = false
 layout_mode = 3
-anchors_preset = -1
 anchor_left = 0.25
 anchor_top = 0.25
 anchor_right = 0.75
