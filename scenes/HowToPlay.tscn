@@ -184,9 +184,9 @@ texture = ExtResource("2_j20v8")
 [node name="Instructions" type="VBoxContainer" parent="."]
 layout_mode = 1
 offset_left = 877.0
-offset_top = 558.0
+offset_top = 548.0
 offset_right = 1121.0
-offset_bottom = 586.0
+offset_bottom = 576.0
 theme_override_constants/separation = 30
 
 [node name="Instructions" type="Label" parent="Instructions"]
@@ -197,7 +197,7 @@ theme_override_colors/font_color = Color(0.7607843, 0.101960786, 0.101960786, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 22
-text = "Good luck surviving!"
+text = "Good Luck Surviving!"
 vertical_alignment = 1
 autowrap_mode = 3
 
