@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 300.0
+const SPRINT_MULTIPLIER = 1.6  # Sprint is 60% faster
 
 # Attack system
 const ATTACK_COOLDOWN = 0.2
@@ -106,8 +107,13 @@ func _physics_process(delta):
 	# Normalize diagonal movement
 	input_dir = input_dir.normalized()
 	
+	# Check if sprinting (Shift key)
+	var current_speed = SPEED
+	if Input.is_key_pressed(KEY_SHIFT):
+		current_speed = SPEED * SPRINT_MULTIPLIER
+	
 	# Set velocity
-	velocity = input_dir * SPEED
+	velocity = input_dir * current_speed
 	
 	# Move the player
 	move_and_slide()

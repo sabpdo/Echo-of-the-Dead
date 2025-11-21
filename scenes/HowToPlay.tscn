@@ -124,7 +124,8 @@ theme_override_colors/font_outline_color = Color(0.2, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 20
-text = "Movement"
+text = "Movement
+Hold Shift to Sprint"
 vertical_alignment = 1
 autowrap_mode = 3
 
