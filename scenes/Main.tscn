@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://dv8cobyu81ie0" path="res://scripts/WallGenerator.gd" id="2_1"]
 [ext_resource type="Script" uid="uid://dvhgcq5hl8sbi" path="res://scripts/FogController.gd" id="3_1"]
 [ext_resource type="Shader" uid="uid://bmvmgq1w8g8qy" path="res://fog_shader.gdshader" id="4_1"]
-[ext_resource type="Script" uid="uid://bflxnhey45cof" path="res://scripts/RadarController.gd" id="5_2"]
-[ext_resource type="Script" uid="uid://ck5mx4hgf3dqr" path="res://scripts/RadarButton.gd" id="5_3"]
+[ext_resource type="Script" path="res://scripts/RadarController.gd" id="5_2"]
+[ext_resource type="Script" path="res://scripts/RadarButton.gd" id="5_3"]
 [ext_resource type="Script" uid="uid://byf3qh6kmqlhu" path="res://scripts/PlayerHealthBar.gd" id="6_1"]
 [ext_resource type="Script" uid="uid://bcffap826g73g" path="res://scripts/ZombieSpawner.gd" id="7_1"]
 [ext_resource type="Script" uid="uid://ds5bxs7u70rap" path="res://scripts/GameOverOverlay.gd" id="8_1"]
@@ -25,8 +25,8 @@
 [ext_resource type="Script" uid="uid://bpwb1pu7q2lst" path="res://scripts/WinOverlay.gd" id="20_win"]
 [ext_resource type="Texture2D" uid="uid://caiwadvkmalgh" path="res://assets/white_home.png" id="21_fs0b5"]
 [ext_resource type="Script" uid="uid://cbpcvws5np2be" path="res://scripts/points_counter.gd" id="21_points"]
-[ext_resource type="Script" uid="uid://bvucavn4hilva" path="res://scripts/AudioCuePlayer.gd" id="22_audio"]
-[ext_resource type="Script" uid="uid://biykpidlql58t" path="res://scripts/Main.gd" id="23_main"]
+[ext_resource type="Script" path="res://scripts/AudioCuePlayer.gd" id="22_audio"]
+[ext_resource type="Script" path="res://scripts/Main.gd" id="23_main"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
