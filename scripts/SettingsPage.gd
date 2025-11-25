@@ -1,13 +1,13 @@
 extends Control
 
-@onready var current_difficulty_label = $CenterContainer/Panel/VBoxContainer/CurrentDifficultyLabel
-@onready var easy_button = $CenterContainer/Panel/VBoxContainer/EasyButton
-@onready var medium_button = $CenterContainer/Panel/VBoxContainer/MediumButton
-@onready var hard_button = $CenterContainer/Panel/VBoxContainer/HardButton
-@onready var volume_slider = $CenterContainer/Panel/VBoxContainer/VolumeContainer/VolumeSlider
-@onready var volume_value_label = $CenterContainer/Panel/VBoxContainer/VolumeContainer/VolumeHeader/VolumeValueLabel
-@onready var music_toggle = $CenterContainer/Panel/VBoxContainer/MusicToggleContainer/MusicToggle
-@onready var sfx_toggle = $CenterContainer/Panel/VBoxContainer/SFXToggleContainer/SFXToggle
+@onready var current_difficulty_label = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/CurrentDifficultyLabel
+@onready var easy_button = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/EasyButton
+@onready var medium_button = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/MediumButton
+@onready var hard_button = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/HardButton
+@onready var volume_slider = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/VolumeContainer/VolumeSlider
+@onready var volume_value_label = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/VolumeContainer/VolumeHeader/VolumeValueLabel
+@onready var music_toggle = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/MusicToggleContainer/MusicToggle
+@onready var sfx_toggle = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/SFXToggleContainer/SFXToggle
 
 const MAIN_MENU_SCENE = "res://scenes/MainMenu.tscn"
 const MAIN_GAME_SCENE = "res://scenes/Main.tscn"
