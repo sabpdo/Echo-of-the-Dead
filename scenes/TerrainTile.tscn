@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cterr3intile"]
+
+[ext_resource type="Script" path="res://scripts/TerrainTile.gd" id="1_terrain"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_terrain"]
+extents = Vector2(25, 25)
+
+[node name="TerrainTile" type="Area2D"]
+script = ExtResource("1_terrain")
+monitorable = true
+monitoring = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_terrain")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.3, 0.3, 0.3, 0.8)
+polygon = PackedVector2Array(-25, -25, 25, -25, 25, 25, -25, 25)
+

@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 const SPRINT_MULTIPLIER = 1.6  # Sprint is 60% faster
+var terrain_speed_multiplier: float = 1.0
 
 # Attack system
 const ATTACK_COOLDOWN = 0.2
@@ -112,6 +113,8 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_SHIFT):
 		current_speed = SPEED * SPRINT_MULTIPLIER
 	
+	current_speed *= terrain_speed_multiplier
+	
 	# Set velocity
 	velocity = input_dir * current_speed
 	
@@ -182,3 +185,9 @@ func perform_strong_attack():
 
 	if spell_audio and spell_audio.has_method("play_cue"):
 		spell_audio.play_cue()
+
+func set_terrain_speed_multiplier(multiplier: float):
+	terrain_speed_multiplier = multiplier
+
+func reset_terrain_speed_multiplier():
+	terrain_speed_multiplier = 1.0

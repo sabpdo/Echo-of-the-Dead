@@ -15,6 +15,7 @@ var current_health: int = 50
 # Difficulty multipliers (set by spawner)
 var speed_multiplier: float = 1.0
 var health_multiplier: float = 1.0
+var terrain_speed_multiplier: float = 1.0
 
 var player: Node2D = null
 var attack_timer: float = 0.0
@@ -98,7 +99,7 @@ func _physics_process(delta):
 	
 	# Move towards player (with speed multiplier)
 	var direction = (player.global_position - global_position).normalized()
-	velocity = direction * SPEED * speed_multiplier
+	velocity = direction * SPEED * speed_multiplier * terrain_speed_multiplier
 	move_and_slide()
 	
 	# Face movement direction
@@ -138,3 +139,9 @@ func _update_monster_audio():
 	var distance = global_position.distance_to(player.global_position)
 	var proximity = clamp(1.0 - distance / MONSTER_AUDIO_MAX_DISTANCE, 0.0, 1.0)
 	monster_audio.volume_db = lerp(MONSTER_AUDIO_MIN_DB, MONSTER_AUDIO_MAX_DB, proximity)
+
+func set_terrain_speed_multiplier(multiplier: float):
+	terrain_speed_multiplier = multiplier
+
+func reset_terrain_speed_multiplier():
+	terrain_speed_multiplier = 1.0

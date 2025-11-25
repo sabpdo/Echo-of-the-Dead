@@ -15,6 +15,7 @@ const DOOR_SCENE = preload("res://scenes/Door.tscn")
 const GATE_SCENE = preload("res://scenes/Gate.tscn")
 const TORCH_SCENE = preload("res://scenes/Torch.tscn")
 const GENERATOR_SCENE = preload("res://scenes/Generator.tscn")
+const TERRAIN_TILE_SCENE = preload("res://scenes/TerrainTile.tscn")
 
 # Hardcoded map layout
 # Edit this array to design your map!
@@ -28,6 +29,12 @@ const GENERATOR_SCENE = preload("res://scenes/Generator.tscn")
 #   'S' = Player spawn point
 #   '.' = Empty space
 #   'B' = Boundary wall (automatically placed, but you can mark them here too)
+#   'H' = Wooden planks (walkable speed boost)
+#   'L' = Leaves (walkable, no change)
+#   'C' = Cobblestone (walkable speed boost)
+#   'M' = Dirt/Mud (walkable, slows zombies)
+#   'R' = Grass (walkable, slows player)
+#   'U' = Puddles (walkable, slows zombies)
 var map_layout = [
 	"................................................",
 	"............Z..........Z..........Z.............",
@@ -57,6 +64,15 @@ var map_layout = [
 var grid_width: int = 0
 var grid_height: int = 0
 var cell_size: float = WALL_SIZE
+
+const TERRAIN_CHAR_MAP := {
+	'H': "wooden_planks",
+	'L': "leaves",
+	'C': "cobblestone",
+	'M': "dirt_mud",
+	'R': "grass",
+	'U': "puddle"
+}
 
 # Spawn point storage
 var zombie_spawn_points: Array[Vector2] = []
@@ -160,6 +176,9 @@ func spawn_map_objects():
 				'.':
 					# Empty space, do nothing
 					pass
+				_:
+					if TERRAIN_CHAR_MAP.has(cell_char):
+						spawn_terrain_tile(world_pos, TERRAIN_CHAR_MAP[cell_char])
 	
 	# Pass zombie spawn points to ZombieSpawner if it exists
 	pass_zombie_spawn_points_to_spawner()
@@ -193,6 +212,13 @@ func spawn_generator_at(position: Vector2):
 	var generator = GENERATOR_SCENE.instantiate()
 	generator.global_position = position
 	add_child(generator)
+
+func spawn_terrain_tile(position: Vector2, terrain_type: String):
+	var tile = TERRAIN_TILE_SCENE.instantiate()
+	tile.global_position = position
+	if tile.has_method("configure"):
+		tile.configure(cell_size, terrain_type)
+	add_child(tile)
 
 func set_player_spawn(position: Vector2):
 	# Set the player's position if player exists
