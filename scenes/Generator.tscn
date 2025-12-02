@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://generator_scene_001"]
+[gd_scene load_steps=6 format=3 uid="uid://generator_scene_001"]
 
 [ext_resource type="Script" path="res://scripts/Generator.gd" id="1_generator"]
+[ext_resource type="Script" path="res://scripts/AudioCuePlayer2D.gd" id="2_audio2d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 80.0
@@ -35,4 +36,11 @@ vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_1")
+
+[node name="ElectricityAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+script = ExtResource("2_audio2d")
+audio_key = &"electricity"
+autoplay_on_ready = false
+restart_on_trigger = true
 

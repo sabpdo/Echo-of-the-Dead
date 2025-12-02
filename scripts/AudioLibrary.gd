@@ -14,7 +14,8 @@ const AUDIO_PATHS := {
 	"human_pain": "res://audio/humanPain.wav",
 	"zombie_death": "res://audio/zombieDeath.wav",
 	"light_switch_on": "res://audio/light_switch_turn_on.mp3",
-	"light_switch_off": "res://audio/light_switch_turn_off.mp3"
+	"light_switch_off": "res://audio/light_switch_turn_off.mp3",
+	"electricity": "res://audio/electricity.flac"
 }
 
 static var _cache: Dictionary = {}

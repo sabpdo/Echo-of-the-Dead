@@ -3,6 +3,7 @@ extends Node2D
 @onready var interaction_area = $InteractionArea
 @onready var color_rect = $ColorRect
 @onready var label = $Label
+@onready var electricity_audio = $ElectricityAudio
 
 var is_on: bool = false
 const INTERACTION_RADIUS: float = 80.0
@@ -47,7 +48,15 @@ func _on_body_exited(body):
 			body.nearby_generator = null
 
 func set_on(on: bool):
+	var was_on = is_on
 	is_on = on
+	
+	# Play electricity sound when generator is turned on
+	if on and not was_on and electricity_audio:
+		if electricity_audio.has_method("play_cue"):
+			electricity_audio.play_cue()
+		elif electricity_audio.stream:
+			electricity_audio.play()
 	
 	if color_rect:
 		if on:
