@@ -19,6 +19,14 @@ var fog_controller: Node = null
 var unexplored_controller: Node = null
 
 func _ready():
+	# Ensure superball and its glow render above torches and other world elements
+	z_index = 4
+	# Also raise superball sprite and glow above torch sprite
+	if fireball_sprite:
+		fireball_sprite.z_index = 4
+	if glow_sprite:
+		glow_sprite.z_index = 4
+	
 	# Set collision mask to detect zombies (layer 2) and walls (layers 1+2 = 3)
 	# Layer 1 = 1, Layer 2 = 2, so 1 + 2 = 3 detects both layers
 	# This allows fireballs to detect zombies and walls, but we'll ignore gates in code
