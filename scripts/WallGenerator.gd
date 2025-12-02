@@ -35,6 +35,13 @@ const TERRAIN_TILE_SCENE = preload("res://scenes/TerrainTile.tscn")
 #   'M' = Dirt/Mud (walkable, slows zombies)
 #   'R' = Grass (walkable, slows player)
 #   'U' = Puddles (walkable, slows zombies)
+#   'Y' = Hay bale (furniture wall)
+#   'A' = Barrel (furniture wall)
+#   'V' = Graves (furniture wall)
+#   'O' = Bones (furniture wall)
+#   'N' = Bushes (furniture wall)
+#   'E' = Rubble (furniture wall)
+#   'F' = Fallen soldier (furniture wall)
 var map_layout = [
 	"................................................",
 	"............Z..........Z..........Z.............",
@@ -60,6 +67,7 @@ var map_layout = [
 
 
 
+
 # Grid settings
 var grid_width: int = 0
 var grid_height: int = 0
@@ -72,6 +80,16 @@ const TERRAIN_CHAR_MAP := {
 	'M': "dirt_mud",
 	'R': "grass",
 	'U': "puddle"
+}
+
+const FURNITURE_CHAR_MAP := {
+	'Y': "hay_bale",
+	'A': "barrel",
+	'V': "graves",
+	'O': "bones",
+	'N': "bushes",
+	'E': "rubble",
+	'F': "fallen_soldier"
 }
 
 # Spawn point storage
@@ -177,7 +195,9 @@ func spawn_map_objects():
 					# Empty space, do nothing
 					pass
 				_:
-					if TERRAIN_CHAR_MAP.has(cell_char):
+					if FURNITURE_CHAR_MAP.has(cell_char):
+						spawn_furniture_wall(world_pos, FURNITURE_CHAR_MAP[cell_char])
+					elif TERRAIN_CHAR_MAP.has(cell_char):
 						spawn_terrain_tile(world_pos, TERRAIN_CHAR_MAP[cell_char])
 	
 	# Pass zombie spawn points to ZombieSpawner if it exists
@@ -189,6 +209,26 @@ func spawn_wall(position: Vector2):
 	# Set wall to collision layers 1 and 2 (blocks both players and zombies)
 	# Layer 1 = 1, Layer 2 = 2, so 1 + 2 = 3
 	wall.collision_layer = 3  # Binary: 11 = layer 1 (player) + layer 2 (zombie)
+	add_child(wall)
+
+func spawn_furniture_wall(position: Vector2, furniture_type: String):
+	# Spawns a furniture wall that functions exactly like a wall but is distinguishable in code
+	var wall = WALL_SCENE.instantiate()
+	wall.global_position = position
+	# Set wall to collision layers 1 and 2 (blocks both players and zombies)
+	# Layer 1 = 1, Layer 2 = 2, so 1 + 2 = 3
+	wall.collision_layer = 3  # Binary: 11 = layer 1 (player) + layer 2 (zombie)
+	# Set name and metadata to distinguish this furniture type in code
+	# Format name: convert "hay_bale" to "HayBale" for readability
+	var name_parts = furniture_type.split("_")
+	var formatted_name = ""
+	for part in name_parts:
+		if part.length() > 0:
+			formatted_name += part[0].to_upper() + part.substr(1)
+	wall.name = formatted_name
+	wall.set_meta("furniture_type", furniture_type)
+	# Add to furniture group for easy identification
+	wall.add_to_group("furniture")
 	add_child(wall)
 
 func spawn_door(position: Vector2):
