@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://info_screen_001"]
+[gd_scene load_steps=2 format=3 uid="uid://qhjoyh210xjl"]
 
-[ext_resource type="Script" path="res://scripts/InfoScreen.gd" id="1_info"]
+[ext_resource type="Script" uid="uid://cq505ax1ba7jb" path="res://scripts/InfoScreen.gd" id="1_info"]
 
 [node name="InfoScreen" type="Control"]
 layout_mode = 3
@@ -45,25 +45,26 @@ text = "INFORMATION"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CreditsLabel" type="Label" parent="VBoxContainer"]
+[node name="CreditsLabel" type="RichTextLabel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_colors/default_color = Color(0.9, 0.9, 0.9, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.1, 0.1, 1)
-theme_override_constants/line_spacing = 8
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 18
-text = "Created by Es Lee, Elisa Xia, Kent Brought, Kira Pospeshil, Lara Monagel, and Sabrina Do.
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[center]Created by Kent Brought, Sabrina Do, Lara Monagel, 
+Kira Pospeshil, Es Lee, and Elisa Xia.
 
-Final project for MIT class CMS.611.
+Final project for MIT class CMS.611/6.4570J (Creating Video Games).
 
-Uses Godot Version 4.5.
+Made with Godot Version 4.5.
 Artwork by Es Lee.
-Music/sound effects from opengameart.org under CC license."
+Music and sound effects from opengameart.org under CC license.
 
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
+It's open source! 
+[color=#4A9EFF][url=https://github.com/sabpdo/Echo-of-the-Dead]https://github.com/sabpdo/Echo-of-the-Dead[/url][/color][/center]"
+scroll_active = false
 
 [node name="HomePageButton" type="Button" parent="."]
 layout_mode = 1
@@ -80,4 +81,5 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Home Page"
 
+[connection signal="meta_clicked" from="VBoxContainer/CreditsLabel" to="." method="_on_credits_label_meta_clicked"]
 [connection signal="pressed" from="HomePageButton" to="." method="_on_home_page_button_pressed"]
