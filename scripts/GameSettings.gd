@@ -22,6 +22,8 @@ var sfx_enabled: bool = true
 func _ready():
 	_setup_audio_buses()
 	_load_audio_settings()
+	# Preload all audio files for web export compatibility
+	AudioLibrary.preload_all()
 
 func _setup_audio_buses():
 	# Create Music bus if it doesn't exist
