@@ -66,3 +66,17 @@ script = ExtResource("3_audio2d")
 audio_key = &"monster_growl"
 autoplay_on_ready = true
 restart_on_trigger = false
+
+[node name="PainAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+script = ExtResource("3_audio2d")
+audio_key = &"zombie_pain"
+autoplay_on_ready = false
+restart_on_trigger = true
+
+[node name="DeathAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+script = ExtResource("3_audio2d")
+audio_key = &"zombie_death"
+autoplay_on_ready = false
+restart_on_trigger = true

@@ -50,3 +50,10 @@ frame_progress = 0.8917271
 bus = &"SFX"
 script = ExtResource("3_audio2d")
 audio_key = &"fireball_cast"
+
+[node name="PainAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+script = ExtResource("3_audio2d")
+audio_key = &"human_pain"
+autoplay_on_ready = false
+restart_on_trigger = true

@@ -9,7 +9,12 @@ const AUDIO_PATHS := {
 	"spell_cast": "res://audio/spell.wav",
 	"echolocation_ping": "res://audio/echolocation.wav",
 	"fireball_cast": "res://audio/fireball.wav",
-	"click": "res://audio/click.wav"
+	"click": "res://audio/click.wav",
+	"zombie_pain": "res://audio/zombiePain.wav",
+	"human_pain": "res://audio/humanPain.wav",
+	"zombie_death": "res://audio/zombieDeath.wav",
+	"light_switch_on": "res://audio/light_switch_turn_on.mp3",
+	"light_switch_off": "res://audio/light_switch_turn_off.mp3"
 }
 
 static var _cache: Dictionary = {}

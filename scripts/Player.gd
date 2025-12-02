@@ -52,6 +52,7 @@ signal generator_proximity_changed(has_generator: bool)
 signal door_proximity_changed(has_door: bool)
 
 @onready var spell_audio = $SpellAudio
+@onready var pain_audio = $PainAudio
 
 func _ready():
 	current_half_hearts = max_half_hearts
@@ -63,6 +64,13 @@ func take_damage(amount: float = 0.5):
 	var half_heart_damage = int(amount * HALF_HEARTS_PER_HEART)
 	current_half_hearts = max(0, current_half_hearts - half_heart_damage)
 	health_changed.emit(current_half_hearts, max_half_hearts)
+	
+	# Play pain sound when taking damage (but not when dying)
+	if current_half_hearts > 0 and pain_audio:
+		if pain_audio.has_method("play_cue"):
+			pain_audio.play_cue()
+		elif pain_audio.stream:
+			pain_audio.play()
 	
 	if current_half_hearts <= 0:
 		player_died.emit()

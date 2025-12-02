@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://torch_scene_001"]
+[gd_scene load_steps=14 format=3 uid="uid://torch_scene_001"]
 
 [ext_resource type="Script" path="res://scripts/Torch.gd" id="1_torch"]
 [ext_resource type="Texture2D" path="res://assets/torch.png" id="2_torch"]
 [ext_resource type="Shader" path="res://torch_glow_shader.gdshader" id="3_glow"]
+[ext_resource type="Script" path="res://scripts/AudioCuePlayer2D.gd" id="4_audio2d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 60.0
@@ -121,4 +122,18 @@ theme_override_font_sizes/font_size = 18
 text = "Light"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="LightSwitchOnAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+script = ExtResource("4_audio2d")
+audio_key = &"light_switch_on"
+autoplay_on_ready = false
+restart_on_trigger = true
+
+[node name="LightSwitchOffAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+script = ExtResource("4_audio2d")
+audio_key = &"light_switch_off"
+autoplay_on_ready = false
+restart_on_trigger = true
 

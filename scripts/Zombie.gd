@@ -26,6 +26,8 @@ const GATE_UPDATE_INTERVAL = 0.5  # Update gate target every 0.5 seconds
 @onready var health_bar_container: Control = $HealthBarContainer
 @onready var health_bar: ColorRect = $HealthBarContainer/HealthBar
 @onready var monster_audio = $MonsterAudio
+@onready var pain_audio = $PainAudio
+@onready var death_audio = $DeathAudio
 
 signal health_changed(current_health, max_health)
 signal zombie_died
@@ -78,7 +80,37 @@ func take_damage(amount: int):
 	current_health = max(0, current_health - amount)
 	health_changed.emit(current_health, max_health)
 	
+	# Play pain sound when taking damage (but not when dying)
+	if current_health > 0 and pain_audio:
+		if pain_audio.has_method("play_cue"):
+			pain_audio.play_cue()
+		elif pain_audio.stream:
+			pain_audio.play()
+	
 	if current_health <= 0:
+		# Play death sound before freeing the zombie
+		if death_audio:
+			# Detach death audio so it can finish playing after zombie is freed
+			var parent_node = get_parent()
+			if parent_node:
+				remove_child(death_audio)
+				parent_node.add_child(death_audio)
+				death_audio.global_position = global_position
+				
+				if death_audio.has_method("play_cue"):
+					death_audio.play_cue()
+				elif death_audio.stream:
+					death_audio.play()
+				
+				# Auto-remove the audio player after it finishes playing
+				# Use a timer to clean up the audio player
+				var cleanup_timer = Timer.new()
+				cleanup_timer.wait_time = 3.0  # Give enough time for the sound to play
+				cleanup_timer.one_shot = true
+				cleanup_timer.timeout.connect(func(): death_audio.queue_free(); cleanup_timer.queue_free())
+				parent_node.add_child(cleanup_timer)
+				cleanup_timer.start()
+		
 		var counters = get_tree().get_nodes_in_group("kill_counter")
 		if counters.size() > 0:
 			counters[0].zombies_killed += 1

@@ -5,6 +5,8 @@ extends Node2D
 @onready var light_2d = $Light2D
 @onready var interaction_button = $InteractionButton
 @onready var glow_effect = $GlowEffect
+@onready var light_switch_on_audio = $LightSwitchOnAudio
+@onready var light_switch_off_audio = $LightSwitchOffAudio
 
 var is_lit: bool = false
 var fog_controller: Node = null
@@ -13,6 +15,7 @@ const LIGHT_RADIUS: float = 150.0
 var player_nearby: bool = false
 var toggle_cooldown: float = 0.0
 const TOGGLE_COOLDOWN_TIME: float = 0.3
+var _initialized: bool = false
 
 signal torch_toggled(lit: bool)
 
@@ -20,8 +23,9 @@ func _ready():
 	fog_controller = get_node("/root/Main/FogLayer/FogController")
 	unexplored_controller = get_node("/root/Main/FogLayer/UnexploredController")
 	
-	# Start unlit
-	set_lit(false)
+	# Start unlit (without playing sound)
+	set_lit(false, false)
+	_initialized = true
 	
 	# Connect interaction signal
 	if interaction_area:
@@ -73,8 +77,22 @@ func _on_body_exited(body):
 			body.nearby_torch = null
 		player_nearby = false
 
-func set_lit(lit: bool):
+func set_lit(lit: bool, play_sound: bool = true):
+	var was_lit = is_lit
 	is_lit = lit
+	
+	# Play light switch sound when state changes (but not on initial setup)
+	if _initialized and play_sound and was_lit != lit:
+		if lit and light_switch_on_audio:
+			if light_switch_on_audio.has_method("play_cue"):
+				light_switch_on_audio.play_cue()
+			elif light_switch_on_audio.stream:
+				light_switch_on_audio.play()
+		elif not lit and light_switch_off_audio:
+			if light_switch_off_audio.has_method("play_cue"):
+				light_switch_off_audio.play_cue()
+			elif light_switch_off_audio.stream:
+				light_switch_off_audio.play()
 	
 	if animated_sprite:
 		# Always visible, but show different animation based on state
