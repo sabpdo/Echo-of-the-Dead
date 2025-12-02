@@ -113,6 +113,10 @@ func stop_spawning_and_kill_all():
 	# Clear the array
 	active_zombies.clear()
 
+func resume_spawning():
+	# Resume spawning after it was stopped (used when player chooses to keep playing)
+	spawning_enabled = true
+
 func _spawn_zombie():
 	if spawn_points.is_empty() or not player:
 		return

@@ -5,7 +5,8 @@ const SPEED = 400.0
 # duration of the attack
 const DURATION = 0.4
 # how much the zombie is damaged
-const DAMAGE = 25
+# Reduced to half so regular fireballs do less damage than strong fireballs
+const DAMAGE = 12
 
 var direction: Vector2 = Vector2.ZERO
 

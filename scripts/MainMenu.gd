@@ -4,6 +4,7 @@ extends Control
 @onready var settings_button = $VBoxContainer/SettingsButton
 @onready var info_button = $InfoButtonContainer/InfoButton
 @onready var info_button_container = $InfoButtonContainer
+@onready var vbox_container = $VBoxContainer
 
 const MAIN_SCENE = preload("res://scenes/Main.tscn")
 const HOW_TO_PLAY_SCENE = preload("res://scenes/HowToPlay.tscn")
@@ -16,6 +17,9 @@ func _ready():
 	play_button.pressed.connect(_on_play_pressed)
 	settings_button.pressed.connect(_on_settings_pressed)
 	info_button.pressed.connect(_on_info_button_pressed)
+
+	# Start UI faded out, then tween it in smoothly
+	_start_ui_fade_in()
 	
 	# Set info button container size relative to viewport
 	_update_info_button_size()
@@ -40,6 +44,22 @@ func _update_info_button_size():
 		# Scale font size relative to button size
 		var font_size = max(20, button_size.y * 0.7)
 		info_button.add_theme_font_size_override("font_size", int(font_size))
+
+
+func _start_ui_fade_in() -> void:
+	# Start the main menu UI invisible and fade it in
+	if vbox_container:
+		vbox_container.modulate.a = 0.0
+	if info_button_container:
+		info_button_container.modulate.a = 0.0
+
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+	if vbox_container:
+		tween.tween_property(vbox_container, "modulate:a", 1.0, 1.2)
+	if info_button_container:
+		tween.parallel().tween_property(info_button_container, "modulate:a", 1.0, 1.0)
 
 func _on_play_pressed():
 	GameSettings.play_click_sound()

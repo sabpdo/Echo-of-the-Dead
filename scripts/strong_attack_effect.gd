@@ -2,8 +2,8 @@ extends Area2D
 
 # speed of the attack
 const SPEED = 100.0
-# duration of the attack
-const DURATION = 1.6  # Twice as long as before
+# duration of the attack (tripled current lifetime)
+const DURATION = 4.8
 # how much the zombie is damaged
 const DAMAGE = 50
 

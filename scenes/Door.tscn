@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://door_scene_001"]
+[gd_scene load_steps=7 format=3 uid="uid://door_scene_001"]
 
 [ext_resource type="Script" path="res://scripts/Door.gd" id="1_door"]
 [ext_resource type="Texture2D" path="res://assets/ClosedDoor.png" id="2_closed"]
@@ -9,6 +9,12 @@ size = Vector2(50, 50)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 80.0
+
+[sub_resource type="ParticleProcessMaterial" id="DoorParticlesMaterial"]
+direction = Vector3(0, 0, -1)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+color = Color(0.7, 0.3, 1, 0.8)
 
 [node name="Door" type="StaticBody2D" groups=["walls"]]
 script = ExtResource("1_door")
@@ -29,6 +35,18 @@ texture = ExtResource("3_open")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_1")
+
+[node name="DoorParticles" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 1)
+emitting = true
+amount = 25
+lifetime = 1.2
+one_shot = false
+preprocess = 0.5
+speed_scale = 1.0
+explosiveness = 0.0
+randomness = 0.2
+process_material = SubResource("DoorParticlesMaterial")
 
 [node name="InteractionButton" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0.9)

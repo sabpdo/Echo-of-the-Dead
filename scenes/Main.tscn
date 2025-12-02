@@ -32,6 +32,7 @@
 [ext_resource type="Shader" uid="uid://c44etgsbgski5" path="res://unexplored_shader.gdshader" id="24_1"]
 [ext_resource type="Script" uid="uid://v88j1kfyaa5o" path="res://scripts/UnexploredController.gd" id="25_1"]
 [ext_resource type="Script" uid="uid://pbasx6tb5md7" path="res://scripts/DamageVignette.gd" id="26_1"]
+[ext_resource type="Script" path="res://scripts/GeneratorRingEffect.gd" id="27_1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
 shader = ExtResource("4_1")
@@ -165,6 +166,17 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[node name="GeneratorRingEffect" type="Control" parent="FogLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+z_index = 10
+script = ExtResource("27_1")
+
 [node name="UILayer" type="CanvasLayer" parent="."]
 
 [node name="PlayerHealthBarContainer" type="Control" parent="UILayer"]
@@ -187,6 +199,7 @@ theme_override_constants/separation = 10
 
 [node name="LightTorchButtonContainer" type="Control" parent="UILayer"]
 visible = false
+z_index = 100
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
@@ -243,6 +256,7 @@ horizontal_alignment = 1
 
 [node name="GeneratorButtonContainer" type="Control" parent="UILayer"]
 visible = false
+z_index = 100
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
@@ -299,6 +313,7 @@ horizontal_alignment = 1
 
 [node name="DoorButtonContainer" type="Control" parent="UILayer"]
 visible = false
+z_index = 100
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
@@ -691,6 +706,13 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_1")
 text = "Play Again"
+
+[node name="KeepPlayingButton" type="Button" parent="UILayer/WinOverlay/VBoxContainer"]
+process_mode = 4
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+text = "Keep Playing"
 
 [node name="ReturnHomeButton" type="Button" parent="UILayer/WinOverlay/VBoxContainer"]
 process_mode = 4
