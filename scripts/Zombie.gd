@@ -19,6 +19,9 @@ var terrain_speed_multiplier: float = 1.0
 
 var player: Node2D = null
 var attack_timer: float = 0.0
+var target_gate: Node2D = null
+var gate_update_timer: float = 0.0
+const GATE_UPDATE_INTERVAL = 0.5  # Update gate target every 0.5 seconds
 
 @onready var health_bar_container: Control = $HealthBarContainer
 @onready var health_bar: ColorRect = $HealthBarContainer/HealthBar
@@ -96,9 +99,18 @@ func _physics_process(delta):
 		return
 	
 	attack_timer -= delta
+	gate_update_timer -= delta
 	
-	# Move towards player (with speed multiplier)
-	var direction = (player.global_position - global_position).normalized()
+	# Update target gate periodically
+	if gate_update_timer <= 0.0:
+		target_gate = _find_nearest_gate()
+		gate_update_timer = GATE_UPDATE_INTERVAL
+	
+	# Determine movement target: gate first, then player
+	var target_position = _get_movement_target()
+	
+	# Move towards target (with speed multiplier)
+	var direction = (target_position - global_position).normalized()
 	velocity = direction * SPEED * speed_multiplier * terrain_speed_multiplier
 	move_and_slide()
 	
@@ -145,3 +157,49 @@ func set_terrain_speed_multiplier(multiplier: float):
 
 func reset_terrain_speed_multiplier():
 	terrain_speed_multiplier = 1.0
+
+func _find_nearest_gate() -> Node2D:
+	# Get all gates in the scene
+	var gates = get_tree().get_nodes_in_group("gates")
+	if gates.is_empty() or not player:
+		return null
+	
+	# Find the gate nearest to the player (not the zombie)
+	var nearest_gate: Node2D = null
+	var nearest_distance: float = INF
+	
+	for gate in gates:
+		if not is_instance_valid(gate):
+			continue
+		var distance = player.global_position.distance_to(gate.global_position)
+		if distance < nearest_distance:
+			nearest_distance = distance
+			nearest_gate = gate
+	
+	return nearest_gate
+
+func _get_movement_target() -> Vector2:
+	# If no gate found, go directly to player
+	if not target_gate or not is_instance_valid(target_gate):
+		return player.global_position
+	
+	# Check if zombie has passed through the gate (is on player's side)
+	# We consider the zombie past the gate if:
+	# 1. The zombie is closer to the player than the gate is, OR
+	# 2. The zombie is on the same side of the gate as the player
+	var gate_pos = target_gate.global_position
+	var zombie_pos = global_position
+	var player_pos = player.global_position
+	
+	# Calculate distances
+	var zombie_to_gate = zombie_pos.distance_to(gate_pos)
+	var zombie_to_player = zombie_pos.distance_to(player_pos)
+	var gate_to_player = gate_pos.distance_to(player_pos)
+	
+	# If zombie is closer to player than gate is, we've passed the gate
+	# Or if the zombie is very close to the gate (within 30 units), consider it passed
+	if zombie_to_player < gate_to_player or zombie_to_gate < 30.0:
+		return player_pos
+	
+	# Otherwise, move towards the gate
+	return gate_pos
