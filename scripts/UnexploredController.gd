@@ -5,10 +5,11 @@ extends Control
 @onready var fog_controller = get_node("/root/Main/FogLayer/FogController")
 
 # Map boundaries (matching WallGenerator)
-const MAP_LEFT = -1085.0
-const MAP_RIGHT = 1157.0
-const MAP_TOP = -640.0
-const MAP_BOTTOM = 640.0
+# Map size is 2.3x larger to accommodate larger map layouts
+const MAP_LEFT = -2495.5
+const MAP_RIGHT = 2661.1
+const MAP_TOP = -1472.0
+const MAP_BOTTOM = 1472.0
 const MAP_WIDTH = MAP_RIGHT - MAP_LEFT
 const MAP_HEIGHT = MAP_BOTTOM - MAP_TOP
 
