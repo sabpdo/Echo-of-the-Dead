@@ -11,6 +11,7 @@ const MONSTER_AUDIO_MAX_DB = 3.0
 var base_max_health: int = 125  # 1.25x regular zombie health
 var max_health: int = 125
 var current_health: int = 125
+var fractional_damage: float = 0.0  # Track fractional damage
 
 # Difficulty multipliers (set by spawner)
 var speed_multiplier: float = 1.0
@@ -23,11 +24,16 @@ var target_gate: Node2D = null
 var gate_update_timer: float = 0.0
 const GATE_UPDATE_INTERVAL = 0.5  # Update gate target every 0.5 seconds
 
+# Freeze state
+var is_frozen: bool = false
+var freeze_timer: float = 0.0
+
 @onready var health_bar_container: Control = $HealthBarContainer
 @onready var health_bar: ColorRect = $HealthBarContainer/HealthBar
 @onready var monster_audio = $MonsterAudio
 @onready var pain_audio = $PainAudio
 @onready var death_audio = $DeathAudio
+@onready var freeze_effect = $FreezeEffect
 
 signal health_changed(current_health, max_health)
 signal zombie_died
@@ -56,11 +62,20 @@ func _on_health_changed(current: int, max_hp: int):
 	# Health bar is hidden, no need to update
 	pass
 
-func take_damage(amount: int):
+func take_damage(amount):
+	# Accept both int and float for damage
+	var damage_float: float = float(amount)
 	var points_counters = get_tree().get_nodes_in_group("points_counter")
 	
-	current_health = max(0, current_health - amount)
-	health_changed.emit(current_health, max_health)
+	# Add to fractional damage
+	fractional_damage += damage_float
+	
+	# Apply whole damage when fractional damage >= 1.0
+	var whole_damage: int = int(fractional_damage)
+	if whole_damage > 0:
+		fractional_damage -= float(whole_damage)
+		current_health = max(0, current_health - whole_damage)
+		health_changed.emit(current_health, max_health)
 	
 	# Play pain sound when taking damage (but not when dying)
 	if current_health > 0 and pain_audio:
@@ -111,6 +126,18 @@ func take_damage(amount: int):
 func _physics_process(delta):
 	if not player:
 		return
+	
+	# Update freeze timer
+	if is_frozen:
+		freeze_timer -= delta
+		if freeze_timer <= 0.0:
+			_unfreeze()
+		else:
+			# Stop movement when frozen
+			velocity = Vector2.ZERO
+			move_and_slide()
+			_update_freeze_effect()
+			return
 	
 	attack_timer -= delta
 	gate_update_timer -= delta
@@ -171,6 +198,25 @@ func set_terrain_speed_multiplier(multiplier: float):
 
 func reset_terrain_speed_multiplier():
 	terrain_speed_multiplier = 1.0
+
+func freeze(duration: float):
+	is_frozen = true
+	freeze_timer = duration
+	_update_freeze_effect()
+
+func _unfreeze():
+	is_frozen = false
+	freeze_timer = 0.0
+	_update_freeze_effect()
+
+func _update_freeze_effect():
+	if freeze_effect:
+		freeze_effect.visible = is_frozen
+		if is_frozen:
+			# Add a subtle pulsing effect
+			var time = Time.get_ticks_msec() / 1000.0
+			var pulse = 0.7 + 0.3 * sin(time * 3.0)
+			freeze_effect.modulate = Color(1, 1, 1, pulse)
 
 func _find_nearest_gate() -> Node2D:
 	# Get all gates in the scene

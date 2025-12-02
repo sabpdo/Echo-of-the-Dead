@@ -13,6 +13,11 @@ var radar_max_radius: float = 500.0
 var radar_active: bool = false
 var radar_on_cooldown: bool = false
 var detected_zombies: Array[Dictionary] = []
+var hit_zombies_this_pulse: Array[Node2D] = []  # Track zombies hit in current pulse
+
+# Radar freeze and damage parameters
+const RADAR_FREEZE_DURATION: float = 3.0  # How long zombies are frozen
+const RADAR_DAMAGE: float = 0.25  # Damage dealt to zombies
 
 # Visual components
 var radar_tween: Tween = null
@@ -83,6 +88,7 @@ func activate_radar():
 func _start_radar_pulse():
 	visible = true
 	set_meta("current_radius", 0.0)
+	hit_zombies_this_pulse.clear()  # Reset hit list for new pulse
 	
 	# Create tween for radar expansion and contraction
 	if radar_tween:
@@ -95,8 +101,11 @@ func _start_radar_pulse():
 	radar_tween.tween_method(_update_radar_radius, 0.0, radar_max_radius, radar_pulse_duration * 0.6)
 	radar_tween.tween_method(_update_radar_radius, radar_max_radius, 0.0, radar_pulse_duration * 0.4)
 	
-	# Hide radar circle when done
-	radar_tween.tween_callback(func(): visible = false)
+	# Hide radar circle when done and clear hit list
+	radar_tween.tween_callback(func(): 
+		visible = false
+		hit_zombies_this_pulse.clear()
+	)
 
 func _update_radar_radius(radius: float):
 	set_meta("current_radius", radius)
@@ -133,6 +142,11 @@ func _check_zombie_detection(current_radius: float):
 		# Use a larger tolerance to ensure zombies are detected
 		var tolerance = 30.0
 		if distance_to_zombie <= current_radius + tolerance and distance_to_zombie >= current_radius - tolerance:
+			# Push zombie away and deal damage when pulse hits (only once per pulse)
+			if zombie not in hit_zombies_this_pulse:
+				_push_and_damage_zombie(zombie)
+				hit_zombies_this_pulse.append(zombie)
+			
 			# Check if zombie is not already detected
 			var already_detected = false
 			for detected in detected_zombies:
@@ -150,6 +164,18 @@ func _find_zombies_recursive(node: Node, zombie_list: Array):
 	
 	for child in node.get_children():
 		_find_zombies_recursive(child, zombie_list)
+
+func _push_and_damage_zombie(zombie: Node2D):
+	if not player or not is_instance_valid(zombie):
+		return
+	
+	# Freeze zombie for 3 seconds
+	if zombie.has_method("freeze"):
+		zombie.freeze(RADAR_FREEZE_DURATION)
+	
+	# Deal damage to zombie (0.25 damage)
+	if zombie.has_method("take_damage"):
+		zombie.take_damage(RADAR_DAMAGE)
 
 func _detect_zombie(zombie: Node2D):
 	# Add zombie to detected list
