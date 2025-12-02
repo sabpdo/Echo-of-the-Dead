@@ -1,13 +1,14 @@
 extends Control
 
-@onready var current_difficulty_label = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/CurrentDifficultyLabel
-@onready var easy_button = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/EasyButton
-@onready var medium_button = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/MediumButton
-@onready var hard_button = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/HardButton
-@onready var volume_slider = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/VolumeContainer/VolumeSlider
-@onready var volume_value_label = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/VolumeContainer/VolumeHeader/VolumeValueLabel
-@onready var music_toggle = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/MusicToggleContainer/MusicToggle
-@onready var sfx_toggle = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/SFXToggleContainer/SFXToggle
+@onready var current_difficulty_label = $CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/CurrentDifficultyLabel
+@onready var easy_button = $CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/EasyButton
+@onready var medium_button = $CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/MediumButton
+@onready var hard_button = $CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/HardButton
+@onready var volume_slider = $CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/VolumeContainer/VolumeSlider
+@onready var volume_value_label = $CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/VolumeContainer/VolumeHeader/VolumeValueLabel
+@onready var music_toggle = $CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/MusicToggleContainer/MusicToggle
+@onready var sfx_toggle = $CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/SFXToggleContainer/SFXToggle
+@onready var panel = $CenterContainer/Panel
 
 const MAIN_MENU_SCENE = "res://scenes/MainMenu.tscn"
 const MAIN_GAME_SCENE = "res://scenes/Main.tscn"
@@ -15,11 +16,17 @@ const MAIN_GAME_SCENE = "res://scenes/Main.tscn"
 # Track where we came from
 var return_to_game: bool = false
 
+# Hardcoded default height
+const DEFAULT_HEIGHT = 900
+
 func _ready():
 	# Check if we should return to game (if there's a saved state)
 	if GameSettings.has_meta("came_from_game"):
 		return_to_game = GameSettings.get_meta("came_from_game")
 		GameSettings.remove_meta("came_from_game")
+	
+	# Set dynamic height for settings panel
+	_set_dynamic_height()
 	
 	_update_current_difficulty()
 	_highlight_selected_button()
@@ -29,6 +36,15 @@ func _ready():
 	if volume_slider:
 		volume_slider.drag_started.connect(_on_slider_drag_started)
 		volume_slider.drag_ended.connect(_on_slider_drag_ended)
+
+func _set_dynamic_height():
+	# Get screen height
+	var screen_height = get_viewport().get_visible_rect().size.y
+	# Use the smaller of screen height or default height
+	var panel_height = min(screen_height, DEFAULT_HEIGHT)
+	# Set the panel's minimum size height
+	if panel:
+		panel.custom_minimum_size.y = panel_height
 
 func _on_slider_drag_started():
 	# Slider is being dragged

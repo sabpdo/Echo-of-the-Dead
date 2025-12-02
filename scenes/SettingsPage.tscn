@@ -59,18 +59,13 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/Panel/MarginContainer"]
-layout_mode = 2
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/ScrollContainer"]
+[node name="MainVBox" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/MainVBox"]
 layout_mode = 2
 size_flags_vertical = 0
 custom_minimum_size = Vector2(0, 60)
@@ -80,12 +75,29 @@ text = "SETTINGS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer1" type="Control" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer_Title" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="DifficultyLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/Panel/MarginContainer/MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Spacer1" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="DifficultyLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 custom_minimum_size = Vector2(0, 40)
@@ -94,7 +106,7 @@ text = "SELECT DIFFICULTY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CurrentDifficultyLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="CurrentDifficultyLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 custom_minimum_size = Vector2(0, 30)
@@ -104,12 +116,12 @@ text = "Current: MEDIUM"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer2" type="Control" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer2" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="EasyButton" type="Button" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="EasyButton" type="Button" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -117,7 +129,7 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 28
 text = "EASY (Fewer, Slower Zombies)"
 
-[node name="MediumButton" type="Button" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="MediumButton" type="Button" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -125,7 +137,7 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 28
 text = "MEDIUM (Normal Zombies)"
 
-[node name="HardButton" type="Button" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="HardButton" type="Button" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -133,23 +145,23 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 28
 text = "HARD (Big Zombies + Many Fast!)"
 
-[node name="Spacer3" type="Control" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer3" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Separator" type="ColorRect" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Separator" type="ColorRect" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 custom_minimum_size = Vector2(0, 2)
 color = Color(0.9, 0.1, 0.1, 0.5)
 
-[node name="Spacer_Sep" type="Control" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer_Sep" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="AudioLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="AudioLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 0
@@ -161,38 +173,38 @@ text = "🔊 AUDIO SETTINGS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer4" type="Control" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer4" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="VolumeContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="VolumeContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_constants/separation = 8
 
-[node name="VolumeHeader" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/VolumeContainer"]
+[node name="VolumeHeader" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/VolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 10
 
-[node name="VolumeLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/VolumeContainer/VolumeHeader"]
+[node name="VolumeLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/VolumeContainer/VolumeHeader"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 22
 text = "🔉 Master Volume"
 vertical_alignment = 1
 
-[node name="VolumeValueLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/VolumeContainer/VolumeHeader"]
+[node name="VolumeValueLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/VolumeContainer/VolumeHeader"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 22
 text = "100%"
 vertical_alignment = 1
 
-[node name="VolumeSlider" type="HSlider" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/VolumeContainer"]
+[node name="VolumeSlider" type="HSlider" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/VolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -205,19 +217,19 @@ allow_greater = false
 allow_lesser = false
 scrollable = false
 
-[node name="Spacer5" type="Control" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer5" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="MusicToggleContainer" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="MusicToggleContainer" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_constants/separation = 20
 
-[node name="MusicToggle" type="CheckBox" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/MusicToggleContainer"]
+[node name="MusicToggle" type="CheckBox" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/MusicToggleContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -225,19 +237,19 @@ theme_override_font_sizes/font_size = 24
 text = "♫ Background Music"
 button_pressed = true
 
-[node name="Spacer6" type="Control" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer6" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="SFXToggleContainer" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="SFXToggleContainer" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_constants/separation = 20
 
-[node name="SFXToggle" type="CheckBox" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/SFXToggleContainer"]
+[node name="SFXToggle" type="CheckBox" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/SFXToggleContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -245,24 +257,29 @@ theme_override_font_sizes/font_size = 24
 text = "⚡ Sound Effects"
 button_pressed = true
 
-[node name="Spacer7" type="Control" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer7" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="BackButton" type="Button" parent="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer_Back" type="Control" parent="CenterContainer/Panel/MarginContainer/MainVBox"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="BackButton" type="Button" parent="CenterContainer/Panel/MarginContainer/MainVBox"]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 28
 text = "BACK"
 
-[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/EasyButton" to="." method="_on_easy_pressed"]
-[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/MediumButton" to="." method="_on_medium_pressed"]
-[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/HardButton" to="." method="_on_hard_pressed"]
-[connection signal="value_changed" from="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/VolumeContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
-[connection signal="toggled" from="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/MusicToggleContainer/MusicToggle" to="." method="_on_music_toggle_toggled"]
-[connection signal="toggled" from="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/SFXToggleContainer/SFXToggle" to="." method="_on_sfx_toggle_toggled"]
-[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer/BackButton" to="." method="_on_back_pressed"]
-
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/EasyButton" to="." method="_on_easy_pressed"]
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/MediumButton" to="." method="_on_medium_pressed"]
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/HardButton" to="." method="_on_hard_pressed"]
+[connection signal="value_changed" from="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/VolumeContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="toggled" from="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/MusicToggleContainer/MusicToggle" to="." method="_on_music_toggle_toggled"]
+[connection signal="toggled" from="CenterContainer/Panel/MarginContainer/MainVBox/ScrollContainer/VBoxContainer/SFXToggleContainer/SFXToggle" to="." method="_on_sfx_toggle_toggled"]
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/MainVBox/BackButton" to="." method="_on_back_pressed"]

@@ -7,10 +7,6 @@ func _ready() -> void:
 func _pressed():
 	GameSettings.play_click_sound()
 	var settings_menu = get_parent().get_node("SettingsMenu")
-	var pause_menu = get_parent().get_node("PauseMenu")
 	
-	# Don't open settings menu if pause menu is open
-	if pause_menu and pause_menu.visible:
-		return
-	
+	# Open settings menu even when paused
 	settings_menu.open()

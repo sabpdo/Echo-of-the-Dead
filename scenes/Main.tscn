@@ -64,6 +64,9 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 0.6, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3"]
+bg_color = Color(1, 1, 1, 0)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.2, 0.2, 0.2, 0.9)
 border_width_left = 2
@@ -176,6 +179,18 @@ grow_vertical = 2
 mouse_filter = 2
 z_index = 10
 script = ExtResource("27_1")
+
+[node name="WorldUILayer" type="CanvasLayer" parent="."]
+layer = 1
+
+[node name="WorldUIContainer" type="Control" parent="WorldUILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
@@ -756,6 +771,10 @@ offset_top = 10.0
 offset_right = -205.0
 offset_bottom = 100.0
 grow_horizontal = 0
+z_index = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3")
 script = ExtResource("16_home")
 
 [node name="HouseIcon" type="Control" parent="UILayer/HomeIcon"]
@@ -771,6 +790,7 @@ mouse_filter = 2
 position = Vector2(28, 12)
 color = Color(1, 0, 0, 1)
 polygon = PackedVector2Array(20, -2, 49, 26, 19, 26, -9, 26)
+mouse_filter = 2
 
 [node name="HouseBody" type="ColorRect" parent="UILayer/HomeIcon/HouseIcon"]
 layout_mode = 0
@@ -778,6 +798,7 @@ offset_left = 19.0
 offset_top = 38.0
 offset_right = 77.0
 offset_bottom = 78.0
+mouse_filter = 2
 color = Color(1, 0, 0, 1)
 
 [node name="Door" type="ColorRect" parent="UILayer/HomeIcon/HouseIcon"]
@@ -786,6 +807,7 @@ offset_left = 39.0
 offset_top = 54.0
 offset_right = 59.0
 offset_bottom = 78.0
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="TextureRect" type="TextureRect" parent="UILayer/HomeIcon"]
