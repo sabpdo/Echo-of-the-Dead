@@ -103,6 +103,11 @@ func _ready():
 		grid_height = map_layout.size()
 		grid_width = map_layout[0].length()
 	
+	# Set background z_index to be below terrain tiles
+	var background = get_node_or_null("../Background")
+	if background:
+		background.z_index = -1
+	
 	spawn_boundary_walls()
 	spawn_map_objects()
 
@@ -209,6 +214,8 @@ func spawn_wall(position: Vector2):
 	# Set wall to collision layers 1 and 2 (blocks both players and zombies)
 	# Layer 1 = 1, Layer 2 = 2, so 1 + 2 = 3
 	wall.collision_layer = 3  # Binary: 11 = layer 1 (player) + layer 2 (zombie)
+	# Set z_index so walls render above terrain tiles
+	wall.z_index = 1
 	add_child(wall)
 
 func spawn_furniture_wall(position: Vector2, furniture_type: String):
@@ -218,6 +225,10 @@ func spawn_furniture_wall(position: Vector2, furniture_type: String):
 	# Set wall to collision layers 1 and 2 (blocks both players and zombies)
 	# Layer 1 = 1, Layer 2 = 2, so 1 + 2 = 3
 	wall.collision_layer = 3  # Binary: 11 = layer 1 (player) + layer 2 (zombie)
+	# Set z_index so furniture walls render above terrain tiles
+	wall.z_index = 1
+	# Ensure it's in the walls group (should already be from scene, but make sure)
+	wall.add_to_group("walls")
 	# Set name and metadata to distinguish this furniture type in code
 	# Format name: convert "hay_bale" to "HayBale" for readability
 	var name_parts = furniture_type.split("_")
@@ -236,6 +247,8 @@ func spawn_door(position: Vector2):
 	door.global_position = position
 	# Set door to collision layers 1 and 2 (blocks both players and zombies when locked)
 	door.collision_layer = 3  # Binary: 11 = layer 1 (player) + layer 2 (zombie)
+	# Set z_index so doors render above terrain tiles
+	door.z_index = 1
 	add_child(door)
 
 func spawn_gate(position: Vector2):
@@ -246,6 +259,16 @@ func spawn_gate(position: Vector2):
 func spawn_torch(position: Vector2):
 	var torch = TORCH_SCENE.instantiate()
 	torch.global_position = position
+	# Set z_index so torch and its glow effect render above walls and terrain tiles
+	torch.z_index = 2
+	# Set z_index for glow effect to be above terrain but below torch sprite
+	var glow_effect = torch.get_node_or_null("GlowEffect")
+	if glow_effect:
+		glow_effect.z_index = 2
+	# Set z_index for torch sprite to be above the glow effect
+	var torch_sprite = torch.get_node_or_null("AnimatedSprite2D")
+	if torch_sprite:
+		torch_sprite.z_index = 3
 	add_child(torch)
 
 func spawn_generator_at(position: Vector2):
@@ -256,6 +279,10 @@ func spawn_generator_at(position: Vector2):
 func spawn_terrain_tile(position: Vector2, terrain_type: String):
 	var tile = TERRAIN_TILE_SCENE.instantiate()
 	tile.global_position = position
+	# Set z_index so terrain tiles render above background but below walls and glow effects
+	# Background is at z_index 0 (default), so terrain at 0 will render after it in scene tree
+	# Walls are at z_index 1, so they render above terrain
+	tile.z_index = 0
 	if tile.has_method("configure"):
 		tile.configure(cell_size, terrain_type)
 	add_child(tile)
