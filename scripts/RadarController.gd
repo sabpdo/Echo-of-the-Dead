@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var player = get_node("/root/Main/Player")
 @onready var fog_controller = get_node("/root/Main/FogLayer/FogController")
+@onready var unexplored_controller = get_node("/root/Main/FogLayer/UnexploredController")
 
 # Radar parameters
 var radar_cooldown: float = 10.0
@@ -101,6 +102,13 @@ func _update_radar_radius(radius: float):
 	set_meta("current_radius", radius)
 	queue_redraw()
 	
+	# Reveal unexplored area around player as pulse expands
+	if player and unexplored_controller:
+		# Reveal area around player with the current pulse radius
+		# Use a reasonable reveal radius (e.g., 60 pixels around each point)
+		var reveal_radius = 60.0
+		unexplored_controller._reveal_area(player.global_position, reveal_radius)
+	
 	# Check for zombie detection when pulse passes through
 	_check_zombie_detection(radius)
 
@@ -156,7 +164,7 @@ func _detect_zombie(zombie: Node2D):
 	
 	# Make zombie visible through fog by adding it as a light source
 	if fog_controller and fog_controller.has_method("add_light_source"):
-		fog_controller.add_light_source(zombie, 60.0)  # 60 pixel radius around zombie
+		fog_controller.add_light_source(zombie, 60.0, Vector2.ZERO, 1.0)  # 60 pixel radius around zombie (circular)
 	
 	# Emit detection signal
 	zombie_detected.emit(zombie)
@@ -189,3 +197,10 @@ func is_radar_available() -> bool:
 func _process(_delta):
 	# Clean up invalid zombie references
 	detected_zombies = detected_zombies.filter(func(data): return is_instance_valid(data.zombie))
+	
+	# Continuously reveal unexplored areas around detected zombies while spell is active
+	if unexplored_controller:
+		var reveal_radius = 60.0  # Same radius as the fog clearing
+		for detection_data in detected_zombies:
+			if is_instance_valid(detection_data.zombie):
+				unexplored_controller._reveal_area(detection_data.zombie.global_position, reveal_radius)
