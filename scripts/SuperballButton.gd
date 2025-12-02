@@ -1,13 +1,13 @@
 extends Control
 
-@onready var button: Button = $FireballButton
-@onready var cooldown_overlay: ColorRect = $FireballButton/CooldownOverlay
+@onready var button: Button = $SuperballButton
+@onready var cooldown_overlay: ColorRect = $SuperballButton/CooldownOverlay
 @onready var player = get_node("/root/Main/Player")
 
 var cooldown_tween: Tween = null
 var stored_button_height: float = 0.0
 var attack_timer: float = 0.0
-const ATTACK_COOLDOWN = 0.2
+const ATTACK_COOLDOWN = 0.6  # Three times as long as regular fireball
 
 func _ready():
 	if button:
@@ -15,7 +15,7 @@ func _ready():
 	
 	# Connect to player signal to sync cooldown
 	if player:
-		player.attack_performed.connect(_on_player_attack_performed)
+		player.strong_attack_performed.connect(_on_player_strong_attack_performed)
 	
 	# Initialize cooldown overlay as hidden
 	if cooldown_overlay:
@@ -33,14 +33,14 @@ func _process(delta):
 			_stop_cooldown()
 
 func _on_button_pressed():
-	_try_activate_fireball()
+	_try_activate_superball()
 
-func _try_activate_fireball():
+func _try_activate_superball():
 	if player and attack_timer <= 0.0:
-		player.perform_attack()
+		player.perform_strong_attack()
 
-func _on_player_attack_performed():
-	# Sync cooldown when player performs regular attack (either from button or left mouse click)
+func _on_player_strong_attack_performed():
+	# Sync cooldown when player performs strong attack (either from button or right mouse click)
 	attack_timer = ATTACK_COOLDOWN
 	if button:
 		button.disabled = true
@@ -91,3 +91,4 @@ func _stop_cooldown():
 	if cooldown_tween:
 		cooldown_tween.kill()
 		cooldown_tween = null
+

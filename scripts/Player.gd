@@ -6,8 +6,10 @@ var terrain_speed_multiplier: float = 1.0
 
 # Attack system
 const ATTACK_COOLDOWN = 0.2
+const STRONG_ATTACK_COOLDOWN = 0.6  # Three times as long as regular attack
 const ATTACK_OFFSET = 20.0
 var attack_timer: float = 0.0
+var strong_attack_timer: float = 0.0
 var attack_scene = preload("res://scenes/attack_effect.tscn")
 var strong_attack_scene = preload("res://scenes/strong_attack_effect.tscn")
 
@@ -44,6 +46,7 @@ var health_regen_timer: float = 0.0
 signal health_changed(current_half_hearts, max_half_hearts)
 signal player_died
 signal attack_performed
+signal strong_attack_performed
 signal torch_proximity_changed(has_torch: bool)
 signal generator_proximity_changed(has_generator: bool)
 signal door_proximity_changed(has_door: bool)
@@ -131,9 +134,11 @@ func _physics_process(delta):
 		perform_attack()
 		attack_timer = ATTACK_COOLDOWN
 		
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and attack_timer <= 0.0:
+	# Strong Attack (Right Mouse Click)
+	strong_attack_timer -= delta
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and strong_attack_timer <= 0.0:
 		perform_strong_attack()
-		attack_timer = ATTACK_COOLDOWN
+		strong_attack_timer = STRONG_ATTACK_COOLDOWN
 	
 	# Update interaction timers
 	generator_interact_timer -= delta
@@ -181,7 +186,7 @@ func perform_strong_attack():
 	attack.global_position = global_position + dir * ATTACK_OFFSET
 	get_parent().add_child(attack)
 
-	attack_performed.emit()
+	strong_attack_performed.emit()
 
 	if spell_audio and spell_audio.has_method("play_cue"):
 		spell_audio.play_cue()

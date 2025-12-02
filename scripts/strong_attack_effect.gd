@@ -3,7 +3,7 @@ extends Area2D
 # speed of the attack
 const SPEED = 100.0
 # duration of the attack
-const DURATION = 0.8
+const DURATION = 1.6  # Twice as long as before
 # how much the zombie is damaged
 const DAMAGE = 50
 
@@ -12,9 +12,11 @@ var direction: Vector2 = Vector2.ZERO
 var time_left := DURATION
 
 @onready var fireball_sprite = $FireballSprite
+@onready var glow_sprite = $GlowSprite
 @onready var trail_particles = $TrailParticles
 
 var fog_controller: Node = null
+var unexplored_controller: Node = null
 
 func _ready():
 	# Set collision mask to detect zombies (layer 2) and walls (layers 1+2 = 3)
@@ -27,16 +29,22 @@ func _ready():
 	
 	# Register as light source to clear fog
 	fog_controller = get_node("/root/Main/FogLayer/FogController")
+	unexplored_controller = get_node("/root/Main/FogLayer/UnexploredController")
 	if fog_controller and direction.length() > 0:
-		# Use circular fog clearing (aspect ratio 1.0)
-		fog_controller.add_light_source(self, 120.0, direction, 1.0)
+		# Use elliptical fog clearing to match fireball shape (wider in direction of travel)
+		# Aspect ratio 1.8 makes it wider than tall, matching the fireball's shape
+		fog_controller.add_light_source(self, 60.0, direction, 1.8)
 	
 	# Rotate fireball to face movement direction (straight from player)
 	if direction.length() > 0:
+		var angle = direction.angle()
 		# Face the direction of movement
-		fireball_sprite.rotation = direction.angle()
+		fireball_sprite.rotation = angle
+		# Rotate glow to match
+		if glow_sprite:
+			glow_sprite.rotation = angle
 		# Rotate particles to emit backwards (opposite to movement)
-		trail_particles.rotation = direction.angle() + PI
+		trail_particles.rotation = angle + PI
 
 func _physics_process(delta):
 	# Freeze attack when paused
@@ -44,6 +52,11 @@ func _physics_process(delta):
 		return
 	# Move the attack
 	position += direction * SPEED * delta
+	
+	# Continuously reveal unexplored areas around fireball
+	if unexplored_controller:
+		unexplored_controller._reveal_area(global_position, 60.0)
+	
 	# Count down timer
 	time_left -= delta
 	if time_left <= 0:

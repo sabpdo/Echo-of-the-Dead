@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c3laxr6n4o5q6"]
+[gd_scene load_steps=35 format=3 uid="uid://c3laxr6n4o5q6"]
 
 [ext_resource type="PackedScene" uid="uid://b2j8wq5m3n4p5" path="res://scenes/Player.tscn" id="1_2"]
 [ext_resource type="Texture2D" uid="uid://dn722b128mods" path="res://assets/brick.png" id="1_2ofn6"]
@@ -19,6 +19,8 @@
 [ext_resource type="Script" uid="uid://b6tbl40k7fnl7" path="res://scripts/kill_counter.gd" id="15_cvmbd"]
 [ext_resource type="Script" uid="uid://cbxbl8wdam3cx" path="res://scripts/home_icon.gd" id="16_home"]
 [ext_resource type="Script" uid="uid://dss26kjsv8fan" path="res://scripts/FireballButton.gd" id="17_fireball"]
+[ext_resource type="Script" path="res://scripts/SuperballButton.gd" id="17_superball"]
+[ext_resource type="Texture2D" uid="uid://bmng5djvct3ah" path="res://assets/Fireball/fire_ball.png" id="18_fireball_icon"]
 [ext_resource type="Script" uid="uid://sban3vieqfvm" path="res://scripts/LightTorchButton.gd" id="18_torch"]
 [ext_resource type="Script" uid="uid://de0k5flb5qr0l" path="res://scripts/GeneratorButton.gd" id="19_generator"]
 [ext_resource type="Script" uid="uid://bk5k32spqfh66" path="res://scripts/DoorButton.gd" id="20_door"]
@@ -96,6 +98,8 @@ stretch_mode = 1
 
 [node name="WallGenerator" type="Node2D" parent="."]
 script = ExtResource("2_1")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 script = ExtResource("22_audio")
@@ -433,6 +437,29 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16
 
+[node name="FireballIconContainer" type="Control" parent="UILayer/FireballButtonContainer/FireballButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FireballIcon" type="Sprite2D" parent="UILayer/FireballButtonContainer/FireballButton/FireballIconContainer"]
+modulate = Color(1, 1, 1, 0.25)
+layout_mode = 0
+position = Vector2(30, 30)
+texture = ExtResource("18_fireball_icon")
+scale = Vector2(0.3, 0.3)
+rotation = -0.785398
+
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/FireballButtonContainer/FireballButton"]
 layout_mode = 1
 anchors_preset = 8
@@ -456,10 +483,94 @@ horizontal_alignment = 1
 [node name="NumberLabel" type="Label" parent="UILayer/FireballButtonContainer/FireballButton/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "Click"
+text = "Left Click"
 horizontal_alignment = 1
 
 [node name="CooldownOverlay" type="ColorRect" parent="UILayer/FireballButtonContainer/FireballButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.3, 0.3, 0.3, 0.7)
+
+[node name="SuperballButtonContainer" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 270.0
+offset_top = -180.0
+offset_right = 420.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("17_superball")
+
+[node name="SuperballButton" type="Button" parent="UILayer/SuperballButtonContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+
+[node name="SuperballIconContainer" type="Control" parent="UILayer/SuperballButtonContainer/SuperballButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SuperballIcon" type="Sprite2D" parent="UILayer/SuperballButtonContainer/SuperballButton/SuperballIconContainer"]
+modulate = Color(0.13725491, 1, 1, 0.25)
+layout_mode = 0
+position = Vector2(30, 30)
+texture = ExtResource("18_fireball_icon")
+scale = Vector2(0.3, 0.3)
+rotation = -0.785398
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/SuperballButtonContainer/SuperballButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -20.0
+offset_right = 25.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SuperballLabel" type="Label" parent="UILayer/SuperballButtonContainer/SuperballButton/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Superball"
+horizontal_alignment = 1
+
+[node name="NumberLabel" type="Label" parent="UILayer/SuperballButtonContainer/SuperballButton/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Right Click"
+horizontal_alignment = 1
+
+[node name="CooldownOverlay" type="ColorRect" parent="UILayer/SuperballButtonContainer/SuperballButton"]
 visible = false
 layout_mode = 1
 anchors_preset = 15

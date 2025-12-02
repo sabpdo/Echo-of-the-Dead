@@ -4,9 +4,11 @@ extends Node2D
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var light_2d = $Light2D
 @onready var interaction_button = $InteractionButton
+@onready var glow_effect = $GlowEffect
 
 var is_lit: bool = false
 var fog_controller: Node = null
+var unexplored_controller: Node = null
 const LIGHT_RADIUS: float = 150.0
 var player_nearby: bool = false
 var toggle_cooldown: float = 0.0
@@ -16,6 +18,7 @@ signal torch_toggled(lit: bool)
 
 func _ready():
 	fog_controller = get_node("/root/Main/FogLayer/FogController")
+	unexplored_controller = get_node("/root/Main/FogLayer/UnexploredController")
 	
 	# Start unlit
 	set_lit(false)
@@ -39,6 +42,25 @@ func _process(delta):
 	# Update button visibility
 	if interaction_button:
 		interaction_button.visible = player_nearby
+	
+	# Continuously reveal unexplored areas around torch when lit
+	if is_lit and unexplored_controller:
+		unexplored_controller._reveal_area(global_position, LIGHT_RADIUS)
+	
+	# Update glow effect pulsing when lit
+	if is_lit and glow_effect:
+		var time = Time.get_ticks_msec() / 1000.0
+		# Add more variability with multiple sine waves at different frequencies
+		var pulse1 = sin(time * 2.5) * 0.15
+		var pulse2 = sin(time * 4.3) * 0.08
+		var pulse3 = sin(time * 1.7) * 0.05
+		# Add some noise-based flickering for more natural variation
+		var noise = sin(time * 7.2 + 1.3) * sin(time * 11.7 + 2.1) * 0.04
+		var pulse = 1.0 + pulse1 + pulse2 + pulse3 + noise
+		var glow_material = glow_effect.material as ShaderMaterial
+		if glow_material:
+			# Larger radius - ColorRect is now 480x480, so 0.4 gives ~192 pixels
+			glow_material.set_shader_parameter("radius", 0.4 * pulse)
 
 func _on_body_entered(body):
 	if body.is_in_group("player") or body.name == "Player":
@@ -69,6 +91,13 @@ func set_lit(lit: bool):
 	
 	if light_2d:
 		light_2d.enabled = lit
+	
+	# Update glow effect visibility
+	if glow_effect:
+		if lit:
+			glow_effect.modulate = Color(1, 1, 1, 1)
+		else:
+			glow_effect.modulate = Color(1, 1, 1, 0)
 	
 	# Update fog clearing
 	if fog_controller:
