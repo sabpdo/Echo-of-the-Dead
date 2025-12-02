@@ -6,7 +6,7 @@ extends Node2D
 
 var is_on: bool = false
 const INTERACTION_RADIUS: float = 80.0
-const COST_POINTS: int = 1000
+const COST_POINTS: int = 10000
 
 # Generator reveal / ring effect
 var ring_active: bool = false
