@@ -11,11 +11,13 @@ At its core, this game emphasizes atmospheric audio design, limited visibility, 
 - **Engine:** Godot 4.5
 - **Renderer:** Compatibility / OpenGL (exports to WebGL2)
 - **Languages**: GDScript
-
+- Website is deployed through Itch
 
 ## Credits
-Fireball animation is from here: https://opengameart.org/content/spell-animation-spritesheets 
+Artwork by Es Lee.
 
-Torch: https://opengameart.org/content/torch-32px-sprite
+Music, sound effects, and some artwork (torches, fireball, door, gates) from opengameart.org under CC license.
 
-Door: https://opengameart.org/content/spooky-castle-tileset
+- Fireball animation: https://opengameart.org/content/spell-animation-spritesheets 
+- Torch: https://opengameart.org/content/torch-32px-sprite
+- Door: https://opengameart.org/content/spooky-castle-tileset
