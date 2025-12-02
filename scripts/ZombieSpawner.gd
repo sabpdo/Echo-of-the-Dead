@@ -9,6 +9,7 @@ const MAP_BOTTOM = 640.0
 # Spawn settings
 @export var spawn_point_count: int = 10  # Number of spawn points to generate
 @export var min_distance_from_player: float = 300.0  # Minimum distance from player to spawn
+@export var spawn_activation_radius: float = 600.0  # Only spawn points within this radius of player are active
 
 var zombie_scene = preload("res://scenes/Zombie.tscn")
 var big_zombie_scene = preload("res://scenes/BigZombie.tscn")
@@ -112,28 +113,24 @@ func stop_spawning_and_kill_all():
 	active_zombies.clear()
 
 func _spawn_zombie():
-	if spawn_points.is_empty():
+	if spawn_points.is_empty() or not player:
 		return
 	
-	# Select a random spawn point
-	var spawn_index = randi() % spawn_points.size()
-	var spawn_pos = spawn_points[spawn_index]
+	# Get active spawn points (within activation radius and far enough from player)
+	var active_spawn_points: Array[Vector2] = []
+	for point in spawn_points:
+		var distance_to_player = point.distance_to(player.global_position)
+		# Spawn point must be within activation radius AND far enough from player
+		if distance_to_player <= spawn_activation_radius and distance_to_player >= min_distance_from_player:
+			active_spawn_points.append(point)
 	
-	# Check if spawn point is still far enough from player
-	if player:
-		var distance_to_player = spawn_pos.distance_to(player.global_position)
-		if distance_to_player < min_distance_from_player:
-			# Try to find a better spawn point
-			var best_spawn = spawn_pos
-			var best_distance = distance_to_player
-			
-			for point in spawn_points:
-				var dist = point.distance_to(player.global_position)
-				if dist > best_distance and dist >= min_distance_from_player:
-					best_spawn = point
-					best_distance = dist
-			
-			spawn_pos = best_spawn
+	# If no active spawn points, don't spawn
+	if active_spawn_points.is_empty():
+		return
+	
+	# Select a random active spawn point
+	var spawn_index = randi() % active_spawn_points.size()
+	var spawn_pos = active_spawn_points[spawn_index]
 	
 	# Decide which zombie type to spawn
 	var zombie
