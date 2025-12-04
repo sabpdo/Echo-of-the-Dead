@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var interaction_area = $InteractionArea
 @onready var color_rect = $ColorRect
+@onready var texture_rect = $TextureRect
 @onready var label = $Label
 @onready var electricity_audio = $ElectricityAudio
 
@@ -17,6 +18,8 @@ var ring_radius: float = 0.0
 var generator_reveal_running: bool = false
 var ring_effect_node: Node = null
 
+var active_generator = null
+
 signal generator_toggled(on: bool)
 
 func _ready():
@@ -30,6 +33,9 @@ func _ready():
 	if interaction_area:
 		interaction_area.body_entered.connect(_on_body_entered)
 		interaction_area.body_exited.connect(_on_body_exited)
+	
+	active_generator = load("res://assets/crystal/active.png")
+
 
 func _process(delta: float) -> void:
 	# Update ring timer and update ring effect node while active
@@ -57,6 +63,9 @@ func set_on(on: bool):
 			electricity_audio.play_cue()
 		elif electricity_audio.stream:
 			electricity_audio.play()
+	
+	if texture_rect and on:
+		texture_rect.texture = active_generator
 	
 	if color_rect:
 		if on:

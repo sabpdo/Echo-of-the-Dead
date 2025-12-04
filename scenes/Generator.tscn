@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://generator_scene_001"]
+[gd_scene load_steps=5 format=3 uid="uid://vvbf4hw3fukr"]
 
-[ext_resource type="Script" path="res://scripts/Generator.gd" id="1_generator"]
+[ext_resource type="Script" uid="uid://80hglkybeyam" path="res://scripts/Generator.gd" id="1_generator"]
+[ext_resource type="Texture2D" uid="uid://darhsuy08g1wy" path="res://assets/crystal/inactive.png" id="2_3ih3x"]
 [ext_resource type="Script" path="res://scripts/AudioCuePlayer2D.gd" id="2_audio2d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
@@ -10,6 +11,7 @@ radius = 80.0
 script = ExtResource("1_generator")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 offset_left = -100.0
 offset_top = -50.0
 offset_right = 100.0
@@ -18,6 +20,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.2, 0.4, 1, 1)
 
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -83.0
+offset_top = -92.0
+offset_right = 92.0
+offset_bottom = 83.0
+texture = ExtResource("2_3ih3x")
+expand_mode = 1
+
 [node name="Label" type="Label" parent="."]
 offset_left = -90.0
 offset_top = -40.0
@@ -25,8 +35,8 @@ offset_right = 90.0
 offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
 text = "Generator
 (10000 points)"
 horizontal_alignment = 1
@@ -38,9 +48,5 @@ vertical_alignment = 1
 shape = SubResource("CircleShape2D_1")
 
 [node name="ElectricityAudio" type="AudioStreamPlayer2D" parent="."]
-bus = &"SFX"
 script = ExtResource("2_audio2d")
 audio_key = &"electricity"
-autoplay_on_ready = false
-restart_on_trigger = true
-
