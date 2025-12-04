@@ -10,6 +10,7 @@ const MAIN_SCENE = preload("res://scenes/Main.tscn")
 const HOW_TO_PLAY_SCENE = preload("res://scenes/HowToPlay.tscn")
 const SETTINGS_PAGE_SCENE = "res://scenes/SettingsPage.tscn"
 const INFO_SCENE = "res://scenes/InfoScreen.tscn"
+const WELCOME_SCENE = preload("res://scenes/WelcomeScreen.tscn")
 
 
 func _ready():
@@ -63,7 +64,18 @@ func _start_ui_fade_in() -> void:
 
 func _on_play_pressed():
 	GameSettings.play_click_sound()
-	# Transition to the main game scene
+	
+	# Always show welcome screen when starting from main menu
+	_show_welcome_screen()
+
+func _show_welcome_screen():
+	# Create and add welcome screen as overlay
+	var welcome_screen = WELCOME_SCENE.instantiate()
+	welcome_screen.welcome_screen_finished.connect(_on_welcome_finished)
+	add_child(welcome_screen)
+
+func _on_welcome_finished():
+	# Transition to the main game scene after welcome screen
 	get_tree().change_scene_to_packed(MAIN_SCENE)
 
 func _on_settings_pressed():
