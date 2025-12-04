@@ -10,4 +10,3 @@ func _ready():
 			background_music.play_cue()
 		elif not background_music.playing:
 			background_music.play()
-

@@ -1,6 +1,6 @@
 extends Control
 
-var points: int = 99999
+var points: int = 0
 var popup_scene = preload("res://scenes/score_popup.tscn")
 
 # Time survived tracking (in seconds)
